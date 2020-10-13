@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Map from './pages/Map'
+import Dashboard from './pages/Dashboard'
 
 // Navigation
 import { NavigationContainer } from "@react-navigation/native";
@@ -15,6 +16,10 @@ export default function App() {
             <Stack.Screen
               name="Map"
               component={Map}
+            />
+            <Stack.Screen
+              name="Dashboard"
+              component={Dashboard}
             />
           </Stack.Navigator>
         </NavigationContainer>
