@@ -16,6 +16,7 @@ const FormInput = (props) => {
       placeholder={props.placeholder}
       placeholderTextColor="gray"
       onChangeText={props.onChangeText}
+      onBlur={props.onBlur}
       value={props.value}
       multiline={props.multiline}
       numberOfLines={props.numberOfLines}
