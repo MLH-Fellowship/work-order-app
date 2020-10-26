@@ -1,7 +1,9 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Text, Button } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import buildingData from "../buildings.json";
+import Modal from "react-native-modal";
+// import MarkerModal from "./MarkerModal";
 
 const styles = StyleSheet.create({
   container: {
@@ -15,6 +17,13 @@ const styles = StyleSheet.create({
 });
 
 const Map = () => {
+
+  const [isModalVisible, setModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
+
   return (
     <View style={styles.container}>
       <MapView
@@ -34,9 +43,17 @@ const Map = () => {
               longitude: marker.coordinates[1],
             }}
             title={`Building: ${marker.number}`}
+            onPress={toggleModal}
           />
         ))}
       </MapView>
+      <Modal isVisible={isModalVisible}>
+        <View style={{ flex: 1 }}>
+          <Text>Hello!</Text>
+
+          <Button title="Hide modal" onPress={toggleModal} />
+        </View>
+      </Modal>
     </View>
   );
 };
