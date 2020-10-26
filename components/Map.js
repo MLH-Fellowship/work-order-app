@@ -3,26 +3,39 @@ import { StyleSheet, View, Text, Button } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import buildingData from "../buildings.json";
 import Modal from "react-native-modal";
-// import MarkerModal from "./MarkerModal";
+import {useSelector, useDispatcher, useDispatch} from "react-redux"
+import {activateModal, deleteModal} from "../actions/index"
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    backgroundColor: "#2BD1FB",
+    backgroundColor: "white",
   },
   map: {
     flex: 1,
   },
+  modalView:{
+    marginTop: "10%",
+    flex: 1,
+    backgroundColor: "white",
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });
 
 const Map = () => {
 
   const [isModalVisible, setModalVisible] = useState(false);
-
+  const isVisible = useSelector(state => state);
+  
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
+    console.log(isVisible);
   };
+
+
+  const dispatch = useDispatch();
 
   return (
     <View style={styles.container}>
@@ -48,7 +61,7 @@ const Map = () => {
         ))}
       </MapView>
       <Modal isVisible={isModalVisible}>
-        <View style={{ flex: 1 }}>
+        <View style={styles.modalView}>
           <Text>Hello!</Text>
 
           <Button title="Hide modal" onPress={toggleModal} />

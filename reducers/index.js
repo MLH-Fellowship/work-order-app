@@ -7,6 +7,11 @@ const initialState = {
   orders: [],
 };
 
+const modalState = {
+  modalActive: false,
+  buildingNumber: null
+};
+
 const initialReducer = (state = initialState, action) => {
   switch (action.type) {
     default:
@@ -14,8 +19,27 @@ const initialReducer = (state = initialState, action) => {
   }
 };
 
+const modalReducer = (state = modalState, action) => {
+  switch (action.type) {
+    case actionTypes.MODAL_ACTIVE:
+      return {
+        ...state,
+        modalActive: true,
+        buildingNumber: action.buildingNumber,
+      };
+    case actionTypes.MODAL_INACTIVE:
+      return {
+        ...state,
+        modalActive: false,
+        buildingNumber: null
+      };
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
-  state: initialReducer,
+  state: modalReducer
 });
 
 export default rootReducer;
