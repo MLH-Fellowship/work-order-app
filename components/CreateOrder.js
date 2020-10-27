@@ -63,8 +63,8 @@ const CreateOrder = () => {
       />
       <FormInput
         placeholder='Description'
-        multiline='true'
-        numberOfLines='2'
+        multiline={true}
+        numberOfLines={2}
         onChangeText={handleChange('description')}
         onBlur={handleBlur('description')}
         value={values.description}

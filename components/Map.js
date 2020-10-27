@@ -24,12 +24,12 @@ const styles = StyleSheet.create({
 });
 
 const Map = () => {
-  const modalState = useSelector((state) => state);
+  const modalState = useSelector((state) => state.modalReducer);
   const dispatch = useDispatch();
 
   const createModal = (buildingNumber) => {
-    console.log(modalState);
     dispatch(activateModal(buildingNumber));
+    console.log(modalState);
   };
 
   return (

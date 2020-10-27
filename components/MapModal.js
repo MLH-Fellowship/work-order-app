@@ -20,8 +20,8 @@ const MapModal = () => {
   const dispatch = useDispatch();
 
   const removeModal = () => {
-    console.log(modalState);
     dispatch(deactivateModal());
+    console.log(modalState);
   };
 
   return (
