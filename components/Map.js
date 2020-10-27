@@ -2,19 +2,36 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import buildingData from "../buildings.json";
+import MapModal from "./MapModal";
+import { useSelector, useDispatch } from "react-redux";
+import { activateModal } from "../actions/index";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    backgroundColor: "#2BD1FB",
+    backgroundColor: "white",
   },
   map: {
     flex: 1,
   },
+  modalView: {
+    marginTop: "10%",
+    flex: 1,
+    backgroundColor: "white",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 const Map = () => {
+  const modalState = useSelector((state) => state.modalReducer);
+  const dispatch = useDispatch();
+
+  const createModal = (buildingNumber) => {
+    dispatch(activateModal(buildingNumber));
+    console.log(modalState);
+  };
+
   return (
     <View style={styles.container}>
       <MapView
@@ -33,10 +50,12 @@ const Map = () => {
               latitude: marker.coordinates[0],
               longitude: marker.coordinates[1],
             }}
-            title={`Building: ${marker.number}`}
+            // title={`Building: ${marker.number}`}
+            onPress={() => createModal(marker.number)}
           />
         ))}
       </MapView>
+      <MapModal></MapModal>
     </View>
   );
 };

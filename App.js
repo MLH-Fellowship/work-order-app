@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { StyleSheet, Text, View } from "react-native";
 import MapPage from "./pages/MapPage";
 import DashboardPage from "./pages/DashboardPage";

@@ -1,5 +1,5 @@
 import { Formik } from "formik";
-import React, { useState } from "react";
+import React, {  useState } from "react";
 import { StyleSheet, 
   View, 
   Text, 
@@ -10,6 +10,7 @@ import FormInput from "./FormInput";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: "100%",
     backgroundColor: "#fff",
     backgroundColor: "#2BD1FB",
     justifyContent: 'center',
@@ -62,8 +63,8 @@ const CreateOrder = () => {
       />
       <FormInput
         placeholder='Description'
-        multiline='true'
-        numberOfLines='2'
+        multiline={true}
+        numberOfLines={2}
         onChangeText={handleChange('description')}
         onBlur={handleBlur('description')}
         value={values.description}
