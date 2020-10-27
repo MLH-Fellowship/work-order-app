@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import { StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import buildingData from "../buildings.json";
-import Modal from "react-native-modal";
+import MapModal from "./MapModal";
 import { useSelector, useDispatch } from "react-redux";
-import { activateModal, deactivateModal } from "../actions/index";
+import { activateModal } from "../actions/index";
 
 const styles = StyleSheet.create({
   container: {
@@ -24,19 +23,12 @@ const styles = StyleSheet.create({
 });
 
 const Map = () => {
-  // const [isModalVisible, setModalVisible] = useState(false);
-
   const modalState = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const createModal = (buildingNumber) => {
     console.log(modalState);
     dispatch(activateModal(buildingNumber));
-  };
-
-  const removeModal = () => {
-    console.log(modalState);
-    dispatch(deactivateModal());
   };
 
   return (
@@ -62,13 +54,7 @@ const Map = () => {
           />
         ))}
       </MapView>
-      <Modal isVisible={modalState.modalReducer.modalActive}>
-        <View style={styles.modalView}>
-          <Text>{modalState.modalReducer.buildingNumber}</Text>
-
-          <Button title="Hide modal" onPress={() => removeModal()} />
-        </View>
-      </Modal>
+      <MapModal></MapModal>
     </View>
   );
 };
