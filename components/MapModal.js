@@ -1,4 +1,4 @@
-
+import React from "react";
 import { StyleSheet, View, Text, Button } from "react-native";
 import Modal from "react-native-modal";
 import { useSelector, useDispatch } from "react-redux";
