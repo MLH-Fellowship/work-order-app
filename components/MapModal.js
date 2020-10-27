@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, Button } from "react-native";
 import Modal from "react-native-modal";
 import { useSelector, useDispatch } from "react-redux";
 import { deactivateModal } from "../actions/index";
+import CreateOrder from "./CreateOrder";
 
 const styles = StyleSheet.create({
   modalView: {
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
 });
 
 const MapModal = () => {
-  const modalState = useSelector((state) => state);
+  const modalState = useSelector((state) => state.modalReducer);
   const dispatch = useDispatch();
 
   const removeModal = () => {
@@ -24,10 +25,10 @@ const MapModal = () => {
   };
 
   return (
-    <Modal isVisible={modalState.modalReducer.modalActive}>
+    <Modal isVisible={modalState.modalActive}>
       <View style={styles.modalView}>
-        <Text>{modalState.modalReducer.buildingNumber}</Text>
-
+        <Text>{`Building ${modalState.buildingNumber}`}</Text>
+        <CreateOrder></CreateOrder>
         <Button title="Hide modal" onPress={() => removeModal()} />
       </View>
     </Modal>

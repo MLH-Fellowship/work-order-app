@@ -10,6 +10,7 @@ import FormInput from "./FormInput";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: "100%",
     backgroundColor: "#fff",
     backgroundColor: "#2BD1FB",
     justifyContent: 'center',
