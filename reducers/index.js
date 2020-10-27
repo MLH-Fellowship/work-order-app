@@ -39,7 +39,7 @@ const modalReducer = (state = modalState, action) => {
 };
 
 const rootReducer = combineReducers({
-  state: modalReducer
+  modalReducer
 });
 
 export default rootReducer;

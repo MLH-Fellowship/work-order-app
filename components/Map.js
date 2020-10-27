@@ -3,9 +3,8 @@ import { StyleSheet, View, Text, Button } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import buildingData from "../buildings.json";
 import Modal from "react-native-modal";
-import {useSelector, useDispatcher, useDispatch} from "react-redux"
-import {activateModal, deleteModal} from "../actions/index"
-
+import { useSelector, useDispatch } from "react-redux";
+import { activateModal, deactivateModal } from "../actions/index";
 
 const styles = StyleSheet.create({
   container: {
@@ -15,27 +14,30 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
   },
-  modalView:{
+  modalView: {
     marginTop: "10%",
     flex: 1,
     backgroundColor: "white",
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 const Map = () => {
+  // const [isModalVisible, setModalVisible] = useState(false);
 
-  const [isModalVisible, setModalVisible] = useState(false);
-  const isVisible = useSelector(state => state);
-  
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-    console.log(isVisible);
+  const modalState = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  const createModal = (buildingNumber) => {
+    console.log(modalState);
+    dispatch(activateModal(buildingNumber));
   };
 
-
-  const dispatch = useDispatch();
+  const removeModal = () => {
+    console.log(modalState);
+    dispatch(deactivateModal());
+  };
 
   return (
     <View style={styles.container}>
@@ -55,16 +57,16 @@ const Map = () => {
               latitude: marker.coordinates[0],
               longitude: marker.coordinates[1],
             }}
-            title={`Building: ${marker.number}`}
-            onPress={toggleModal}
+            // title={`Building: ${marker.number}`}
+            onPress={() => createModal(marker.number)}
           />
         ))}
       </MapView>
-      <Modal isVisible={isModalVisible}>
+      <Modal isVisible={modalState.modalReducer.modalActive}>
         <View style={styles.modalView}>
-          <Text>Hello!</Text>
+          <Text>{modalState.modalReducer.buildingNumber}</Text>
 
-          <Button title="Hide modal" onPress={toggleModal} />
+          <Button title="Hide modal" onPress={() => removeModal()} />
         </View>
       </Modal>
     </View>
