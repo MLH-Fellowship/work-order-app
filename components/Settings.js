@@ -1,5 +1,8 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
+import { logoutUser } from "../api/auth-api";
+import Button from "../components/Button";
+
 
 const styles = StyleSheet.create({
   container: {
@@ -15,7 +18,7 @@ const styles = StyleSheet.create({
 const Settings = () => {
   return (
     <View style={styles.container}>
-    
+    <Button onPress={logoutUser}><Text>Logout</Text></Button>
     </View>
   );
 };
