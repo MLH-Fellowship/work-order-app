@@ -1,14 +1,17 @@
 import React from 'react';
 import { StyleSheet, Text, View } from "react-native";
+import LoginPage from "./pages/LoginPage";
 import MapPage from "./pages/MapPage";
 import DashboardPage from "./pages/DashboardPage";
 import SettingsPage from "./pages/SettingsPage";
+import AuthLoadingScreen from './components/AuthLoadingScreen'
 
 // Redux
 import { createStore, applyMiddleware } from "redux";
 import { Provider as StoreProvider } from "react-redux";
 import rootReducer from "./reducers";
 import thunk from "redux-thunk";
+import firebase from './core/config'
 
 //Icons
 //cheatsheet: https://ionicons.com/v4/cheatsheet.html
@@ -28,11 +31,15 @@ export default function App() {
     <StoreProvider store={store}>
       <NavigationContainer>
         <Tab.Navigator
+        initialRouteName='AuthLoadingScreen'
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
               let iconName;
 
               switch (route.name) {
+                case "Login":
+                  iconName = "ios-contact";
+                  break;
                 case "Map":
                   iconName = "ios-map";
                   break;
@@ -56,6 +63,8 @@ export default function App() {
             inactiveTintColor: "gray",
           }}
         >
+          <Tab.Screen name="AuthLoadingScreen" component={AuthLoadingScreen} />
+          <Tab.Screen name="Login" component={LoginPage} />
           <Tab.Screen name="Map" component={MapPage} />
           <Tab.Screen name="Dashboard" component={DashboardPage} />
           <Tab.Screen name="Settings" component={SettingsPage} />
