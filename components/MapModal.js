@@ -21,8 +21,9 @@ const MapModal = () => {
 
   const removeModal = () => {
     dispatch(deactivateModal());
-    console.log(modalState);
   };
+
+  console.log(modalState);
 
   return (
     <Modal isVisible={modalState.modalActive}>

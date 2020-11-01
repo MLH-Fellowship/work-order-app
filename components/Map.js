@@ -32,7 +32,6 @@ const Map = () => {
 
   const createModal = (buildingNumber) => {
     dispatch(activateModal(buildingNumber));
-    console.log(modalState);
   };
 
   const stopTrackingViewChanges = () => {
@@ -66,7 +65,7 @@ const Map = () => {
           </View>
         ))}
       </MapView>
-      <MapModal></MapModal>
+      <MapModal/>
     </View>
   );
 };
