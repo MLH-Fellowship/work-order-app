@@ -1,10 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import { StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import buildingData from "../buildings.json";
 import MapModal from "./MapModal";
 import { useSelector, useDispatch } from "react-redux";
 import { activateModal } from "../actions/index";
+import Building from "./Building";
 
 const styles = StyleSheet.create({
   container: {
@@ -27,10 +28,16 @@ const Map = () => {
   const modalState = useSelector((state) => state.modalReducer);
   const dispatch = useDispatch();
 
+  const [trackViewChanges, setTrackViewChanges] = useState(true)
+
   const createModal = (buildingNumber) => {
     dispatch(activateModal(buildingNumber));
     console.log(modalState);
   };
+
+  const stopTrackingViewChanges = () => {
+    setTrackViewChanges(false);
+  }
 
   return (
     <View style={styles.container}>
@@ -44,15 +51,19 @@ const Map = () => {
         }}
       >
         {buildingData.buildings.map((marker, index) => (
+          <View>
           <Marker
             key={index}
             coordinate={{
               latitude: marker.coordinates[0],
               longitude: marker.coordinates[1],
             }}
-            // title={`Building: ${marker.number}`}
             onPress={() => createModal(marker.number)}
-          />
+            tracksViewChanges={trackViewChanges}
+          >
+            <Building onLoad={stopTrackingViewChanges} fadeDuration={0} />
+          </Marker>
+          </View>
         ))}
       </MapView>
       <MapModal></MapModal>
