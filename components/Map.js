@@ -51,7 +51,7 @@ const Map = () => {
         }}
       >
         {buildingData.buildings.map((marker, index) => (
-          <View>
+          <View key={index}>
           <Marker
             key={index}
             coordinate={{
