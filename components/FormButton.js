@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 });
 
 const FormButton = ( props ) => (
-  <TouchableOpacity style={styles.button} onPress={props.onPress}>
+  <TouchableOpacity style={styles.button} onPress={props.onSubmit}>
     <Text style={styles.buttonText}>{props.text}</Text>
   </TouchableOpacity>
 );

@@ -1,9 +1,6 @@
 import { Formik } from "formik";
-import React, {  useState } from "react";
-import { StyleSheet, 
-  View, 
-  Text, 
-  TextInput } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Text, TextInput } from "react-native";
 import FormButton from "./FormButton";
 import FormInput from "./FormInput";
 
@@ -13,67 +10,59 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#fff",
     backgroundColor: "#2BD1FB",
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
-  input: {
-
-  }
 });
 
 const CreateOrder = () => {
-  const [text, setText] = useState('');
-
   return (
     <Formik
       initialValues={{
-        name: '',
-        building: '',
-        room: '',
-        problem: '',
-        description: ''
+        name: "",
+        building: "",
+        room: "",
+        problem: "",
+        description: "",
       }}
-      onSubmit={values => console.log(values)}
+      onSubmit={(values) => {console.log(values)}}
     >
       {({ handleChange, handleBlur, handleSubmit, values }) => (
-    <View style={styles.container}>
-      <FormInput
-        placeholder='Personnel Name'
-        onChangeText={handleChange('name')}
-        onBlur={handleBlur('name')}
-        value={values.name}
-      />
-      <FormInput
-        placeholder='Building #'
-        onChangeText={handleChange('building')}
-        onBlur={handleBlur('building')}
-        value={values.building}
-      />
-      <FormInput
-        placeholder='Room #'
-        onChangeText={handleChange('room')}
-        onBlur={handleBlur('room')}
-        value={values.room}
-      />
-      <FormInput
-        placeholder='Problem'
-        onChangeText={handleChange('problem')}
-        onBlur={handleBlur('problem')}
-        value={values.problem}
-      />
-      <FormInput
-        placeholder='Description'
-        multiline={true}
-        numberOfLines={2}
-        onChangeText={handleChange('description')}
-        onBlur={handleBlur('description')}
-        value={values.description}
-      />
-      <FormButton
-      onSubmit={handleSubmit}
-      text='Submit'
-      />
-    </View>
+        <View style={styles.container}>
+          <FormInput
+            placeholder="Personnel Name"
+            onChangeText={handleChange("name")}
+            onBlur={handleBlur("name")}
+            value={values.name}
+          />
+          <FormInput
+            placeholder="Building #"
+            onChangeText={handleChange("building")}
+            onBlur={handleBlur("building")}
+            value={values.building}
+          />
+          <FormInput
+            placeholder="Room #"
+            onChangeText={handleChange("room")}
+            onBlur={handleBlur("room")}
+            value={values.room}
+          />
+          <FormInput
+            placeholder="Problem"
+            onChangeText={handleChange("problem")}
+            onBlur={handleBlur("problem")}
+            value={values.problem}
+          />
+          <FormInput
+            placeholder="Description"
+            multiline={true}
+            numberOfLines={2}
+            onChangeText={handleChange("description")}
+            onBlur={handleBlur("description")}
+            value={values.description}
+          />
+          <FormButton onSubmit={handleSubmit} text="Submit" />
+        </View>
       )}
     </Formik>
   );
