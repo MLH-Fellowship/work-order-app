@@ -4,3 +4,4 @@ export const MODAL_INACTIVE = 'MODAL_INACTIVE'
 
 // Order Actions
 export const GET_ORDERS = 'GET_ORDERS'
+export const ADD_ORDERS = 'ADD_ORDERS'
