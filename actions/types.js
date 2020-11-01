@@ -1,6 +1,6 @@
 // Modal Actions
-export const MODAL_ACTIVE = 'MODAL_ACTIVE'
-export const MODAL_INACTIVE = 'MODAL_INACTIVE'
+export const ACTIVATE_MODAL = 'ACTIVATE_MODAL'
+export const DEACTIVATE_MODAL = 'DEACTIVATE_MODAL'
 
 // Order Actions
 export const GET_ORDERS = 'GET_ORDERS'

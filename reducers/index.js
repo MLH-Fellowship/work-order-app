@@ -19,13 +19,13 @@ const modalState = {
 
 const modalReducer = (state = modalState, action) => {
   switch (action.type) {
-    case actionTypes.MODAL_ACTIVE:
+    case actionTypes.ACTIVATE_MODAL:
       return {
         ...state,
         modalActive: true,
         buildingNumber: action.buildingNumber,
       };
-    case actionTypes.MODAL_INACTIVE:
+    case actionTypes.DEACTIVATE_MODAL:
       return {
         ...state,
         modalActive: false,

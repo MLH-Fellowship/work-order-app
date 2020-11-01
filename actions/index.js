@@ -4,12 +4,12 @@ const db = firebase.database();
 
 // Modal Actions
 export const activateModal = (buildingNumber) => ({
-    type: actionTypes.MODAL_ACTIVE,
+    type: actionTypes.ACTIVATE_MODAL,
     buildingNumber: buildingNumber
 });
 
 export const deactivateModal = () => ({
-    type: actionTypes.MODAL_INACTIVE
+    type: actionTypes.DEACTIVATE_MODAL
 });
 
 
