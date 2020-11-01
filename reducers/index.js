@@ -1,11 +1,9 @@
 import { combineReducers } from "redux";
 import * as actionTypes from "../actions/types";
 
-// const initialState = {
-//   loading: false,
-//   error: "",
-//   orders: [],
-// };
+const orderState = {
+  orders: [],
+};
 
 const modalState = {
   modalActive: false,
@@ -38,8 +36,20 @@ const modalReducer = (state = modalState, action) => {
   }
 };
 
+const orderReducer = (state = orderState, action) => {
+  switch (action.type) {
+    case actionTypes.GET_ORDERS:
+      return {
+        ...state,
+        orders: action.payload
+      };
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
-  modalReducer
+  modalReducer, orderReducer
 });
 
 export default rootReducer;

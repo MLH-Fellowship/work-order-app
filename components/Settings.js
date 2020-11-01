@@ -2,6 +2,8 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { logoutUser } from "../api/auth-api";
 import Button from "../components/Button";
+import Background from "../components/Background";
+
 
 
 const styles = StyleSheet.create({
@@ -17,9 +19,11 @@ const styles = StyleSheet.create({
 
 const Settings = () => {
   return (
-    <View style={styles.container}>
-    <Button onPress={logoutUser}><Text>Logout</Text></Button>
-    </View>
+    <Background>
+      <Button mode="contained" onPress={logoutUser}>
+        Logout
+      </Button>
+    </Background>
   );
 };
 
