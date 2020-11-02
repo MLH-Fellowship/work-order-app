@@ -8,7 +8,19 @@ const LoginStack = createStackNavigator();
 const LoginPage = () => {
   return (
     <LoginStack.Navigator>
-      <LoginStack.Screen name="Login" component={Login} />
+      <LoginStack.Screen
+        name="Login"
+        component={Login}
+        options={{
+          headerStyle: {
+            backgroundColor: "#f4511e",
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      />
     </LoginStack.Navigator>
   );
 };
