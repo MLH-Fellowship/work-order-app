@@ -11,7 +11,6 @@ import { createStore, applyMiddleware } from "redux";
 import { Provider as StoreProvider } from "react-redux";
 import rootReducer from "./reducers";
 import thunk from "redux-thunk";
-import firebase from './core/config'
 
 //Icons
 //cheatsheet: https://ionicons.com/v4/cheatsheet.html

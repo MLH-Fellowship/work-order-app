@@ -7,7 +7,19 @@ const SettingsStack = createStackNavigator();
 const SettingsPage = () => {
   return (
     <SettingsStack.Navigator>
-      <SettingsStack.Screen name="Settings" component={Settings} />
+      <SettingsStack.Screen
+        name="Settings"
+        component={Settings}
+        options={{
+          headerStyle: {
+            backgroundColor: "#f4511e",
+          },
+          headerTintColor: "#fff",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      />
     </SettingsStack.Navigator>
   );
 };

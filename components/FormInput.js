@@ -4,8 +4,12 @@ import { StyleSheet, View, TextInput } from "react-native";
 const styles = StyleSheet.create({
   input: {
     backgroundColor: 'white',
+    overflow: "hidden",
     width: '80%',
+    height: "10%",
+    marginTop: 10,
     marginBottom: 10,
+    borderRadius: 3
   }
 });
 
