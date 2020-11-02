@@ -24,5 +24,4 @@ export const getOrders = () => (dispatch) => {
 export const addOrders = (order) => (dispatch) => {
   dispatch({ type: actionTypes.ADD_ORDERS });
   db.ref("/orders").push(order);
-  console.log("yEET");
 };

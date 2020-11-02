@@ -5,63 +5,64 @@ import { useDispatch } from "react-redux";
 import { addOrders } from "../actions/index";
 import FormButton from "./FormButton";
 import FormInput from "./FormInput";
+import { deactivateModal } from "../actions/index";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+
     width: "100%",
-    backgroundColor: "#fff",
     backgroundColor: "#2BD1FB",
     justifyContent: "center",
     alignItems: "center",
   },
 });
 
-const CreateOrder = () => {
+const CreateOrder = (buildingNumber) => {
   const dispatch = useDispatch();
 
   return (
     <Formik
       initialValues={{
         name: "",
-        building: "",
+        building: buildingNumber.buildingNumber,
         room: "",
         problem: "",
         description: "",
       }}
       onSubmit={(values) => {
         console.log(values);
-        addOrders(values, dispatch);
+        addOrders(values)(dispatch);
+        dispatch(deactivateModal())
       }}
     >
       {({ handleChange, handleBlur, handleSubmit, values }) => (
         <View style={styles.container}>
           <FormInput
-            placeholder="Personnel Name"
+            placeholder=" Personnel Name"
             onChangeText={handleChange("name")}
             onBlur={handleBlur("name")}
             value={values.name}
           />
-          <FormInput
+          {/* <FormInput
             placeholder="Building #"
             onChangeText={handleChange("building")}
             onBlur={handleBlur("building")}
             value={values.building}
-          />
+          /> */}
           <FormInput
-            placeholder="Room #"
+            placeholder=" Room #"
             onChangeText={handleChange("room")}
             onBlur={handleBlur("room")}
             value={values.room}
           />
           <FormInput
-            placeholder="Problem"
+            placeholder=" Problem"
             onChangeText={handleChange("problem")}
             onBlur={handleBlur("problem")}
             value={values.problem}
           />
           <FormInput
-            placeholder="Description"
+            placeholder=" Description"
             multiline={true}
             numberOfLines={2}
             onChangeText={handleChange("description")}
