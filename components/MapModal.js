@@ -19,10 +19,6 @@ const MapModal = () => {
   const modalState = useSelector((state) => state.modalReducer);
   const dispatch = useDispatch();
 
-  const removeModal = () => {
-    dispatch(deactivateModal());
-  };
-
   console.log(modalState);
 
   return (
@@ -30,7 +26,10 @@ const MapModal = () => {
       <View style={styles.modalView}>
         <Text>{`Building ${modalState.buildingNumber}`}</Text>
         <CreateOrder></CreateOrder>
-        <Button title="Hide modal" onPress={() => removeModal()} />
+        <Button
+          title="Hide modal"
+          onPress={() => dispatch(deactivateModal())}
+        />
       </View>
     </Modal>
   );

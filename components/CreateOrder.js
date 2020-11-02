@@ -1,6 +1,8 @@
 import { Formik } from "formik";
-import React, { useState } from "react";
-import { StyleSheet, View, Text, TextInput } from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { useDispatch } from "react-redux";
+import { addOrders } from "../actions/index";
 import FormButton from "./FormButton";
 import FormInput from "./FormInput";
 
@@ -16,6 +18,8 @@ const styles = StyleSheet.create({
 });
 
 const CreateOrder = () => {
+  const dispatch = useDispatch();
+
   return (
     <Formik
       initialValues={{
@@ -25,7 +29,10 @@ const CreateOrder = () => {
         problem: "",
         description: "",
       }}
-      onSubmit={(values) => {console.log(values)}}
+      onSubmit={(values) => {
+        console.log(values);
+        addOrders(values, dispatch);
+      }}
     >
       {({ handleChange, handleBlur, handleSubmit, values }) => (
         <View style={styles.container}>
