@@ -3,6 +3,7 @@ import * as actionTypes from "../actions/types";
 
 const orderState = {
   orders: [],
+  userOrders: []
 };
 
 const modalState = {
@@ -42,6 +43,11 @@ const orderReducer = (state = orderState, action) => {
       return {
         ...state,
         orders: action.payload
+      };
+    case actionTypes.GET_USER_ORDERS:
+      return {
+        ...state,
+        userOrders: action.payload
       };
     default:
       return state;

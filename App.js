@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, Text, View } from "react-native";
 import LoginPage from "./pages/LoginPage";
 import MapPage from "./pages/MapPage";
 import DashboardPage from "./pages/DashboardPage";
 import SettingsPage from "./pages/SettingsPage";
-import AuthLoadingScreen from './components/AuthLoadingScreen'
+import firebase from './core/config'
 
 // Redux
 import { createStore, applyMiddleware } from "redux";
@@ -26,19 +26,30 @@ export default function App() {
   const middleware = [thunk];
   const store = createStore(rootReducer, applyMiddleware(...middleware));
 
+  const [user, setUser] = useState()
+
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      setUser(user)
+    } else {
+      setUser(user)
+    }
+  });
+
+  // console.log("USER",user)
+
   return (
     <StoreProvider store={store}>
+
+      {user ?
       <NavigationContainer>
         <Tab.Navigator
-        initialRouteName='AuthLoadingScreen'
+        initialRouteName='Map'
           screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, color, size }) => {
               let iconName;
 
               switch (route.name) {
-                case "Login":
-                  iconName = "ios-contact";
-                  break;
                 case "Map":
                   iconName = "ios-map";
                   break;
@@ -62,13 +73,40 @@ export default function App() {
             inactiveTintColor: "gray",
           }}
         >
-          <Tab.Screen name="AuthLoadingScreen" component={AuthLoadingScreen} />
-          <Tab.Screen name="Login" component={LoginPage} />
           <Tab.Screen name="Map" component={MapPage} />
           <Tab.Screen name="Dashboard" component={DashboardPage} />
           <Tab.Screen name="Settings" component={SettingsPage} />
         </Tab.Navigator>
-      </NavigationContainer>
+      </NavigationContainer> :
+       <NavigationContainer>
+       <Tab.Navigator
+       initialRouteName='Login'
+         screenOptions={({ route }) => ({
+           tabBarIcon: ({ focused, color, size }) => {
+             let iconName;
+
+             switch (route.name) {
+               case "Login":
+                 iconName = "ios-contact";
+                 break;
+               default:
+                 break;
+             }
+
+             // You can return any component that you like here!
+             return <Icon name={iconName} size={size} color={color} />;
+           },
+         })}
+         tabBarOptions={{
+           activeTintColor: "tomato",
+           inactiveTintColor: "gray",
+         }}
+       >
+         <Tab.Screen name="Login" component={LoginPage} />
+       </Tab.Navigator>
+     </NavigationContainer>
+
+    }
     </StoreProvider>
   );
 }
