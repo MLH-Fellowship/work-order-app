@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { getOrders } from '../actions'
+import { getUserOrders } from '../actions'
 import Button from './Button'
 
 
@@ -26,6 +26,9 @@ const Dashboard = () => {
     <View style={styles.container}>
       <Button mode="contained" onPress={() => dispatch(getOrders())}>
           Get Orders
+      </Button>
+      <Button mode="contained" onPress={() => dispatch(getUserOrders('testuser'))}>
+          Get User Orders
       </Button>
     </View>
   );

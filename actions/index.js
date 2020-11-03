@@ -21,6 +21,14 @@ export const getOrders = () => (dispatch) => {
   });
 };
 
+export const getUserOrders = (user) => (dispatch) => {
+  db.ref("/orders").on("value", (snap) => {
+    let data = snap.val() ? snap.val() : {};
+    let orders = Object.values(data);
+    dispatch({ type: actionTypes.GET_USER_ORDERS, payload: orders.filter(order => order.user == user) });
+  });
+};
+
 export const addOrders = (order) => (dispatch) => {
   dispatch({ type: actionTypes.ADD_ORDERS });
   db.ref("/orders").push(order);
