@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import LoginPage from "./pages/LoginPage";
 import MapPage from "./pages/MapPage";
 import DashboardPage from "./pages/DashboardPage";
 import SettingsPage from "./pages/SettingsPage";
-import firebase from './core/config'
+import firebase from "./core/config";
 
 // Redux
 import { createStore, applyMiddleware } from "redux";
@@ -26,13 +26,13 @@ export default function App() {
   const middleware = [thunk];
   const store = createStore(rootReducer, applyMiddleware(...middleware));
 
-  const [user, setUser] = useState()
+  const [user, setUser] = useState();
 
-  firebase.auth().onAuthStateChanged(user => {
+  firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      setUser(user)
+      setUser(user);
     } else {
-      setUser(user)
+      setUser(user);
     }
   });
 
@@ -40,72 +40,57 @@ export default function App() {
 
   return (
     <StoreProvider store={store}>
+      {user ? (
+        <NavigationContainer>
+          <Tab.Navigator
+            initialRouteName="Map"
+            screenOptions={({ route }) => ({
+              tabBarIcon: ({ focused, color, size }) => {
+                let iconName;
 
-      {user ?
-      <NavigationContainer>
-        <Tab.Navigator
-        initialRouteName='Map'
-          screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused, color, size }) => {
-              let iconName;
+                switch (route.name) {
+                  case "Map":
+                    iconName = "ios-map";
+                    break;
+                  case "Dashboard":
+                    iconName = "md-list";
+                    break;
+                  case "Settings":
+                    iconName = "md-settings";
+                    break;
 
-              switch (route.name) {
-                case "Map":
-                  iconName = "ios-map";
-                  break;
-                case "Dashboard":
-                  iconName = "md-list";
-                  break;
-                case "Settings":
-                  iconName = "md-settings";
-                  break;
+                  default:
+                    break;
+                }
 
-                default:
-                  break;
-              }
-
-              // You can return any component that you like here!
-              return <Icon name={iconName} size={size} color={color} />;
-            },
-          })}
-          tabBarOptions={{
-            activeTintColor: "#f0c40f",
-            inactiveTintColor: "white",
-            style: {
-              backgroundColor: 'black'
-            }
-          }}
-        >
-          <Tab.Screen name="Map" component={MapPage} />
-          <Tab.Screen name="Dashboard" component={DashboardPage} />
-          <Tab.Screen name="Settings" component={SettingsPage} />
-        </Tab.Navigator>
-      </NavigationContainer> :
-       <NavigationContainer>
-       <Tab.Navigator
-       initialRouteName='Login'
-         screenOptions={({ route }) => ({
-           tabBarIcon: ({ focused, color, size }) => {
-             let iconName;
-
-             switch (route.name) {
-               case "Login":
-                 iconName = "ios-contact";
-                 break;
-               default:
-                 break;
-             }
-
-             // You can return any component that you like here!
-             return <Icon name={iconName} size={size} color={color} />;
-           },
-         })}
-       >
-         <Tab.Screen name="Login" component={LoginPage} />
-       </Tab.Navigator>
-     </NavigationContainer>
-
-    }
+                // You can return any component that you like here!
+                return <Icon name={iconName} size={size} color={color} />;
+              },
+            })}
+            tabBarOptions={{
+              activeTintColor: "#f0c40f",
+              inactiveTintColor: "white",
+              style: {
+                backgroundColor: "black",
+              },
+            }}
+          >
+            <Tab.Screen name="Map" component={MapPage} />
+            <Tab.Screen name="Dashboard" component={DashboardPage} />
+            <Tab.Screen name="Settings" component={SettingsPage} />
+          </Tab.Navigator>
+        </NavigationContainer>
+      ) : (
+        <NavigationContainer>
+          <Tab.Navigator initialRouteName="Login">
+            <Tab.Screen
+              name="Login"
+              component={LoginPage}
+              options={{ tabBarVisible: false }}
+            />
+          </Tab.Navigator>
+        </NavigationContainer>
+      )}
     </StoreProvider>
   );
 }
