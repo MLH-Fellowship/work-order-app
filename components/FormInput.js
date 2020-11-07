@@ -3,14 +3,14 @@ import { StyleSheet, View, TextInput } from "react-native";
 
 const styles = StyleSheet.create({
   input: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     overflow: "hidden",
-    width: '80%',
+    width: "80%",
     height: "10%",
     marginTop: 10,
     marginBottom: 10,
-    borderRadius: 3
-  }
+    borderRadius: 3,
+  },
 });
 
 const FormInput = (props) => {

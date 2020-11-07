@@ -4,8 +4,6 @@ import { logoutUser } from "../api/auth-api";
 import Button from "../components/Button";
 import Background from "../components/Background";
 
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,

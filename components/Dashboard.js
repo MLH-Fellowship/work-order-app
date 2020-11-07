@@ -3,16 +3,13 @@ import { StyleSheet, View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserOrders } from '../actions'
 import Button from './Button'
+import { theme } from "../core/theme";
 
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    backgroundColor: "#2BD1FB",
-  },
-  map: {
-    flex: 1,
+    backgroundColor: theme.colors.background,
   },
 });
 

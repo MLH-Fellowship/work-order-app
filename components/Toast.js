@@ -12,7 +12,7 @@ const Toast = ({ type = "error", message, onDismiss }) => (
       onDismiss={onDismiss}
       style={{
         backgroundColor:
-          type === "error" ? theme.colors.error : theme.colors.success
+          type === "error" ? theme.colors.error : theme.colors.success,
       }}
     >
       <Text style={styles.content}>{message}</Text>
@@ -24,11 +24,11 @@ const styles = StyleSheet.create({
   container: {
     position: "absolute",
     top: 80 + getStatusBarHeight(),
-    width: "100%"
+    width: "100%",
   },
   content: {
-    fontWeight: "500"
-  }
+    fontWeight: "500",
+  },
 });
 
 export default memo(Toast);

@@ -7,8 +7,9 @@ export const theme = {
     primary: "#241c24",
     secondary: "#f8c024",
     accent: "white",
-    background: "grey",
+    background: "#3c343c",
     error: "#f13a59",
-    success: "#00B386"
+    success: "#00B386",
+    text: "white"
   }
 };

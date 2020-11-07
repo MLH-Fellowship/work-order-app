@@ -4,7 +4,7 @@ import Modal from "react-native-modal";
 import { useSelector, useDispatch } from "react-redux";
 import { deactivateModal } from "../actions/index";
 import CreateOrder from "./CreateOrder";
-import {theme} from "../core/theme";
+import { theme } from "../core/theme";
 
 const styles = StyleSheet.create({
   modalView: {
@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-  }
+    color: theme.colors.text,
+  },
 });
 
 const MapModal = () => {
@@ -32,7 +33,9 @@ const MapModal = () => {
       onSwipeComplete={() => dispatch(deactivateModal())}
     >
       <View style={styles.modalView}>
-        <Text>{`Building ${modalState.buildingNumber}`}</Text>
+        <Text
+          style={styles.text}
+        >{`Building ${modalState.buildingNumber}`}</Text>
         <CreateOrder buildingNumber={modalState.buildingNumber} />
       </View>
     </Modal>

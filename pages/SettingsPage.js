@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Settings from "../components/Settings";
-import {theme} from "../core/theme";
+import { theme } from "../core/theme";
 
 const SettingsStack = createStackNavigator();
 
@@ -14,6 +14,9 @@ const SettingsPage = () => {
         options={{
           headerStyle: {
             backgroundColor: theme.colors.primary,
+            elevation: 0,
+            shadowOpacity: 0,
+            borderBottomWidth: 0,
           },
           headerTintColor: theme.colors.accent,
           headerTitleStyle: {

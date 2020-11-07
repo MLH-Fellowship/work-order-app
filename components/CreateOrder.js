@@ -6,12 +6,13 @@ import { addOrders } from "../actions/index";
 import FormButton from "./FormButton";
 import FormInput from "./FormInput";
 import { deactivateModal } from "../actions/index";
+import {theme} from "../core/theme";
 
 const styles = StyleSheet.create({
   container: {
 
     width: "100%",
-    backgroundColor: "grey",
+    backgroundColor: theme.colors.background,
     justifyContent: "center",
     alignItems: "center",
   },

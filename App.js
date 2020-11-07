@@ -7,7 +7,7 @@ import SettingsPage from "./pages/SettingsPage";
 import firebase from "./core/config";
 
 // Theme
-import {theme} from "./core/theme";
+import { theme } from "./core/theme";
 
 // Redux
 import { createStore, applyMiddleware } from "redux";
@@ -76,6 +76,7 @@ export default function App() {
               inactiveTintColor: theme.colors.accent,
               style: {
                 backgroundColor: theme.colors.primary,
+                borderTopWidth: 0,
               },
             }}
           >
