@@ -15,6 +15,9 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     height: "80%",
   },
+  text: {
+    fontSize: 20,
+  }
 });
 
 const MapModal = () => {
@@ -29,7 +32,7 @@ const MapModal = () => {
       onSwipeComplete={() => dispatch(deactivateModal())}
     >
       <View style={styles.modalView}>
-        {/* <Text>{`Building ${modalState.buildingNumber}`}</Text> */}
+        <Text>{`Building ${modalState.buildingNumber}`}</Text>
         <CreateOrder buildingNumber={modalState.buildingNumber} />
       </View>
     </Modal>

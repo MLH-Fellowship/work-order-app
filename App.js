@@ -6,6 +6,9 @@ import DashboardPage from "./pages/DashboardPage";
 import SettingsPage from "./pages/SettingsPage";
 import firebase from "./core/config";
 
+// Theme
+import {theme} from "./core/theme";
+
 // Redux
 import { createStore, applyMiddleware } from "redux";
 import { Provider as StoreProvider } from "react-redux";
@@ -19,6 +22,7 @@ import Icon from "react-native-vector-icons/Ionicons";
 // Navigation
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { ThemeColors } from "react-navigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -68,10 +72,10 @@ export default function App() {
               },
             })}
             tabBarOptions={{
-              activeTintColor: "#f0c40f",
-              inactiveTintColor: "white",
+              activeTintColor: theme.colors.secondary,
+              inactiveTintColor: theme.colors.accent,
               style: {
-                backgroundColor: "black",
+                backgroundColor: theme.colors.primary,
               },
             }}
           >
