@@ -1,6 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Dashboard from "../components/Dashboard";
+import {theme} from "../core/theme";
 
 const DashboardStack = createStackNavigator();
 
@@ -12,9 +13,9 @@ const DashboardPage = () => {
         component={Dashboard}
         options={{
           headerStyle: {
-            backgroundColor: "#f4511e",
+            backgroundColor: theme.colors.primary,
           },
-          headerTintColor: "#fff",
+          headerTintColor: theme.colors.accent,
           headerTitleStyle: {
             fontWeight: "bold",
           },

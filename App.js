@@ -69,8 +69,11 @@ export default function App() {
             },
           })}
           tabBarOptions={{
-            activeTintColor: "tomato",
-            inactiveTintColor: "gray",
+            activeTintColor: "#f0c40f",
+            inactiveTintColor: "white",
+            style: {
+              backgroundColor: 'black'
+            }
           }}
         >
           <Tab.Screen name="Map" component={MapPage} />
@@ -97,10 +100,6 @@ export default function App() {
              return <Icon name={iconName} size={size} color={color} />;
            },
          })}
-         tabBarOptions={{
-           activeTintColor: "tomato",
-           inactiveTintColor: "gray",
-         }}
        >
          <Tab.Screen name="Login" component={LoginPage} />
        </Tab.Navigator>

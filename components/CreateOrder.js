@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   container: {
 
     width: "100%",
-    backgroundColor: "#2BD1FB",
+    backgroundColor: "grey",
     justifyContent: "center",
     alignItems: "center",
   },
