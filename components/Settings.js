@@ -1,23 +1,17 @@
 import React from "react";
 import {
   Container,
-  Header,
   Content,
-  List,
   ListItem,
   Text,
   Left,
   Right,
   Icon,
   Separator,
-  Body,
-  Thumbnail,
 } from "native-base";
 import { theme } from "../core/theme";
 import { StyleSheet, View } from "react-native";
 import { logoutUser } from "../api/auth-api";
-// import Button from "../components/Button";
-import Background from "../components/Background";
 
 const styles = StyleSheet.create({
   container: {
@@ -55,7 +49,7 @@ const Settings = () => {
               <Icon name="arrow-forward" />
             </Right>
           </ListItem>
-          <ListItem>
+          <ListItem onPress={logoutUser}>
             <Left>
               <Text>Sign Out</Text>
             </Left>
