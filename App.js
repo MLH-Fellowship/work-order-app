@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, StatusBar } from "react-native";
 import LoginPage from "./pages/LoginPage";
 import MapPage from "./pages/MapPage";
 import DashboardPage from "./pages/DashboardPage";
@@ -46,6 +46,10 @@ export default function App() {
     <StoreProvider store={store}>
       {user ? (
         <NavigationContainer>
+          <StatusBar
+            backgroundColor={theme.colors.primary}
+            barStyle="light-content"
+          />
           <Tab.Navigator
             initialRouteName="Map"
             screenOptions={({ route }) => ({
@@ -87,6 +91,10 @@ export default function App() {
         </NavigationContainer>
       ) : (
         <NavigationContainer>
+          <StatusBar
+            backgroundColor={theme.colors.primary}
+            barStyle="light-content"
+          />
           <Tab.Navigator initialRouteName="Login">
             <Tab.Screen
               name="Login"
