@@ -5,9 +5,9 @@ import { theme } from "../core/theme";
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 5,
-    paddingBottom: 5,
-    paddingHorizontal: 5,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingHorizontal: 15,
   },
   card: {
     shadowColor: "#000",
