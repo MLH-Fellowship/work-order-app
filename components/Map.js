@@ -29,6 +29,7 @@ const Map = () => {
   return (
     <View style={styles.container}>
       <MapView
+        moveOnMarkerPress={false}
         style={styles.map}
         initialRegion={{
           latitude: 32.340773,

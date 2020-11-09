@@ -2,10 +2,12 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Dashboard from "../components/Dashboard";
 import { theme } from "../core/theme";
+import { useSelector, useDispatch } from "react-redux";
 
 const DashboardStack = createStackNavigator();
 
 const DashboardPage = () => {
+  const dispatch = useDispatch();
   return (
     <DashboardStack.Navigator>
       <DashboardStack.Screen

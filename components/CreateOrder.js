@@ -24,7 +24,7 @@ const CreateOrder = (buildingNumber) => {
   return (
     <Formik
       initialValues={{
-        name: "",
+        user: "testuser",
         building: buildingNumber.buildingNumber,
         room: "",
         problem: "",
@@ -38,18 +38,6 @@ const CreateOrder = (buildingNumber) => {
     >
       {({ handleChange, handleBlur, handleSubmit, values }) => (
         <View style={styles.container}>
-          <FormInput
-            placeholder=" Personnel Name"
-            onChangeText={handleChange("name")}
-            onBlur={handleBlur("name")}
-            value={values.name}
-          />
-          {/* <FormInput
-            placeholder="Building #"
-            onChangeText={handleChange("building")}
-            onBlur={handleBlur("building")}
-            value={values.building}
-          /> */}
           <FormInput
             placeholder=" Room #"
             onChangeText={handleChange("room")}

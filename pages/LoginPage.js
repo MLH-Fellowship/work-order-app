@@ -22,6 +22,7 @@ const LoginPage = () => {
           headerTitleStyle: {
             fontWeight: "bold",
           },
+          
         }}
       />
     </LoginStack.Navigator>
