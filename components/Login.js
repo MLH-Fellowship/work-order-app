@@ -46,7 +46,7 @@ const LoginScreen = ({ navigation }) => {
     <Background>
       <Logo />
 
-      <Header>Welcome back.</Header>
+      {/* <Header>Welcome back.</Header> */}
 
       <TextInput
         label="Email"
