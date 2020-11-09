@@ -5,7 +5,13 @@ import buildingData from "../buildings.json";
 import MapModal from "./MapModal";
 import { useSelector, useDispatch } from "react-redux";
 import { activateModal } from "../actions/index";
-import Building from "./Building";
+import Building from "./MapMarkers/Building";
+import Barracks from "./MapMarkers/Barracks";
+import CarShop from "./MapMarkers/CarShop";
+import Gym from "./MapMarkers/Gym";
+import Medical from "./MapMarkers/Medical";
+import Office from "./MapMarkers/Office";
+import Dining from "./MapMarkers/Dining";
 
 const styles = StyleSheet.create({
   container: {
@@ -56,6 +62,7 @@ const Map = () => {
               onPress={() => dispatch(activateModal(marker.number))}
               tracksViewChanges={trackViewChanges}
             >
+              {marker.purpose === 'Office' ? <Office onLoad={stopTrackingViewChanges} fadeDuration={0} /> : marker.purpose === 'Barracks' ? <Barracks onLoad={stopTrackingViewChanges} fadeDuration={0} /> : marker.purpose === 'Gym' ? <Gym onLoad={stopTrackingViewChanges} fadeDuration={0} /> : marker.purpose === 'Medical' ? <Medical onLoad={stopTrackingViewChanges} fadeDuration={0} /> : marker.purpose === 'Dining Facility' ? <Dining onLoad={stopTrackingViewChanges} fadeDuration={0} /> : marker.purpose === 'Car Shop' ? <CarShop onLoad={stopTrackingViewChanges} fadeDuration={0} /> : <Building onLoad={stopTrackingViewChanges} fadeDuration={0} />}
               <Building onLoad={stopTrackingViewChanges} fadeDuration={0} />
             </Marker>
           </View>
