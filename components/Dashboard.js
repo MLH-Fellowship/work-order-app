@@ -1,35 +1,37 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
+import * as React from "react";
+import { StyleSheet, View, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserOrders } from '../actions'
-import Button from './Button'
-
+import { getUserOrders } from "../actions";
+import Button from "./Button";
+import { theme } from "../core/theme";
+import DashboardTile from "./DashboardTile";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    backgroundColor: "#2BD1FB",
-  },
-  map: {
-    flex: 1,
+    backgroundColor: theme.colors.background,
   },
 });
 
-const Dashboard = () => {
+const Dashboard = ({ navigation }) => {
   const orderState = useSelector((state) => state.orderReducer);
   const dispatch = useDispatch();
 
-  console.log('ORDER STATE', orderState)
+  React.useEffect(
+    () =>
+      navigation.addListener("focus", () =>
+        dispatch(getUserOrders("testuser"))
+      ),
+    []
+  );
 
   return (
     <View style={styles.container}>
-      <Button mode="contained" onPress={() => dispatch(getOrders())}>
-          Get Orders
-      </Button>
-      <Button mode="contained" onPress={() => dispatch(getUserOrders('testuser'))}>
-          Get User Orders
-      </Button>
+      <FlatList
+        data={orderState.userOrders}
+        renderItem={({ item }) => <DashboardTile item={item} />}
+        keyExtractor={(item, index) => index.toString()}
+      ></FlatList>
     </View>
   );
 };

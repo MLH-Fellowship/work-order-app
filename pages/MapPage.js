@@ -1,6 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Map from "../components/Map";
+import { theme } from "../core/theme";
 
 const MapStack = createStackNavigator();
 
@@ -12,9 +13,12 @@ const MapPage = () => {
         component={Map}
         options={{
           headerStyle: {
-            backgroundColor: "#f4511e",
+            backgroundColor: theme.colors.primary,
+            elevation: 0,
+            shadowOpacity: 0,
+            borderBottomWidth: 0,
           },
-          headerTintColor: "#fff",
+          headerTintColor: theme.colors.accent,
           headerTitleStyle: {
             fontWeight: "bold",
           },

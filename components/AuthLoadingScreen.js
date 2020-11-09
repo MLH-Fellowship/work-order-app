@@ -5,7 +5,7 @@ import Background from "../components/Background";
 import { theme } from "../core/theme";
 
 const AuthLoadingScreen = ({ navigation }) => {
-  firebase.auth().onAuthStateChanged(user => {
+  firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       // User is logged in
       navigation.navigate("Map");

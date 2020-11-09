@@ -32,7 +32,7 @@ const LoginScreen = ({ navigation }) => {
 
     const response = await loginUser({
       email: email.value,
-      password: password.value
+      password: password.value,
     });
 
     if (response.error) {
@@ -44,16 +44,15 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <Background>
-
       <Logo />
 
-      <Header>Welcome back.</Header>
+      {/* <Header>Welcome back.</Header> */}
 
       <TextInput
         label="Email"
         returnKeyType="next"
         value={email.value}
-        onChangeText={text => setEmail({ value: text, error: "" })}
+        onChangeText={(text) => setEmail({ value: text, error: "" })}
         error={!!email.error}
         errorText={email.error}
         autoCapitalize="none"
@@ -66,7 +65,7 @@ const LoginScreen = ({ navigation }) => {
         label="Password"
         returnKeyType="done"
         value={password.value}
-        onChangeText={text => setPassword({ value: text, error: "" })}
+        onChangeText={(text) => setPassword({ value: text, error: "" })}
         error={!!password.error}
         errorText={password.error}
         secureTextEntry
@@ -85,15 +84,15 @@ const LoginScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
-    marginTop: 4
+    marginTop: 4,
   },
   label: {
-    color: theme.colors.secondary
+    color: theme.colors.secondary,
   },
   link: {
     fontWeight: "bold",
-    color: theme.colors.primary
-  }
+    color: theme.colors.primary,
+  },
 });
 
 export default memo(LoginScreen);

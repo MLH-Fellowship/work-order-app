@@ -16,17 +16,9 @@ import Dining from "./MapMarkers/Dining";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
   },
   map: {
     flex: 1,
-  },
-  modalView: {
-    marginTop: "10%",
-    flex: 1,
-    backgroundColor: "white",
-    justifyContent: "center",
-    alignItems: "center",
   },
 });
 
@@ -43,6 +35,7 @@ const Map = () => {
   return (
     <View style={styles.container}>
       <MapView
+        moveOnMarkerPress={false}
         style={styles.map}
         initialRegion={{
           latitude: 32.340773,

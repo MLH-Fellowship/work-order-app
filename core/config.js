@@ -8,9 +8,8 @@ var firebaseConfig = {
   projectId: "workorder-f57f0",
   storageBucket: "workorder-f57f0.appspot.com",
   messagingSenderId: "486097764365",
-  appId: "1:486097764365:web:4d3fb2f2ef188a52139544"
+  appId: "1:486097764365:web:4d3fb2f2ef188a52139544",
 };
-
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);

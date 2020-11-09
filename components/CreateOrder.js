@@ -6,12 +6,13 @@ import { addOrders } from "../actions/index";
 import FormButton from "./FormButton";
 import FormInput from "./FormInput";
 import { deactivateModal } from "../actions/index";
+import {theme} from "../core/theme";
 
 const styles = StyleSheet.create({
   container: {
 
     width: "100%",
-    backgroundColor: "#2BD1FB",
+    backgroundColor: theme.colors.background,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -23,7 +24,7 @@ const CreateOrder = (buildingNumber) => {
   return (
     <Formik
       initialValues={{
-        name: "",
+        user: "testuser",
         building: buildingNumber.buildingNumber,
         room: "",
         problem: "",
@@ -37,18 +38,6 @@ const CreateOrder = (buildingNumber) => {
     >
       {({ handleChange, handleBlur, handleSubmit, values }) => (
         <View style={styles.container}>
-          <FormInput
-            placeholder=" Personnel Name"
-            onChangeText={handleChange("name")}
-            onBlur={handleBlur("name")}
-            value={values.name}
-          />
-          {/* <FormInput
-            placeholder="Building #"
-            onChangeText={handleChange("building")}
-            onBlur={handleBlur("building")}
-            value={values.building}
-          /> */}
           <FormInput
             placeholder=" Room #"
             onChangeText={handleChange("room")}
