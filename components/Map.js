@@ -56,7 +56,7 @@ const Map = () => {
               tracksViewChanges={trackViewChanges}
             >
               {marker.purpose === 'Office' ? <Office onLoad={stopTrackingViewChanges} fadeDuration={0} /> : marker.purpose === 'Barracks' ? <Barracks onLoad={stopTrackingViewChanges} fadeDuration={0} /> : marker.purpose === 'Gym' ? <Gym onLoad={stopTrackingViewChanges} fadeDuration={0} /> : marker.purpose === 'Medical' ? <Medical onLoad={stopTrackingViewChanges} fadeDuration={0} /> : marker.purpose === 'Dining Facility' ? <Dining onLoad={stopTrackingViewChanges} fadeDuration={0} /> : marker.purpose === 'Car Shop' ? <CarShop onLoad={stopTrackingViewChanges} fadeDuration={0} /> : <Building onLoad={stopTrackingViewChanges} fadeDuration={0} />}
-              <Building onLoad={stopTrackingViewChanges} fadeDuration={0} />
+              {/* <Building onLoad={stopTrackingViewChanges} fadeDuration={0} /> */}
             </Marker>
           </View>
         ))}
