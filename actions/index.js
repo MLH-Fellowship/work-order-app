@@ -3,9 +3,10 @@ import firebase from "../core/config";
 const db = firebase.database();
 
 // Modal Actions
-export const activateModal = (buildingNumber) => ({
+export const activateModal = (building) => ({
   type: actionTypes.ACTIVATE_MODAL,
-  buildingNumber: buildingNumber,
+  buildingNumber: building.number,
+  buildingName: building.name
 });
 
 export const deactivateModal = () => ({

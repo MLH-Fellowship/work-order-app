@@ -33,9 +33,11 @@ const MapModal = () => {
       onSwipeComplete={() => dispatch(deactivateModal())}
     >
       <View style={styles.modalView}>
-        <Text
-          style={styles.text}
-        >{`Building ${modalState.buildingNumber}`}</Text>
+        <Text style={styles.text}>
+          {modalState.buildingName != "undefined"
+            ? modalState.buildingName
+            : `Building ${modalState.buildingNumber}`}
+        </Text>
         <CreateOrder buildingNumber={modalState.buildingNumber} />
       </View>
     </Modal>

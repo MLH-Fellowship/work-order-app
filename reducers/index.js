@@ -3,12 +3,13 @@ import * as actionTypes from "../actions/types";
 
 const orderState = {
   orders: [],
-  userOrders: []
+  userOrders: [],
 };
 
 const modalState = {
   modalActive: false,
-  buildingNumber: null
+  buildingNumber: null,
+  buildingName: null,
 };
 
 // const initialReducer = (state = initialState, action) => {
@@ -25,12 +26,14 @@ const modalReducer = (state = modalState, action) => {
         ...state,
         modalActive: true,
         buildingNumber: action.buildingNumber,
+        buildingName: action.buildingName,
       };
     case actionTypes.DEACTIVATE_MODAL:
       return {
         ...state,
         modalActive: false,
-        buildingNumber: null
+        buildingNumber: null,
+        buildingName: null,
       };
     default:
       return state;
@@ -42,12 +45,12 @@ const orderReducer = (state = orderState, action) => {
     case actionTypes.GET_ORDERS:
       return {
         ...state,
-        orders: action.payload
+        orders: action.payload,
       };
     case actionTypes.GET_USER_ORDERS:
       return {
         ...state,
-        userOrders: action.payload
+        userOrders: action.payload,
       };
     default:
       return state;
@@ -55,7 +58,8 @@ const orderReducer = (state = orderState, action) => {
 };
 
 const rootReducer = combineReducers({
-  modalReducer, orderReducer
+  modalReducer,
+  orderReducer,
 });
 
 export default rootReducer;
