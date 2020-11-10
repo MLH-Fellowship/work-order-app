@@ -33,8 +33,8 @@ const MapPage = () => {
           headerTitleStyle: {
             fontWeight: "bold",
           },
-          headerLeft: () => (
-            <Icon.Button name="bars" backgroundColor={theme.colors.primary} size={30} style={styles.button}>
+          headerRight: () => (
+            <Icon.Button name="search" backgroundColor={theme.colors.primary} size={25} style={styles.button} onPress={() => console.log("yeet")}>
             </Icon.Button>
           ),
         }}

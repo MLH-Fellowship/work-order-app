@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { deactivateModal } from "../actions/index";
 import CreateOrder from "./CreateOrder";
 import { theme } from "../core/theme";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const styles = StyleSheet.create({
   modalView: {
@@ -19,6 +20,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: theme.colors.text,
   },
+  closeButton: {
+    alignSelf: 'flex-end',
+    right: 0,
+    top: 0,
+  },
 });
 
 const MapModal = () => {
@@ -32,7 +38,15 @@ const MapModal = () => {
       swipeDirection="down"
       onSwipeComplete={() => dispatch(deactivateModal())}
     >
+      
       <View style={styles.modalView}>
+        {/* <Icon.Button
+          name="bars"
+          backgroundColor={theme.colors.primary}
+          size={30}
+          style={styles.closeButton}
+          onPress={() => console.log("yeet")}
+        ></Icon.Button> */}
         <Text style={styles.text}>
           {modalState.buildingName == null
             ? `Building ${modalState.buildingNumber}`
