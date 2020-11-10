@@ -3,10 +3,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Map from "../components/Map";
 import { theme } from "../core/theme";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { Button, Text, StyleSheet} from "react-native";
+import { Button, Text, StyleSheet } from "react-native";
+import Search from "../components/Search";
 
 const MapStack = createStackNavigator();
-
 
 const styles = StyleSheet.create({
   headerStyle: {
@@ -14,7 +14,6 @@ const styles = StyleSheet.create({
     elevation: 0,
     shadowOpacity: 0,
     borderBottomWidth: 0,
-
   },
   button: {
     paddingLeft: 20,
@@ -27,16 +26,32 @@ const MapPage = () => {
       <MapStack.Screen
         name="Map"
         component={Map}
-        options={{
+        options={({ navigation }) => ({
           headerStyle: styles.headerStyle,
           headerTintColor: theme.colors.accent,
           headerTitleStyle: {
             fontWeight: "bold",
           },
           headerRight: () => (
-            <Icon.Button name="search" backgroundColor={theme.colors.primary} size={25} style={styles.button} onPress={() => console.log("yeet")}>
-            </Icon.Button>
+            <Icon.Button
+              name="search"
+              backgroundColor={theme.colors.primary}
+              size={25}
+              style={styles.button}
+              onPress={() => navigation.navigate("Search")}
+            ></Icon.Button>
           ),
+        })}
+      />
+      <MapStack.Screen
+        name="Search"
+        component={Search}
+        options={{
+          headerStyle: styles.headerStyle,
+          headerTintColor: theme.colors.accent,
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
         }}
       />
     </MapStack.Navigator>
