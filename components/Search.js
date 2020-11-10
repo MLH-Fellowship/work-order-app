@@ -10,8 +10,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.background,
   },
-  searchbar:{
-    margin: "2%"
+  searchbar: {
+    margin: "2%",
   },
 });
 
@@ -31,9 +31,7 @@ const Search = () => {
         data={buildingData.buildings}
         renderItem={({ item }) => <SearchTile item={item}></SearchTile>}
         keyExtractor={(item, index) => index.toString()}
-      >
-      
-      </FlatList>
+      />
     </View>
   );
 };

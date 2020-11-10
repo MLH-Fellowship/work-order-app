@@ -35,7 +35,10 @@ const SearchTile = ({ item }) => (
   <View style={styles.container}>
     <Card style={styles.card}>
       <Card.Title
-        title={`Building ${item.number}`}
+        // title={`Building ${item.number}`}
+        title={item.name == null
+          ? `Building ${item.number}`
+          : item.name}
         titleStyle={styles.cardText}
         subtitleStyle={styles.cardText}
         left={(props) =>
