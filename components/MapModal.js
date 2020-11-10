@@ -34,9 +34,9 @@ const MapModal = () => {
     >
       <View style={styles.modalView}>
         <Text style={styles.text}>
-          {modalState.buildingName != "undefined"
-            ? modalState.buildingName
-            : `Building ${modalState.buildingNumber}`}
+          {modalState.buildingName == null
+            ? `Building ${modalState.buildingNumber}`
+            : modalState.buildingName}
         </Text>
         <CreateOrder buildingNumber={modalState.buildingNumber} />
       </View>
