@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import buildingData from "../buildings.json";
-import MapModal from "./MapModal";
+import OrderModal from "./OrderModal";
 import { useSelector, useDispatch } from "react-redux";
 import { activateModal } from "../actions/index";
 import Building from "./MapMarkers/Building";
@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
 });
 
 const Map = () => {
-  const modalState = useSelector((state) => state.modalReducer);
   const dispatch = useDispatch();
 
   const [trackViewChanges, setTrackViewChanges] = useState(true);
@@ -74,7 +73,7 @@ const Map = () => {
           </View>
         ))}
       </MapView>
-      <MapModal />
+      <OrderModal />
     </View>
   );
 };

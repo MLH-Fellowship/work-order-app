@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { Searchbar } from "react-native-paper";
+
 import { StyleSheet, View, FlatList, Text } from "react-native";
 import { theme } from "../core/theme";
 import buildingData from "../buildings.json";

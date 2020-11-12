@@ -2,6 +2,9 @@ import React, { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Paragraph, Avatar } from "react-native-paper";
 import { theme } from "../core/theme";
+import OrderModal from "./OrderModal";
+import { useDispatch } from "react-redux";
+import { activateModal } from "../actions/index";
 import Building from "./MapMarkers/Building";
 import Barracks from "./MapMarkers/Barracks";
 import CarShop from "./MapMarkers/CarShop";
@@ -31,34 +34,38 @@ const styles = StyleSheet.create({
   },
 });
 
-const SearchTile = ({ item }) => (
-  <View style={styles.container}>
-    <Card style={styles.card}>
-      <Card.Title
-        // title={`Building ${item.number}`}
-        title={item.name == null ? `Building ${item.number}` : item.name}
-        titleStyle={styles.cardText}
-        subtitleStyle={styles.cardText}
-        left={(props) =>
-          item.purpose === "Office" ? (
-            <Office />
-          ) : item.purpose === "Barracks" ? (
-            <Barracks />
-          ) : item.purpose === "Gym" ? (
-            <Gym />
-          ) : item.purpose === "Medical" ? (
-            <Medical />
-          ) : item.purpose === "Dining Facility" ? (
-            <Dining />
-          ) : item.purpose === "Car Shop" ? (
-            <CarShop />
-          ) : (
-            <Building />
-          )
-        }
-      />
-    </Card>
-  </View>
-);
+const SearchTile = ({ item }) => {
+  const dispatch = useDispatch();
+
+  return (
+    <View style={styles.container}>
+      <Card style={styles.card} onPress={() => dispatch(activateModal(item))}>
+        <Card.Title
+          // title={`Building ${item.number}`}
+          title={item.name == null ? `Building ${item.number}` : item.name}
+          titleStyle={styles.cardText}
+          subtitleStyle={styles.cardText}
+          left={() =>
+            item.purpose === "Office" ? (
+              <Office />
+            ) : item.purpose === "Barracks" ? (
+              <Barracks />
+            ) : item.purpose === "Gym" ? (
+              <Gym />
+            ) : item.purpose === "Medical" ? (
+              <Medical />
+            ) : item.purpose === "Dining Facility" ? (
+              <Dining />
+            ) : item.purpose === "Car Shop" ? (
+              <CarShop />
+            ) : (
+              <Building />
+            )
+          }
+        />
+      </Card>
+    </View>
+  );
+};
 
 export default memo(SearchTile);

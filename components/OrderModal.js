@@ -21,13 +21,13 @@ const styles = StyleSheet.create({
     color: theme.colors.text,
   },
   closeButton: {
-    alignSelf: 'flex-end',
+    alignSelf: "flex-end",
     right: 0,
     top: 0,
   },
 });
 
-const MapModal = () => {
+const OrderModal = () => {
   const modalState = useSelector((state) => state.modalReducer);
   const dispatch = useDispatch();
   console.log(modalState);
@@ -38,7 +38,6 @@ const MapModal = () => {
       swipeDirection="down"
       onSwipeComplete={() => dispatch(deactivateModal())}
     >
-      
       <View style={styles.modalView}>
         {/* <Icon.Button
           name="bars"
@@ -58,4 +57,4 @@ const MapModal = () => {
   );
 };
 
-export default MapModal;
+export default OrderModal;
