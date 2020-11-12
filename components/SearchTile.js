@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Paragraph, Avatar } from "react-native-paper";
 import { theme } from "../core/theme";
@@ -36,9 +36,7 @@ const SearchTile = ({ item }) => (
     <Card style={styles.card}>
       <Card.Title
         // title={`Building ${item.number}`}
-        title={item.name == null
-          ? `Building ${item.number}`
-          : item.name}
+        title={item.name == null ? `Building ${item.number}` : item.name}
         titleStyle={styles.cardText}
         subtitleStyle={styles.cardText}
         left={(props) =>
@@ -63,4 +61,4 @@ const SearchTile = ({ item }) => (
   </View>
 );
 
-export default SearchTile;
+export default memo(SearchTile);

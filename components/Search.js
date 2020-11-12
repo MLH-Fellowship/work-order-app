@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Searchbar } from "react-native-paper";
 import { StyleSheet, View, FlatList, Text } from "react-native";
 import { theme } from "../core/theme";
@@ -24,10 +24,10 @@ const Search = () => {
 
   const onChangeSearch = (query) => {
     const formattedQuery = query.toLowerCase();
-    const filteredData = filter(data, (building) => {
+    const filteredData = filter(jsonData, (building) => {
       return contains(building, formattedQuery);
     });
-    setData(filteredData);
+    setData(filteredData.sort((a, b) => a.number > b.number));
     setSearchQuery(query);
   };
 
@@ -52,16 +52,11 @@ const Search = () => {
       <Searchbar
         placeholder="Search"
         onChangeText={onChangeSearch}
-        onKeyPress={({ nativeEvent }) => {
-          if (nativeEvent.key === "Backspace") {
-            console.log("yeet");
-          }
-        }}
         value={searchQuery}
         style={styles.searchbar}
       />
       <FlatList
-        data={data.sort((a, b) => a.number > b.number)}
+        data={data}
         renderItem={({ item }) => <SearchTile item={item}></SearchTile>}
         keyExtractor={(item, index) => index.toString()}
       />
