@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Paragraph } from "react-native-paper";
 import { theme } from "../core/theme";
@@ -42,4 +42,4 @@ const DashboardTile = ({ item }) => (
   </View>
 );
 
-export default DashboardTile;
+export default memo(DashboardTile);
