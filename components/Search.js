@@ -4,6 +4,7 @@ import { StyleSheet, View, FlatList, Text } from "react-native";
 import { theme } from "../core/theme";
 import buildingData from "../buildings.json";
 import SearchTile from "./SearchTile";
+import filter from "lodash/filter";
 
 const styles = StyleSheet.create({
   container: {
@@ -16,32 +17,51 @@ const styles = StyleSheet.create({
 });
 
 const Search = () => {
-
-  const data = buildingData.buildings;
+  const jsonData = buildingData.buildings;
 
   const [searchQuery, setSearchQuery] = useState("");
+  const [data, setData] = useState(jsonData);
 
   const onChangeSearch = (query) => {
+    const formattedQuery = query.toLowerCase();
+    const filteredData = filter(data, (building) => {
+      return contains(building, formattedQuery);
+    });
+    setData(filteredData);
     setSearchQuery(query);
   };
 
-  const filteredData = searchQuery 
-    ? data.filter(item => {
-        const itemData = item.number;
-        const textData = searchQuery.toUpperCase();
-        return itemData.indexOf(textData) > -1;
-      })
-    : data;
+  const contains = (item, query) => {
+    const name = (item.name + "").toLowerCase();
+    const number = item.number + "";
+    const numberWithBuilding = `Building ${item.number}`.toLowerCase();
+
+    if (
+      name.includes(query) ||
+      number.includes(query) ||
+      numberWithBuilding.includes(query)
+    ) {
+      return true;
+    }
+
+    return false;
+  };
+
   return (
     <View style={styles.container}>
       <Searchbar
         placeholder="Search"
         onChangeText={onChangeSearch}
+        onKeyPress={({ nativeEvent }) => {
+          if (nativeEvent.key === "Backspace") {
+            console.log("yeet");
+          }
+        }}
         value={searchQuery}
         style={styles.searchbar}
       />
       <FlatList
-        data={data.sort((a,b) => a.number > b.number)}
+        data={data.sort((a, b) => a.number > b.number)}
         renderItem={({ item }) => <SearchTile item={item}></SearchTile>}
         keyExtractor={(item, index) => index.toString()}
       />

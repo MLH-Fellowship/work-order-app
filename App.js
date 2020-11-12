@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, StatusBar } from "react-native";
+import { StatusBar } from "react-native";
 import LoginPage from "./pages/LoginPage";
 import MapPage from "./pages/MapPage";
 import DashboardPage from "./pages/DashboardPage";
@@ -22,13 +22,16 @@ import Icon from "react-native-vector-icons/Ionicons";
 // Navigation
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { ThemeColors } from "react-navigation";
 
 const Tab = createBottomTabNavigator();
+
+
 
 export default function App() {
   const middleware = [thunk];
   const store = createStore(rootReducer, applyMiddleware(...middleware));
+
+
 
   const [user, setUser] = useState();
 
