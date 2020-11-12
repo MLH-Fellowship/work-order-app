@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import { Searchbar } from "react-native-paper";
 import { StyleSheet, View, FlatList, Text } from "react-native";
 import { theme } from "../core/theme";
@@ -16,9 +16,22 @@ const styles = StyleSheet.create({
 });
 
 const Search = () => {
-  const [searchQuery, setSearchQuery] = React.useState("");
 
-  const onChangeSearch = (query) => setSearchQuery(query);
+  const data = buildingData.buildings;
+
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const onChangeSearch = (query) => {
+    setSearchQuery(query);
+  };
+
+  const filteredData = searchQuery 
+    ? data.filter(item => {
+        const itemData = item.number;
+        const textData = searchQuery.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      })
+    : data;
   return (
     <View style={styles.container}>
       <Searchbar
@@ -28,7 +41,7 @@ const Search = () => {
         style={styles.searchbar}
       />
       <FlatList
-        data={buildingData.buildings}
+        data={data.sort((a,b) => a.number > b.number)}
         renderItem={({ item }) => <SearchTile item={item}></SearchTile>}
         keyExtractor={(item, index) => index.toString()}
       />
