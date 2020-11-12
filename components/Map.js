@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import * as Location from "expo-location";
 import { StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import buildingData from "../buildings.json";
@@ -34,6 +35,7 @@ const Map = () => {
   return (
     <View style={styles.container}>
       <MapView
+        showsUserLocation={true}
         moveOnMarkerPress={false}
         style={styles.map}
         initialRegion={{
@@ -72,6 +74,11 @@ const Map = () => {
             </Marker>
           </View>
         ))}
+        {/* {userLocation.latitude && userLocation.latitude ? (
+          <Marker coordinate={userLocation} />
+        ) : (
+          <View />
+        )} */}
       </MapView>
       <OrderModal />
     </View>

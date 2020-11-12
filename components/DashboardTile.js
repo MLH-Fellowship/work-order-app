@@ -1,4 +1,4 @@
-import React, {memo} from "react";
+import React, { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Paragraph } from "react-native-paper";
 import { theme } from "../core/theme";
@@ -26,15 +26,18 @@ const styles = StyleSheet.create({
   },
 });
 
-const DashboardTile = ({ item }) => (
+const DashboardTile = ({ item, navigation }) => (
   <View style={styles.container}>
-    <Card style={styles.card}>
+    <Card
+      style={styles.card}
+      onPress={() => navigation.navigate("DashboardDetail")}
+    >
       <Card.Title
         title={`Building ${item.building}`}
         titleStyle={styles.cardText}
         subtitleStyle={styles.cardText}
       />
-      <Card.Content >
+      <Card.Content>
         <Paragraph style={styles.cardText}>{`Room ${item.room}`}</Paragraph>
         <Paragraph style={styles.cardText}>{`${item.description}`}</Paragraph>
       </Card.Content>
