@@ -3,6 +3,7 @@ import * as Location from "expo-location";
 import { StyleSheet, View, Text } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import buildingData from "../buildings.json";
+import MapViewDirections from "react-native-maps-directions";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,6 +20,10 @@ const styles = StyleSheet.create({
 });
 
 const DashboardDetail = () => {
+  const origin = { latitude: 37.3318456, longitude: -122.0296002 };
+  const destination = { latitude: 37.771707, longitude: -122.4053769 };
+  const GOOGLE_MAPS_APIKEY = "AIzaSyAA-EWram1eYjyBI1d_zo3TCxqCC78NHkA";
+
   let userLocation = { latitude: null, longitude: null };
 
   const [location, setLocation] = useState(null);
@@ -54,7 +59,13 @@ const DashboardDetail = () => {
           latitudeDelta: 0.00922,
           longitudeDelta: 0.00421,
         }}
-      ></MapView>
+      >
+        <MapViewDirections
+          origin={origin}
+          destination={destination}
+          apikey={GOOGLE_MAPS_APIKEY}
+        />
+      </MapView>
       <View style={styles.bottomView}>
         <Text> Hello World</Text>
       </View>
