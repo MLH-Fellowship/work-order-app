@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
 });
 
 const DashboardPage = () => {
-  const dispatch = useDispatch();
+  const detailState = useSelector((state) => state.detailReducer);
   return (
     <DashboardStack.Navigator>
       <DashboardStack.Screen
@@ -44,6 +44,7 @@ const DashboardPage = () => {
         name="DashboardDetail"
         component={DashboardDetail}
         options={{
+          title: `Building ${detailState.dashboardName}`,
           headerStyle: styles.headerStyle,
           headerTintColor: theme.colors.accent,
           headerTitleStyle: {

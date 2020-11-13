@@ -12,12 +12,10 @@ const modalState = {
   buildingName: null,
 };
 
-// const initialReducer = (state = initialState, action) => {
-//   switch (action.type) {
-//     default:
-//       return state;
-//   }
-// };
+const dashboardDetailPageNameState = {
+  dashboardName : null
+}
+
 
 const modalReducer = (state = modalState, action) => {
   switch (action.type) {
@@ -57,9 +55,23 @@ const orderReducer = (state = orderState, action) => {
   }
 };
 
+const detailReducer = (state = dashboardDetailPageNameState, action) => {
+  switch (action.type) {
+    case actionTypes.GET_DASHBOARD_DETAIL_PAGE_NAME:
+      return {
+        ...state,
+        dashboardName: action.buildingName
+      };
+  
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
   modalReducer,
   orderReducer,
+  detailReducer
 });
 
 export default rootReducer;

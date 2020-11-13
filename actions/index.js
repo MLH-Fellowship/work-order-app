@@ -34,3 +34,8 @@ export const addOrders = (order) => (dispatch) => {
   dispatch({ type: actionTypes.ADD_ORDERS });
   db.ref("/orders").push(order);
 };
+
+export const getDashboardDetailPageName = (buildingName) => ({
+  type: actionTypes.GET_DASHBOARD_DETAIL_PAGE_NAME,
+  buildingName: buildingName
+});
