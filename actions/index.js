@@ -6,7 +6,8 @@ const db = firebase.database();
 export const activateModal = (building) => ({
   type: actionTypes.ACTIVATE_MODAL,
   buildingNumber: building.number,
-  buildingName: building.name
+  buildingName: building.name,
+  buildingCoordinates: building.coordinates
 });
 
 export const deactivateModal = () => ({

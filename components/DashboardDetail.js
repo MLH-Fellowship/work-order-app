@@ -1,6 +1,6 @@
 import React, { useState, useEffect, memo } from "react";
 import * as Location from "expo-location";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import buildingData from "../buildings.json";
 
@@ -9,7 +9,12 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   map: {
+    flex: 2,
+  },
+  bottomView: {
     flex: 1,
+    justifyContent: "center", // vertical alignment
+    alignItems: "center", // horizontal alignment
   },
 });
 
@@ -39,6 +44,7 @@ const DashboardDetail = () => {
   return (
     <View style={styles.container}>
       <MapView
+        style={styles.map}
         showsUserLocation={true}
         moveOnMarkerPress={false}
         style={styles.map}
@@ -49,6 +55,9 @@ const DashboardDetail = () => {
           longitudeDelta: 0.00421,
         }}
       ></MapView>
+      <View style={styles.bottomView}>
+        <Text> Hello World</Text>
+      </View>
     </View>
   );
 };

@@ -10,6 +10,7 @@ const modalState = {
   modalActive: false,
   buildingNumber: null,
   buildingName: null,
+  buildingCoordinates: []
 };
 
 const dashboardDetailPageNameState = {
@@ -25,6 +26,7 @@ const modalReducer = (state = modalState, action) => {
         modalActive: true,
         buildingNumber: action.buildingNumber,
         buildingName: action.buildingName,
+        buildingCoordinates: action.buildingCoordinates
       };
     case actionTypes.DEACTIVATE_MODAL:
       return {
@@ -32,6 +34,7 @@ const modalReducer = (state = modalState, action) => {
         modalActive: false,
         buildingNumber: null,
         buildingName: null,
+        buildingCoordinates: []
       };
     default:
       return state;
