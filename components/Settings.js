@@ -18,12 +18,21 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.background,
   },
+  text: {
+    color: theme.colors.text,
+  },
+  seperatorText:{
+    color: "grey"
+  },
+  seperator: {
+    backgroundColor: theme.colors.background,
+  },
 });
 
 const Settings = () => {
   return (
     <View style={styles.container}>
-      <Container>
+      <Container style={styles.container}>
         <Content>
           {/* <Separator />
           <ListItem avatar>
@@ -38,12 +47,12 @@ const Settings = () => {
               <Text note>3:43 pm</Text>
             </Right>
           </ListItem> */}
-          <Separator>
-            <Text>ACCOUNT</Text>
+          <Separator style={styles.seperator}>
+            <Text style={styles.seperatorText}>ACCOUNT</Text>
           </Separator>
           <ListItem>
             <Left>
-              <Text>Edit Profile</Text>
+              <Text style={styles.text}>Edit Profile</Text>
             </Left>
             <Right>
               <Icon name="arrow-forward" />
@@ -51,29 +60,29 @@ const Settings = () => {
           </ListItem>
           <ListItem onPress={logoutUser}>
             <Left>
-              <Text>Sign Out</Text>
+              <Text style={styles.text}>Sign Out</Text>
             </Left>
             <Right>
               <Icon name="arrow-forward" />
             </Right>
           </ListItem>
-          <Separator>
-            <Text>SUPPORT</Text>
+          <Separator style={styles.seperator}>
+            <Text style={styles.seperatorText}>SUPPORT</Text>
           </Separator>
           <ListItem>
             <Left>
-              <Text>Report a problem</Text>
+              <Text style={styles.text}>Report a problem</Text>
             </Left>
             <Right>
               <Icon name="arrow-forward" />
             </Right>
           </ListItem>
-          <Separator>
-            <Text>ABOUT</Text>
+          <Separator style={styles.seperator}>
+            <Text style={styles.seperatorText}>ABOUT</Text>
           </Separator>
           <ListItem>
             <Left>
-              <Text>Privacy Policy</Text>
+              <Text style={styles.text}>Privacy Policy</Text>
             </Left>
             <Right>
               <Icon name="arrow-forward" />
@@ -81,7 +90,7 @@ const Settings = () => {
           </ListItem>
           <ListItem>
             <Left>
-              <Text>Terms of Service</Text>
+              <Text style={styles.text}>Terms of Service</Text>
             </Left>
             <Right>
               <Icon name="arrow-forward" />
@@ -89,7 +98,7 @@ const Settings = () => {
           </ListItem>
           <ListItem last>
             <Left>
-              <Text>Version: 1.0.0</Text>
+              <Text style={styles.text}>Version: 1.0.0</Text>
             </Left>
           </ListItem>
         </Content>
