@@ -1,9 +1,11 @@
 import React, { useState, useEffect, memo } from "react";
 import * as Location from "expo-location";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import buildingData from "../buildings.json";
+import Building from "./MapMarkers/Building";
+import { Title, Text } from "react-native-paper";
 import MapViewDirections from "react-native-maps-directions";
+import { theme } from "../core/theme";
 
 const styles = StyleSheet.create({
   container: {
@@ -14,15 +16,29 @@ const styles = StyleSheet.create({
   },
   bottomView: {
     flex: 1,
-    justifyContent: "center", // vertical alignment
-    alignItems: "center", // horizontal alignment
+    justifyContent: "flex-start", // vertical alignment
+    alignItems: "flex-start", // horizontal alignment
+    padding: "2%",
+    backgroundColor: theme.colors.background,
+  },
+  text: {
+    color: theme.colors.text,
   },
 });
 
-const DashboardDetail = () => {
-  const origin = { latitude: 37.3318456, longitude: -122.0296002 };
-  const destination = { latitude: 37.771707, longitude: -122.4053769 };
-  const GOOGLE_MAPS_APIKEY = "AIzaSyAA-EWram1eYjyBI1d_zo3TCxqCC78NHkA";
+const DashboardDetail = ({ route, navigation }) => {
+  const {
+    building,
+    coordinates,
+    description,
+    problem,
+    room,
+    user,
+  } = route.params;
+
+  const origin = { latitude: 32.346449, longitude: -84.973891 };
+  const destination = { latitude: coordinates[0], longitude: coordinates[1] };
+  const GOOGLE_MAPS_APIKEY = "AIzaSyAY6tGYbs1FdLLDopXBWRQAMqEhhvyFtRU";
 
   let userLocation = { latitude: null, longitude: null };
 
@@ -54,20 +70,32 @@ const DashboardDetail = () => {
         moveOnMarkerPress={false}
         style={styles.map}
         initialRegion={{
-          latitude: 32.340773,
+          latitude: 32.344,
           longitude: -84.976813,
-          latitudeDelta: 0.00922,
-          longitudeDelta: 0.00421,
+          latitudeDelta: 0.011,
+          longitudeDelta: 0.003,
         }}
       >
         <MapViewDirections
           origin={origin}
           destination={destination}
           apikey={GOOGLE_MAPS_APIKEY}
+          strokeColor="hotpink"
+          strokeWidth={3}
         />
+
+        <Marker coordinate={origin} title={"My Location"} />
+        <Marker coordinate={destination}>
+          <Building />
+        </Marker>
       </MapView>
       <View style={styles.bottomView}>
-        <Text> Hello World</Text>
+        <Title style={styles.text}>Room:</Title>
+        <Text style={styles.text}>{room}</Text>
+        <Title style={styles.text}>Work Order Description:</Title>
+        <Text style={styles.text}>{description}</Text>
+        <Title style={styles.text}>Work Order Problem:</Title>
+        <Text style={styles.text}>{problem}</Text>
       </View>
     </View>
   );

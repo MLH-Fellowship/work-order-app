@@ -74,11 +74,7 @@ const Map = () => {
             </Marker>
           </View>
         ))}
-        {/* {userLocation.latitude && userLocation.latitude ? (
-          <Marker coordinate={userLocation} />
-        ) : (
-          <View />
-        )} */}
+        
       </MapView>
       <OrderModal />
     </View>

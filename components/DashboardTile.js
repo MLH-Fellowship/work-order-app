@@ -37,7 +37,7 @@ const DashboardTile = ({ item, navigation }) => {
         style={styles.card}
         onPress={() => {
           dispatch(getDashboardDetailPageName(item.building));
-          navigation.navigate("DashboardDetail");
+          navigation.navigate("DashboardDetail", item);
         }}
       >
         <Card.Title
