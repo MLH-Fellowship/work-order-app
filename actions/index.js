@@ -7,7 +7,7 @@ export const activateModal = (building) => ({
   type: actionTypes.ACTIVATE_MODAL,
   buildingNumber: building.number,
   buildingName: building.name,
-  buildingCoordinates: building.coordinates
+  buildingCoordinates: building.coordinates,
 });
 
 export const deactivateModal = () => ({
@@ -27,7 +27,12 @@ export const getUserOrders = (user) => (dispatch) => {
   db.ref("/orders").on("value", (snap) => {
     let data = snap.val() ? snap.val() : {};
     let orders = Object.values(data);
-    dispatch({ type: actionTypes.GET_USER_ORDERS, payload: orders.filter(order => order.user == user) });
+    dispatch({
+      type: actionTypes.GET_USER_ORDERS,
+      payload: orders.filter(
+        (order) => order.user == user && order.complete == false
+      ),
+    });
   });
 };
 
@@ -38,5 +43,5 @@ export const addOrders = (order) => (dispatch) => {
 
 export const getDashboardDetailPageName = (buildingName) => ({
   type: actionTypes.GET_DASHBOARD_DETAIL_PAGE_NAME,
-  buildingName: buildingName
+  buildingName: buildingName,
 });
