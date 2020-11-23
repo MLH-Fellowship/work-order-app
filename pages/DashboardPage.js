@@ -5,6 +5,7 @@ import DashboardDetail from "../components/DashboardDetail";
 import { theme } from "../core/theme";
 import { StyleSheet } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
+import Icon from "react-native-vector-icons/Ionicons";
 
 const DashboardStack = createStackNavigator();
 
@@ -50,6 +51,15 @@ const DashboardPage = () => {
           headerTitleStyle: {
             fontWeight: "bold",
           },
+          headerRight: () => (
+            <Icon.Button
+              name="md-checkmark"
+              backgroundColor={theme.colors.primary}
+              size={25}
+              style={styles.button}
+              onPress={() => null}
+            ></Icon.Button>
+          ),
         }}
       />
     </DashboardStack.Navigator>
