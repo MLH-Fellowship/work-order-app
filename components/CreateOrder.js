@@ -29,7 +29,8 @@ const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
         room: "",
         problem: "",
         description: "",
-        coordinates: buildingCoordinates
+        coordinates: buildingCoordinates,
+        complete: false
       }}
       onSubmit={(values) => {
         console.log(values);
