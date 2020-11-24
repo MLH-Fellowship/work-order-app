@@ -48,6 +48,9 @@ const DashboardTile = ({ item, navigation }) => {
         <Card.Content>
           <Paragraph style={styles.cardText}>{`Room ${item.room}`}</Paragraph>
           <Paragraph style={styles.cardText}>{`${item.description}`}</Paragraph>
+          <Paragraph style={styles.cardText}>{`Status: ${
+            item.complete ? "complete" : "incomplete"
+          }   `}</Paragraph>
         </Card.Content>
       </Card>
     </View>

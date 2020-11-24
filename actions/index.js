@@ -18,23 +18,29 @@ export const deactivateModal = () => ({
 export const getOrders = () => (dispatch) => {
   db.ref("/orders").on("value", (snap) => {
     let data = snap.val() ? snap.val() : {};
-    let orders = Object.values(data);
-    dispatch({ type: actionTypes.GET_ORDERS, payload: orders });
+    dispatch({ type: actionTypes.GET_ORDERS, payload: data });
   });
 };
 
 export const getUserOrders = (user) => (dispatch) => {
   db.ref("/orders").on("value", (snap) => {
     let data = snap.val() ? snap.val() : {};
-    let orders = Object.values(data);
+    console.log(data)
+    // let orders = Object.values(data);
+
     dispatch({
       type: actionTypes.GET_USER_ORDERS,
-      payload: orders.filter(
-        (order) => order.user == user && order.complete == false
-      ),
+      payload: data
+      // payload: orders.filter(
+      //   (order) => order.user == user && order.complete == false
+      // ),
     });
   });
 };
+
+export const updateOrders = (order) => (dispatch) => {
+  dispatch({ type: actionTypes.UPDATE_ORDERS });
+}
 
 export const addOrders = (order) => (dispatch) => {
   dispatch({ type: actionTypes.ADD_ORDERS });
