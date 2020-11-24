@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Map from "../components/Map";
 import { theme } from "../core/theme";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { Button, Text, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import Search from "../components/Search";
 
 const MapStack = createStackNavigator();

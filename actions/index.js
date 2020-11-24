@@ -6,7 +6,8 @@ const db = firebase.database();
 export const activateModal = (building) => ({
   type: actionTypes.ACTIVATE_MODAL,
   buildingNumber: building.number,
-  buildingName: building.name
+  buildingName: building.name,
+  buildingCoordinates: building.coordinates
 });
 
 export const deactivateModal = () => ({
@@ -34,3 +35,8 @@ export const addOrders = (order) => (dispatch) => {
   dispatch({ type: actionTypes.ADD_ORDERS });
   db.ref("/orders").push(order);
 };
+
+export const getDashboardDetailPageName = (buildingName) => ({
+  type: actionTypes.GET_DASHBOARD_DETAIL_PAGE_NAME,
+  buildingName: buildingName
+});

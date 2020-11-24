@@ -51,7 +51,10 @@ const OrderModal = () => {
             ? `Building ${modalState.buildingNumber}`
             : modalState.buildingName}
         </Text>
-        <CreateOrder buildingNumber={modalState.buildingNumber} />
+        <CreateOrder
+          buildingNumber={modalState.buildingNumber}
+          buildingCoordinates={modalState.buildingCoordinates}
+        />
       </View>
     </Modal>
   );

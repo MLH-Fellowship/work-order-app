@@ -18,17 +18,18 @@ const styles = StyleSheet.create({
   },
 });
 
-const CreateOrder = (buildingNumber) => {
+const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
   const dispatch = useDispatch();
 
   return (
     <Formik
       initialValues={{
         user: "testuser",
-        building: buildingNumber.buildingNumber,
+        building: buildingNumber,
         room: "",
         problem: "",
         description: "",
+        coordinates: buildingCoordinates
       }}
       onSubmit={(values) => {
         console.log(values);

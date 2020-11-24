@@ -1,7 +1,10 @@
-import React, {memo} from "react";
+import React, { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import { Card, Paragraph } from "react-native-paper";
 import { theme } from "../core/theme";
+import { useDispatch } from "react-redux";
+import { getDashboardDetailPageName } from "../actions/index";
+import { get } from "react-native/Libraries/Utilities/PixelRatio";
 
 const styles = StyleSheet.create({
   container: {
@@ -26,20 +29,29 @@ const styles = StyleSheet.create({
   },
 });
 
-const DashboardTile = ({ item }) => (
-  <View style={styles.container}>
-    <Card style={styles.card}>
-      <Card.Title
-        title={`Building ${item.building}`}
-        titleStyle={styles.cardText}
-        subtitleStyle={styles.cardText}
-      />
-      <Card.Content >
-        <Paragraph style={styles.cardText}>{`Room ${item.room}`}</Paragraph>
-        <Paragraph style={styles.cardText}>{`${item.description}`}</Paragraph>
-      </Card.Content>
-    </Card>
-  </View>
-);
+const DashboardTile = ({ item, navigation }) => {
+  const dispatch = useDispatch();
+  return (
+    <View style={styles.container}>
+      <Card
+        style={styles.card}
+        onPress={() => {
+          dispatch(getDashboardDetailPageName(item.building));
+          navigation.navigate("DashboardDetail", item);
+        }}
+      >
+        <Card.Title
+          title={`Building ${item.building}`}
+          titleStyle={styles.cardText}
+          subtitleStyle={styles.cardText}
+        />
+        <Card.Content>
+          <Paragraph style={styles.cardText}>{`Room ${item.room}`}</Paragraph>
+          <Paragraph style={styles.cardText}>{`${item.description}`}</Paragraph>
+        </Card.Content>
+      </Card>
+    </View>
+  );
+};
 
 export default memo(DashboardTile);

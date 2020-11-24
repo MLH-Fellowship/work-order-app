@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserOrders } from "../actions";
@@ -17,7 +17,7 @@ const Dashboard = ({ navigation }) => {
   const orderState = useSelector((state) => state.orderReducer);
   const dispatch = useDispatch();
 
-  React.useEffect(
+  useEffect(
     () =>
       navigation.addListener("focus", () =>
         dispatch(getUserOrders("testuser"))
@@ -29,7 +29,7 @@ const Dashboard = ({ navigation }) => {
     <View style={styles.container}>
       <FlatList
         data={orderState.userOrders}
-        renderItem={({ item }) => <DashboardTile item={item} />}
+        renderItem={({ item }) => <DashboardTile item={item} navigation={navigation}/>}
         keyExtractor={(item, index) => index.toString()}
       ></FlatList>
     </View>
