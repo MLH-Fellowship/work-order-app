@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, memo } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { getOrders } from "../actions";
@@ -27,6 +27,7 @@ const Dashboard = ({ navigation }) => {
           orderArray.push([orderKeys[i], orderValues[i]]);
         }
       }
+      console.log(orderArray);
     }
     return orderArray;
   };
@@ -49,4 +50,4 @@ const Dashboard = ({ navigation }) => {
   );
 };
 
-export default Dashboard;
+export default memo(Dashboard);

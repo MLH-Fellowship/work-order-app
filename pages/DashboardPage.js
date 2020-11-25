@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
 
 const DashboardPage = () => {
   const detailState = useSelector((state) => state.detailReducer);
+
   let key = detailState.order[0] === undefined ? "" : detailState.order[0];
   let value = detailState.order[1] === undefined ? {} : detailState.order[1];
 
