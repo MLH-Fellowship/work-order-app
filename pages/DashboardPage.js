@@ -49,7 +49,7 @@ const DashboardPage = () => {
       <DashboardStack.Screen
         name="DashboardDetail"
         component={DashboardDetail}
-        options={{
+        options={({ navigation }) => ({
           title: `Building ${value.building}`,
           headerStyle: styles.headerStyle,
           headerTintColor: theme.colors.accent,
@@ -64,10 +64,11 @@ const DashboardPage = () => {
               style={styles.button}
               onPress={() => {
                 updateOrders(key)({ ...value, complete: true })(dispatch);
+                navigation.goBack();
               }}
             ></Icon.Button>
           ),
-        }}
+        })}
       />
     </DashboardStack.Navigator>
   );
