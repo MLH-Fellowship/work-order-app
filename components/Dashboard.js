@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { getOrders} from "../actions";
+import { getOrders } from "../actions";
 import { theme } from "../core/theme";
 import DashboardTile from "./DashboardTile";
 
@@ -16,8 +16,21 @@ const Dashboard = ({ navigation }) => {
   const orderState = useSelector((state) => state.orderReducer);
   const dispatch = useDispatch();
 
-  let orders = Object.values(orderState.orders);
-  orders.filter((order) => order.complete == false);
+  const getOrderArray = () => {
+    let orderValues = Object.values(orderState.orders);
+    let orderKeys = Object.keys(orderState.orders);
+    let orderArray = [];
+
+    if (orderValues.length === orderKeys.length) {
+      for (let i = 0; i < orderKeys.length; i++) {
+        if (orderValues[i].complete == false) {
+          orderArray.push([orderKeys[i], orderValues[i]]);
+        }
+      }
+    }
+    console.log(orderArray);
+    return orderArray;
+  };
 
   useEffect(
     () => navigation.addListener("focus", () => dispatch(getOrders())),
@@ -27,9 +40,13 @@ const Dashboard = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={orders}
+        data={getOrderArray()}
         renderItem={({ item }) => (
-          <DashboardTile item={item} navigation={navigation} />
+          <DashboardTile
+            key={item[0]}
+            value={item[1]}
+            navigation={navigation}
+          />
         )}
         keyExtractor={(item, index) => index.toString()}
       ></FlatList>

@@ -29,27 +29,27 @@ const styles = StyleSheet.create({
   },
 });
 
-const DashboardTile = ({ item, navigation }) => {
+const DashboardTile = ({ key, value, navigation }) => {
   const dispatch = useDispatch();
   return (
     <View style={styles.container}>
       <Card
         style={styles.card}
         onPress={() => {
-          dispatch(getDashboardDetailPageName(item.building));
-          navigation.navigate("DashboardDetail", item);
+          dispatch(getDashboardDetailPageName(value.building));
+          navigation.navigate("DashboardDetail", value);
         }}
       >
         <Card.Title
-          title={`Building ${item.building}`}
+          title={`Building ${value.building}`}
           titleStyle={styles.cardText}
           subtitleStyle={styles.cardText}
         />
         <Card.Content>
-          <Paragraph style={styles.cardText}>{`Room ${item.room}`}</Paragraph>
-          <Paragraph style={styles.cardText}>{`${item.description}`}</Paragraph>
+          <Paragraph style={styles.cardText}>{`Room ${value.room}`}</Paragraph>
+          <Paragraph style={styles.cardText}>{`${value.description}`}</Paragraph>
           <Paragraph style={styles.cardText}>{`Status: ${
-            item.complete ? "complete" : "incomplete"
+            value.complete ? "complete" : "incomplete"
           }   `}</Paragraph>
         </Card.Content>
       </Card>

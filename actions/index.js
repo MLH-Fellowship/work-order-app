@@ -25,12 +25,12 @@ export const getOrders = () => (dispatch) => {
 export const getUserOrders = (user) => (dispatch) => {
   db.ref("/orders").on("value", (snap) => {
     let data = snap.val() ? snap.val() : {};
-    console.log(data)
+    console.log(data);
     // let orders = Object.values(data);
 
     dispatch({
       type: actionTypes.GET_USER_ORDERS,
-      payload: data
+      payload: data,
       // payload: orders.filter(
       //   (order) => order.user == user && order.complete == false
       // ),
@@ -38,9 +38,10 @@ export const getUserOrders = (user) => (dispatch) => {
   });
 };
 
-export const updateOrders = (order) => (dispatch) => {
-  dispatch({ type: actionTypes.UPDATE_ORDERS });
-}
+export const updateOrders = (order) => (orderName) => (dispatch) => {
+  dispatch({ type: actionTypes.UPDATE_ORDERS, payload: data });
+  db.ref("/orders").child(orderName).set(order);
+};
 
 export const addOrders = (order) => (dispatch) => {
   dispatch({ type: actionTypes.ADD_ORDERS });
