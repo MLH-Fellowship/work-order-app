@@ -7,6 +7,9 @@ import FormButton from "./FormButton";
 import FormInput from "./FormInput";
 import { deactivateModal } from "../actions/index";
 import {theme} from "../core/theme";
+import * as ImagePicker from 'expo-image-picker';
+
+import firebase from "../core/config";
 
 const styles = StyleSheet.create({
   container: {
@@ -20,6 +23,25 @@ const styles = StyleSheet.create({
 
 const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
   const dispatch = useDispatch();
+  
+  const pickImage = async (uri) => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+    })
+
+    console.log(result)
+
+    if (!result.cancelled) {
+      uri = result.uri;
+    }
+  }
+
+  const uploadImage = (path, imageName) => {
+    let reference = firebase.storage().ref(imageName);
+    let task = reference.put
+  }
 
   return (
     <Formik
@@ -29,6 +51,7 @@ const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
         room: "",
         problem: "",
         description: "",
+        image,
         coordinates: buildingCoordinates
       }}
       onSubmit={(values) => {
@@ -59,6 +82,8 @@ const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
             onBlur={handleBlur("description")}
             value={values.description}
           />
+          <Button title="Pick an image from camera roll" onPress={pickImage(values.image)} />
+      {values.image && <Image source={{ uri: values.image }} style={{ width: 200, height: 200 }} />}
           <FormButton onSubmit={handleSubmit} text="Submit" />
         </View>
       )}
