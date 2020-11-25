@@ -28,7 +28,6 @@ const Dashboard = ({ navigation }) => {
         }
       }
     }
-    console.log(orderArray);
     return orderArray;
   };
 
@@ -42,11 +41,7 @@ const Dashboard = ({ navigation }) => {
       <FlatList
         data={getOrderArray()}
         renderItem={({ item }) => (
-          <DashboardTile
-            key={item[0]}
-            value={item[1]}
-            navigation={navigation}
-          />
+          <DashboardTile order={item} navigation={navigation} />
         )}
         keyExtractor={(item, index) => index.toString()}
       ></FlatList>

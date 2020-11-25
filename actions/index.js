@@ -38,9 +38,10 @@ export const getUserOrders = (user) => (dispatch) => {
   });
 };
 
-export const updateOrders = (order) => (orderName) => (dispatch) => {
+export const updateOrders = (orderName) => (data) => (dispatch) => {
+  console.log(data);
   dispatch({ type: actionTypes.UPDATE_ORDERS, payload: data });
-  db.ref("/orders").child(orderName).set(order);
+  db.ref("/orders").child(orderName).set(data);
 };
 
 export const addOrders = (order) => (dispatch) => {
@@ -48,7 +49,7 @@ export const addOrders = (order) => (dispatch) => {
   db.ref("/orders").push(order);
 };
 
-export const getDashboardDetailPageName = (buildingName) => ({
-  type: actionTypes.GET_DASHBOARD_DETAIL_PAGE_NAME,
-  buildingName: buildingName,
+export const getDashboardDetailData = (order) => ({
+  type: actionTypes.GET_DASHBOARD_DETAIL_DATA,
+  order: order,
 });

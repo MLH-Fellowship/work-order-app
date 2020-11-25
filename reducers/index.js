@@ -13,8 +13,8 @@ const modalState = {
   buildingCoordinates: [],
 };
 
-const dashboardDetailPageNameState = {
-  dashboardName: null,
+const dashboardDetailState = {
+  order: []
 };
 
 const modalReducer = (state = modalState, action) => {
@@ -62,12 +62,12 @@ const orderReducer = (state = orderState, action) => {
   }
 };
 
-const detailReducer = (state = dashboardDetailPageNameState, action) => {
+const detailReducer = (state = dashboardDetailState, action) => {
   switch (action.type) {
-    case actionTypes.GET_DASHBOARD_DETAIL_PAGE_NAME:
+    case actionTypes.GET_DASHBOARD_DETAIL_DATA:
       return {
         ...state,
-        dashboardName: action.buildingName,
+        order: action.order,
       };
 
     default:
