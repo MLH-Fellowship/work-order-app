@@ -81,7 +81,7 @@ const detailReducer = (state = dashboardDetailState, action) => {
 
 const usernameReducer = (state = usernameState, action) => {
   switch (action.type) {
-    case actionTypes.SET_CURRENT_USER:
+    case actionTypes.SET_CURRENT_USERNAME:
       return {
         ...state,
         username: action.username,

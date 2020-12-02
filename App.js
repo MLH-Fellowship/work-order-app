@@ -11,9 +11,10 @@ import { theme } from "./core/theme";
 
 // Redux
 import { createStore, applyMiddleware } from "redux";
-import { Provider as StoreProvider } from "react-redux";
+import { Provider as StoreProvider, useSelector } from "react-redux";
 import rootReducer from "./reducers";
 import thunk from "redux-thunk";
+import { setCurrentUsername } from "./actions/index";
 
 //Icons
 //cheatsheet: https://ionicons.com/v4/cheatsheet.html
@@ -28,11 +29,10 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   const middleware = [thunk];
   const store = createStore(rootReducer, applyMiddleware(...middleware));
-
+  const orderState = useSelector((state) => state.usernameReduer);
   const [user, setUser] = useState();
 
   firebase.auth().onAuthStateChanged((user) => {
-    console.log(user.email)
     if (user) {
       setUser(user);
     } else {
@@ -40,7 +40,7 @@ export default function App() {
     }
   });
 
-  // console.log("USER",user)
+  console.log(orderState);
 
   return (
     <StoreProvider store={store}>
