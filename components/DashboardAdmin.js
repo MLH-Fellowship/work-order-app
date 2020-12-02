@@ -1,4 +1,4 @@
-import React, { useEffect, memo } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { getOrders } from "../actions";
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Dashboard = ({ navigation }) => {
+const DashboardAdmin = ({ navigation }) => {
   const orderState = useSelector((state) => state.orderReducer);
   const dispatch = useDispatch();
 
@@ -23,11 +23,8 @@ const Dashboard = ({ navigation }) => {
 
     if (orderValues.length === orderKeys.length) {
       for (let i = 0; i < orderKeys.length; i++) {
-        if (orderValues[i].complete == false) {
-          orderArray.push([orderKeys[i], orderValues[i]]);
-        }
+        orderArray.push([orderKeys[i], orderValues[i]]);
       }
-      console.log(orderArray);
     }
     return orderArray;
   };
@@ -50,4 +47,4 @@ const Dashboard = ({ navigation }) => {
   );
 };
 
-export default memo(Dashboard);
+export default DashboardAdmin;
