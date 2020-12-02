@@ -53,3 +53,7 @@ export const getDashboardDetailData = (order) => ({
   type: actionTypes.GET_DASHBOARD_DETAIL_DATA,
   order: order,
 });
+
+export const setCurrentUser = (username) => {
+  dispatch({ type: actionTypes.SET_CURRENT_USER, username: username });
+};

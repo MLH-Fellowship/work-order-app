@@ -10,3 +10,6 @@ export const UPDATE_ORDERS = 'UPDATE_ORDERS'
 
 // Dashboard Detail Actions
 export const GET_DASHBOARD_DETAIL_DATA = 'GET_DASHBOARD_DETAIL_DATA'
+
+// User Actions
+export const SET_CURRENT_USER = 'SET_CURRENT_USER'

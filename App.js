@@ -32,6 +32,7 @@ export default function App() {
   const [user, setUser] = useState();
 
   firebase.auth().onAuthStateChanged((user) => {
+    console.log(user.email)
     if (user) {
       setUser(user);
     } else {

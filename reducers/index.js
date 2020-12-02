@@ -14,7 +14,11 @@ const modalState = {
 };
 
 const dashboardDetailState = {
-  order: []
+  order: [],
+};
+
+const usernameState = {
+  username: "",
 };
 
 const modalReducer = (state = modalState, action) => {
@@ -75,10 +79,24 @@ const detailReducer = (state = dashboardDetailState, action) => {
   }
 };
 
+const usernameReducer = (state = usernameState, action) => {
+  switch (action.type) {
+    case actionTypes.SET_CURRENT_USER:
+      return {
+        ...state,
+        username: action.username,
+      };
+
+    default:
+      return state;
+  }
+};
+
 const rootReducer = combineReducers({
   modalReducer,
   orderReducer,
   detailReducer,
+  usernameReducer,
 });
 
 export default rootReducer;
