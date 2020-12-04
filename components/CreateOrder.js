@@ -105,7 +105,7 @@ const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
             onBlur={handleBlur("description")}
             value={values.description}
           />
-          <Button title="Pick an image from camera roll" onPress={openImagePicker(values.image)} />
+          <Button title="Pick an image from camera roll" onPress={() => openImagePicker(values.image)} />
           <FormButton onSubmit={handleSubmit} text="Submit" />
         </View>
       )}
