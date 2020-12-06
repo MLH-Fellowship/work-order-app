@@ -4,8 +4,7 @@ import { StatusBar } from "react-native";
 import MapPage from "../pages/MapPage";
 import DashboardPage from "../pages/DashboardPage";
 import SettingsPage from "../pages/SettingsPage";
-import { setCurrentUsername } from "../actions/index";
-import { Provider as StoreProvider, useSelector } from "react-redux";
+import { setCurrentUser } from "../actions/index";
 
 // Theme
 import { theme } from "../core/theme";
@@ -19,7 +18,7 @@ import { NavigationContainer } from "@react-navigation/native";
 
 const MainContainer = ({ Tab, user }) => {
   const dispath = useDispatch();
-  useEffect(() => setCurrentUsername(user.email)(dispath), []);
+  useEffect(() => setCurrentUser(user.email)(dispath), []);
   return (
     <NavigationContainer>
       <StatusBar

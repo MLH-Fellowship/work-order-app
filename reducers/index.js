@@ -17,8 +17,9 @@ const dashboardDetailState = {
   order: [],
 };
 
-const usernameState = {
+const userState = {
   username: "",
+  role: "service-member",
 };
 
 const modalReducer = (state = modalState, action) => {
@@ -79,9 +80,9 @@ const detailReducer = (state = dashboardDetailState, action) => {
   }
 };
 
-const usernameReducer = (state = usernameState, action) => {
+const userReducer = (state = userState, action) => {
   switch (action.type) {
-    case actionTypes.SET_CURRENT_USERNAME:
+    case actionTypes.SET_CURRENT_USER:
       return {
         ...state,
         username: action.username,
@@ -96,7 +97,7 @@ const rootReducer = combineReducers({
   modalReducer,
   orderReducer,
   detailReducer,
-  usernameReducer,
+  userReducer,
 });
 
 export default rootReducer;
