@@ -1,11 +1,13 @@
 import React from "react";
 import { StatusBar } from "react-native";
-import MapPage from "./pages/MapPage";
-import DashboardPage from "./pages/DashboardPage";
-import SettingsPage from "./pages/SettingsPage";
+import MapPage from "../pages/MapPage";
+import DashboardPage from "../pages/DashboardPage";
+import SettingsPage from "../pages/SettingsPage";
+import { setCurrentUsername } from "../actions/index";
+import { Provider as StoreProvider, useSelector } from "react-redux";
 
 // Theme
-import { theme } from "./core/theme";
+import { theme } from "../core/theme";
 
 //Icons
 //cheatsheet: https://ionicons.com/v4/cheatsheet.html
@@ -15,6 +17,8 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { NavigationContainer } from "@react-navigation/native";
 
 const MainContainer = ({ Tab, user }) => {
+  const orderState = useSelector((state) => state.usernameReducer);
+  console.log(orderState);
   return (
     <NavigationContainer>
       <StatusBar
