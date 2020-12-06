@@ -25,7 +25,7 @@ const MainContainer = ({ Tab, user }) => {
 
   useEffect(() => {
     setCurrentUser(username)(dispatch);
-    console.log(userState);
+    console.log(userState.role);
   }, []);
   return (
     <NavigationContainer>

@@ -55,12 +55,11 @@ export const getDashboardDetailData = (order) => ({
   order: order,
 });
 
-export const setCurrentUser = (username)  => (dispatch) => {
+export const setCurrentUser = (username) => (dispatch) => {
   db.ref("/users")
     .child(username)
     .on("value", (snap) => {
-      // TODO: THIS IS VERY JANK COME BACK AND FIX THIS
-      let data = snap.val() ? snap.val() : {};
+      let data = snap.val() ? snap.val() : { role: "service-member" };
       dispatch({
         type: actionTypes.SET_CURRENT_USER,
         username: username,
