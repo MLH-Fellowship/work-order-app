@@ -22,6 +22,7 @@ const MainContainer = ({ Tab, user }) => {
   const username = user.email.split("@")[0];
 
   const userState = useSelector((state) => state.userReducer);
+  let role = userState.role;
 
   useEffect(() => {
     setCurrentUser(username)(dispatch);
@@ -68,7 +69,9 @@ const MainContainer = ({ Tab, user }) => {
         }}
       >
         <Tab.Screen name="Map" component={MapPage} />
-        <Tab.Screen name="Dashboard" component={DashboardPage} />
+        {role === "service-member" ? null : (
+          <Tab.Screen name="Dashboard" component={DashboardPage} />
+        )}
         <Tab.Screen name="Settings" component={SettingsPage} />
       </Tab.Navigator>
     </NavigationContainer>
