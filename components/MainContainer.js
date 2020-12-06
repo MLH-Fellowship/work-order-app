@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { StatusBar } from "react-native";
 import MapPage from "../pages/MapPage";
 import DashboardPage from "../pages/DashboardPage";
@@ -17,8 +18,8 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { NavigationContainer } from "@react-navigation/native";
 
 const MainContainer = ({ Tab, user }) => {
-  const orderState = useSelector((state) => state.usernameReducer);
-  console.log(orderState);
+  const dispath = useDispatch();
+  useEffect(() => setCurrentUsername(user.email)(dispath), []);
   return (
     <NavigationContainer>
       <StatusBar
