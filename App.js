@@ -33,7 +33,7 @@ export default function App() {
       {user ? (
         <MainContainer Tab={Tab} user={user} />
       ) : (
-        <LoginContainer Tab={Tab} />
+        <LoginContainer Tab={Tab} user={user} />
       )}
     </StoreProvider>
   );

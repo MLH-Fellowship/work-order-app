@@ -19,7 +19,7 @@ const dashboardDetailState = {
 
 const userState = {
   username: "",
-  role: "service-member",
+  role: "",
 };
 
 const modalReducer = (state = modalState, action) => {
@@ -86,6 +86,7 @@ const userReducer = (state = userState, action) => {
       return {
         ...state,
         username: action.username,
+        role: action.role,
       };
 
     default:
