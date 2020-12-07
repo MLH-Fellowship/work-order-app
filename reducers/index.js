@@ -2,21 +2,20 @@ import { combineReducers } from "redux";
 import * as actionTypes from "../actions/types";
 
 const orderState = {
-  orders: [],
-  userOrders: [],
+  orders: {},
+  userOrders: {},
 };
 
 const modalState = {
   modalActive: false,
   buildingNumber: null,
   buildingName: null,
-  buildingCoordinates: []
+  buildingCoordinates: [],
 };
 
-const dashboardDetailPageNameState = {
-  dashboardName : null
-}
-
+const dashboardDetailState = {
+  order: []
+};
 
 const modalReducer = (state = modalState, action) => {
   switch (action.type) {
@@ -26,7 +25,7 @@ const modalReducer = (state = modalState, action) => {
         modalActive: true,
         buildingNumber: action.buildingNumber,
         buildingName: action.buildingName,
-        buildingCoordinates: action.buildingCoordinates
+        buildingCoordinates: action.buildingCoordinates,
       };
     case actionTypes.DEACTIVATE_MODAL:
       return {
@@ -34,7 +33,7 @@ const modalReducer = (state = modalState, action) => {
         modalActive: false,
         buildingNumber: null,
         buildingName: null,
-        buildingCoordinates: []
+        buildingCoordinates: [],
       };
     default:
       return state;
@@ -44,6 +43,11 @@ const modalReducer = (state = modalState, action) => {
 const orderReducer = (state = orderState, action) => {
   switch (action.type) {
     case actionTypes.GET_ORDERS:
+      return {
+        ...state,
+        orders: action.payload,
+      };
+    case actionTypes.UPDATE_ORDERS:
       return {
         ...state,
         orders: action.payload,
@@ -58,23 +62,23 @@ const orderReducer = (state = orderState, action) => {
   }
 };
 
-const detailReducer = (state = dashboardDetailPageNameState, action) => {
+const detailReducer = (state = dashboardDetailState, action) => {
   switch (action.type) {
-    case actionTypes.GET_DASHBOARD_DETAIL_PAGE_NAME:
+    case actionTypes.GET_DASHBOARD_DETAIL_DATA:
       return {
         ...state,
-        dashboardName: action.buildingName
+        order: action.order,
       };
-  
+
     default:
       return state;
   }
-}
+};
 
 const rootReducer = combineReducers({
   modalReducer,
   orderReducer,
-  detailReducer
+  detailReducer,
 });
 
 export default rootReducer;
