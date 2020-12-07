@@ -67,8 +67,8 @@ const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
     }
   };
 
-  const uploadImage = (path, imageName, values) => {
-    let reference = firebase.storage().ref(imageName);
+  const uploadImage = (path, values) => {
+    let reference = firebase.storage().ref(values.buildingNumber+values.room+values.problem);
     let task = reference.put(path);
 
     task.then(() => {
@@ -97,7 +97,7 @@ const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
         console.log(values);
         if (values.image != null) {
           let image = values.image
-          uploadImage(image, buildingNumber + room + problem, values)
+          uploadImage(image, values)
           //TODO: Minimize problem name
         } else {
           addOrders(values)(dispatch);
