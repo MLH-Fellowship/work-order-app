@@ -90,8 +90,9 @@ const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
         problem: "",
         description: "",
         image: null,
-        coordinates: buildingCoordinates
-      }}
+        coordinates: buildingCoordinates,
+        complete: false
+    }}
       // TODO: Add validation schema
       onSubmit={(values) => {
         console.log(values);

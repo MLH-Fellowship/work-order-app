@@ -25,13 +25,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 const Tab = createBottomTabNavigator();
 
-
-
 export default function App() {
   const middleware = [thunk];
   const store = createStore(rootReducer, applyMiddleware(...middleware));
-
-
 
   const [user, setUser] = useState();
 

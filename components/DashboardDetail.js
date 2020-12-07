@@ -1,10 +1,7 @@
 import React, { useState, useEffect, memo } from "react";
-import * as Location from "expo-location";
 import { StyleSheet, View } from "react-native";
-import MapView, { Marker } from "react-native-maps";
-import Building from "./MapMarkers/Building";
 import { Title, Text } from "react-native-paper";
-import MapViewDirections from "react-native-maps-directions";
+import { useDispatch } from "react-redux";
 import { theme } from "../core/theme";
 
 const styles = StyleSheet.create({

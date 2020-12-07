@@ -7,7 +7,7 @@ export const activateModal = (building) => ({
   type: actionTypes.ACTIVATE_MODAL,
   buildingNumber: building.number,
   buildingName: building.name,
-  buildingCoordinates: building.coordinates
+  buildingCoordinates: building.coordinates,
 });
 
 export const deactivateModal = () => ({
@@ -18,17 +18,30 @@ export const deactivateModal = () => ({
 export const getOrders = () => (dispatch) => {
   db.ref("/orders").on("value", (snap) => {
     let data = snap.val() ? snap.val() : {};
-    let orders = Object.values(data);
-    dispatch({ type: actionTypes.GET_ORDERS, payload: orders });
+    dispatch({ type: actionTypes.GET_ORDERS, payload: data });
   });
 };
 
 export const getUserOrders = (user) => (dispatch) => {
   db.ref("/orders").on("value", (snap) => {
     let data = snap.val() ? snap.val() : {};
-    let orders = Object.values(data);
-    dispatch({ type: actionTypes.GET_USER_ORDERS, payload: orders.filter(order => order.user == user) });
+    console.log(data);
+    // let orders = Object.values(data);
+
+    dispatch({
+      type: actionTypes.GET_USER_ORDERS,
+      payload: data,
+      // payload: orders.filter(
+      //   (order) => order.user == user && order.complete == false
+      // ),
+    });
   });
+};
+
+export const updateOrders = (orderName) => (data) => (dispatch) => {
+  console.log(data);
+  dispatch({ type: actionTypes.UPDATE_ORDERS, payload: data });
+  db.ref("/orders").child(orderName).set(data);
 };
 
 export const addOrders = (order) => (dispatch) => {
@@ -36,7 +49,7 @@ export const addOrders = (order) => (dispatch) => {
   db.ref("/orders").push(order);
 };
 
-export const getDashboardDetailPageName = (buildingName) => ({
-  type: actionTypes.GET_DASHBOARD_DETAIL_PAGE_NAME,
-  buildingName: buildingName
+export const getDashboardDetailData = (order) => ({
+  type: actionTypes.GET_DASHBOARD_DETAIL_DATA,
+  order: order,
 });
