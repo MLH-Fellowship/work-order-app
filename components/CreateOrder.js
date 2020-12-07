@@ -55,14 +55,16 @@ const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
     }
   };
 
-  const uploadImage = (path, imageName) => {
+  const uploadImage = (path, imageName, values) => {
     let reference = firebase.storage().ref(imageName);
     let task = reference.put(path);
 
     task.then(() => {
       console.log('Image uploaded to the bucket!');
       task.snapshot.ref.getDownloadURL().then( function(downloadURL) {
-        return downloadURL
+        values.image = downloadURL;
+        console.log(values.image)
+        addOrders(values)(dispatch)
       })
     }).catch((e) => console.log('uploading image error => ', e));
   };
@@ -78,13 +80,16 @@ const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
         image: null,
         coordinates: buildingCoordinates
       }}
+      // TODO: Add validation schema
       onSubmit={(values) => {
         console.log(values);
         if (values.image != null) {
           let image = values.image
-          values.image = uploadImage(image, buildingNumber + room + problem)
+          uploadImage(image, buildingNumber + room + problem, values)
+          //TODO: Minimize problem name
+        } else {
+          addOrders(values)(dispatch);
         }
-        addOrders(values)(dispatch);
         dispatch(deactivateModal())
       }}
     >
