@@ -19,6 +19,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  image: {
+    height: 50,
+    width: 50,
+    resizeMode: 'stretch'
+  }
 });
 
 const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
@@ -35,7 +40,7 @@ const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
     pickImage(uri)
   }
   
-  const pickImage = async(uri) => {
+  const pickImage = async(handleChange) => {
 
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -43,10 +48,10 @@ const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
       quality: 1,
     })
 
-    console.log(result)
+    console.log("picked an Image", result)
 
     if (!result.cancelled) {
-      uri = result.uri;
+      handleChange(result.uri);
     }
   };
 
@@ -105,10 +110,17 @@ const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
             onBlur={handleBlur("description")}
             value={values.description}
           />
-          <Button title="Pick an image from camera roll" onPress={() => openImagePicker(values.image)} />
+          <Button title="Pick an image from camera roll" onPress={() => openImagePicker(handleChange("image"))} />
+          {values.image && <Image 
+            style={styles.image}
+            backgroundColor='#f0f'
+            source={{
+              uri: values.image
+            }}
+          /> }
           <FormButton onSubmit={handleSubmit} text="Submit" />
         </View>
-      )}
+      )} 
     </Formik>
   );
 };
