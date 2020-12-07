@@ -20,10 +20,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    height: 50,
-    width: 50,
-    resizeMode: 'stretch'
-  }
+    height: 200,
+    width: 200,
+    resizeMode: 'stretch',
+  },
+  button: {
+    width: "80%",
+    backgroundColor: "blue",
+    borderRadius: 5,
+    height: 45,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  buttonText: {
+    color: "#fff",
+  },
 });
 
 const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
@@ -115,7 +127,11 @@ const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
             onBlur={handleBlur("description")}
             value={values.description}
           />
-          <Button title="Pick an image from camera roll" onPress={() => openImagePicker(handleChange("image"))} />
+          <FormButton
+            style={styles.button}
+            text="Pick an image from camera roll" 
+            onSubmit={() => openImagePicker(handleChange("image"))} 
+          />
           {values.image && <Image 
             style={styles.image}
             backgroundColor='#f0f'
