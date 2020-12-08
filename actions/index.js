@@ -1,6 +1,7 @@
 import * as actionTypes from "./types";
 import firebase from "../core/config";
-const db = firebase.database();
+
+export const db = firebase.database();
 
 // Modal Actions
 export const activateModal = (building) => ({
@@ -53,3 +54,16 @@ export const getDashboardDetailData = (order) => ({
   type: actionTypes.GET_DASHBOARD_DETAIL_DATA,
   order: order,
 });
+
+export const setCurrentUser = (username) => (dispatch) => {
+  db.ref("/users")
+    .child(username)
+    .on("value", (snap) => {
+      let data = snap.val() ? snap.val() : { role: "service-member" };
+      dispatch({
+        type: actionTypes.SET_CURRENT_USER,
+        username: username,
+        role: data.role,
+      });
+    });
+};

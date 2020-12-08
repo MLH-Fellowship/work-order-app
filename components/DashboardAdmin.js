@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, memo } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { getOrders } from "../actions";
@@ -47,4 +47,4 @@ const DashboardAdmin = ({ navigation }) => {
   );
 };
 
-export default DashboardAdmin;
+export default memo(DashboardAdmin);

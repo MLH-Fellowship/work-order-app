@@ -1,6 +1,5 @@
 import React, { memo, useState } from "react";
-import { StyleSheet } from "react-native";
-import Background from "../components/Background";
+import { StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
 import Logo from "../components/Logo";
 import Header from "../components/Header";
 import Button from "../components/Button";
@@ -42,11 +41,20 @@ const LoginScreen = ({ navigation }) => {
     setLoading(false);
   };
 
-  return (
-    <Background>
-      <Logo />
+  const styles = StyleSheet.create({
+    container: {
+      justifyContent: "center",
+      alignItems: "center",
+      margin: "5%",
+    },
+  });
 
-      {/* <Header>Welcome back.</Header> */}
+  return (
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
+    >
+      <Logo />
 
       <TextInput
         label="Email"
@@ -77,22 +85,8 @@ const LoginScreen = ({ navigation }) => {
       </Button>
 
       <Toast message={error} onDismiss={() => setError("")} />
-    </Background>
+    </KeyboardAvoidingView>
   );
 };
-
-const styles = StyleSheet.create({
-  row: {
-    flexDirection: "row",
-    marginTop: 4,
-  },
-  label: {
-    color: theme.colors.secondary,
-  },
-  link: {
-    fontWeight: "bold",
-    color: theme.colors.primary,
-  },
-});
 
 export default memo(LoginScreen);

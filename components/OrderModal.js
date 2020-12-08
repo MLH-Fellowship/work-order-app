@@ -6,14 +6,18 @@ import { deactivateModal } from "../actions/index";
 import CreateOrder from "./CreateOrder";
 import { theme } from "../core/theme";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { IconButton, Colors } from "react-native-paper";
 
 const styles = StyleSheet.create({
   modalView: {
     borderRadius: 6,
     backgroundColor: theme.colors.background,
+    overflow: "hidden",
+    height: "80%",
+  },
+  modal: {
     justifyContent: "center",
     alignItems: "center",
-    overflow: "hidden",
     height: "80%",
   },
   text: {
@@ -22,8 +26,7 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     alignSelf: "flex-end",
-    right: 0,
-    top: 0,
+    justifyContent: "flex-end",
   },
 });
 
@@ -39,22 +42,24 @@ const OrderModal = () => {
       onSwipeComplete={() => dispatch(deactivateModal())}
     >
       <View style={styles.modalView}>
-        {/* <Icon.Button
-          name="bars"
-          backgroundColor={theme.colors.primary}
+        <IconButton
+          icon="close"
+          color={"white"}
           size={30}
+          onPress={() => dispatch(deactivateModal())}
           style={styles.closeButton}
-          onPress={() => console.log("yeet")}
-        ></Icon.Button> */}
-        <Text style={styles.text}>
-          {modalState.buildingName == null
-            ? `Building ${modalState.buildingNumber}`
-            : modalState.buildingName}
-        </Text>
-        <CreateOrder
-          buildingNumber={modalState.buildingNumber}
-          buildingCoordinates={modalState.buildingCoordinates}
         />
+        <View style={styles.modal}>
+          <Text style={styles.text}>
+            {modalState.buildingName == null
+              ? `Building ${modalState.buildingNumber}`
+              : modalState.buildingName}
+          </Text>
+          <CreateOrder
+            buildingNumber={modalState.buildingNumber}
+            buildingCoordinates={modalState.buildingCoordinates}
+          />
+        </View>
       </View>
     </Modal>
   );
