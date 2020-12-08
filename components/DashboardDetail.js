@@ -1,5 +1,5 @@
 import React, { useState, useEffect, memo } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import { Title, Text } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { theme } from "../core/theme";
@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: theme.colors.background,
   },
   bottomView: {
     flex: 1,
@@ -33,13 +34,21 @@ const DashboardDetail = ({ route, navigation }) => {
     problem,
     room,
     user,
+    image,
   } = route.params;
+
+  console.log(image);
 
   return (
     <View style={styles.container}>
       <View style={styles.upperView}>
-        <Text>Insert Image Here</Text>
+        {image == null ? (
+          <Title style={styles.text}>No image uploaded</Title>
+        ) : (
+          <Image source={{ uri: image }} style={{ width: 300, height: 300 }} />
+        )}
       </View>
+
       <View style={styles.bottomView}>
         <Title style={styles.text}>Room:</Title>
         <Text style={styles.text}>{room}</Text>
