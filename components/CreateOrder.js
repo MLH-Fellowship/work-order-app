@@ -1,12 +1,15 @@
 import { Formik } from "formik";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Image, Button } from "react-native";
 import { useDispatch } from "react-redux";
 import { addOrders } from "../actions/index";
 import FormButton from "./FormButton";
 import FormInput from "./FormInput";
 import { deactivateModal } from "../actions/index";
 import {theme} from "../core/theme";
+import * as ImagePicker from 'expo-image-picker';
+
+import firebase from "../core/config";
 
 const styles = StyleSheet.create({
   container: {
@@ -16,10 +19,67 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  image: {
+    height: 200,
+    width: 200,
+    resizeMode: 'stretch',
+  },
+  button: {
+    width: "80%",
+    backgroundColor: "blue",
+    borderRadius: 5,
+    height: 45,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 10,
+  },
+  buttonText: {
+    color: "#fff",
+  },
 });
 
 const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
   const dispatch = useDispatch();
+
+  const openImagePicker = async(uri) => {
+    let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+
+    if(permissionResult.granted === false) {
+      alert('Permission to access camera roll is required!');
+      return;
+    }
+
+    pickImage(uri)
+  }
+  
+  const pickImage = async(handleChange) => {
+
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+    })
+
+    console.log("picked an Image", result)
+
+    if (!result.cancelled) {
+      handleChange(result.uri);
+    }
+  };
+
+  const uploadImage = (path, values) => {
+    let reference = firebase.storage().ref(values.buildingNumber+values.room+values.problem);
+    let task = reference.put(path);
+
+    task.then(() => {
+      console.log('Image uploaded to the bucket!');
+      task.snapshot.ref.getDownloadURL().then( function(downloadURL) {
+        values.image = downloadURL;
+        console.log(values.image)
+        addOrders(values)(dispatch)
+      })
+    }).catch((e) => console.log('uploading image error => ', e));
+  };
 
   return (
     <Formik
@@ -29,12 +89,20 @@ const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
         room: "",
         problem: "",
         description: "",
+        image: null,
         coordinates: buildingCoordinates,
         complete: false
-      }}
+    }}
+      // TODO: Add validation schema
       onSubmit={(values) => {
         console.log(values);
-        addOrders(values)(dispatch);
+        if (values.image != null) {
+          let image = values.image
+          uploadImage(image, values)
+          //TODO: Minimize problem name
+        } else {
+          addOrders(values)(dispatch);
+        }
         dispatch(deactivateModal())
       }}
     >
@@ -60,9 +128,21 @@ const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
             onBlur={handleBlur("description")}
             value={values.description}
           />
+          <FormButton
+            style={styles.button}
+            text="Pick an image from camera roll" 
+            onSubmit={() => openImagePicker(handleChange("image"))} 
+          />
+          {values.image && <Image 
+            style={styles.image}
+            backgroundColor='#f0f'
+            source={{
+              uri: values.image
+            }}
+          /> }
           <FormButton onSubmit={handleSubmit} text="Submit" />
         </View>
-      )}
+      )} 
     </Formik>
   );
 };
