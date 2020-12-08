@@ -6,14 +6,13 @@ import { addOrders } from "../actions/index";
 import FormButton from "./FormButton";
 import FormInput from "./FormInput";
 import { deactivateModal } from "../actions/index";
-import {theme} from "../core/theme";
-import * as ImagePicker from 'expo-image-picker';
+import { theme } from "../core/theme";
+import * as ImagePicker from "expo-image-picker";
 
 import firebase from "../core/config";
 
 const styles = StyleSheet.create({
   container: {
-
     width: "100%",
     backgroundColor: theme.colors.background,
     justifyContent: "center",
@@ -22,7 +21,7 @@ const styles = StyleSheet.create({
   image: {
     height: 200,
     width: 200,
-    resizeMode: 'stretch',
+    resizeMode: "stretch",
   },
   button: {
     width: "80%",
@@ -38,49 +37,78 @@ const styles = StyleSheet.create({
   },
 });
 
-const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
+const CreateOrder = ({ buildingNumber, buildingCoordinates }) => {
   const dispatch = useDispatch();
 
-  const openImagePicker = async(handleChangeImage) => {
+  const openImagePicker = async (handleImageChange) => {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
 
-    if(permissionResult.granted === false) {
-      alert('Permission to access camera roll is required!');
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
       return;
     }
 
-    pickImage(handleChangeImage)
-  }
-  
-  const pickImage = async(handleChangeImage) => {
+    pickImage(handleImageChange);
+  };
 
+  const openCamera = async (handleImageChange) => {
+    let permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+
+    takePicture(handleImageChange);
+  };
+
+  const takePicture = async (handleImageChange) => {
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    console.log("Took a picture!", result);
+
+    if (!result.cancelled) {
+      handleImageChange(result.uri);
+    }
+  };
+
+  const pickImage = async (handleImageChange) => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       quality: 1,
-    })
+    });
 
-    console.log("picked an Image", result)
+    console.log("picked an Image!", result);
 
     if (!result.cancelled) {
-      handleChangeImage(result.uri);
+      handleImageChange(result.uri);
     }
   };
 
-  const uploadImage = async(path, values) => {
+  const uploadImage = async (path, values) => {
     const response = await fetch(path);
     const blob = await response.blob();
-    let reference = firebase.storage().ref().child('images/'+buildingNumber+values.room+values.problem);
+    let reference = firebase
+      .storage()
+      .ref()
+      .child("images/" + buildingNumber + values.room + values.problem);
     let task = reference.put(blob);
 
-    task.then(() => {
-      console.log('Image uploaded to the bucket!');
-      task.snapshot.ref.getDownloadURL().then( (downloadURL) => {
-        values.image = downloadURL;
-        console.log(values.image)
-        addOrders(values)(dispatch)
+    task
+      .then(() => {
+        console.log("Image uploaded to the bucket!");
+        task.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          values.image = downloadURL;
+          console.log(values.image);
+          addOrders(values)(dispatch);
+        });
       })
-    }).catch((e) => console.log('uploading image error => ', e));
+      .catch((e) => console.log("uploading image error => ", e));
   };
 
   return (
@@ -93,19 +121,19 @@ const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
         description: "",
         image: null,
         coordinates: buildingCoordinates,
-        complete: false
-    }}
+        complete: false,
+      }}
       // TODO: Add validation schema
       onSubmit={(values) => {
         console.log(values);
         if (values.image != null) {
-          let image = values.image
-          uploadImage(image, values)
+          let image = values.image;
+          uploadImage(image, values);
           //TODO: Minimize problem name
         } else {
           addOrders(values)(dispatch);
         }
-        dispatch(deactivateModal())
+        dispatch(deactivateModal());
       }}
     >
       {({ handleChange, handleBlur, handleSubmit, values }) => (
@@ -132,19 +160,26 @@ const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
           />
           <FormButton
             style={styles.button}
-            text="Pick an image from camera roll" 
-            onSubmit={() => openImagePicker(handleChange("image"))} 
+            text="Pick an image for work order"
+            onSubmit={() => openImagePicker(handleChange("image"))}
           />
-          {values.image && <Image 
-            style={styles.image}
-            backgroundColor='#f0f'
-            source={{
-              uri: values.image
-            }}
-          /> }
+          <FormButton
+            style={styles.button}
+            text="Take a picture for work order"
+            onSubmit={() => openCamera(handleChange("image"))}
+          />
+          {values.image && (
+            <Image
+              style={styles.image}
+              backgroundColor="#f0f"
+              source={{
+                uri: values.image,
+              }}
+            />
+          )}
           <FormButton onSubmit={handleSubmit} text="Submit" />
         </View>
-      )} 
+      )}
     </Formik>
   );
 };
