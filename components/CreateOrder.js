@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
   const dispatch = useDispatch();
 
-  const openImagePicker = async(uri) => {
+  const openImagePicker = async(handleChangeImage) => {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
 
     if(permissionResult.granted === false) {
@@ -49,10 +49,10 @@ const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
       return;
     }
 
-    pickImage(uri)
+    pickImage(handleChangeImage)
   }
   
-  const pickImage = async(handleChange) => {
+  const pickImage = async(handleChangeImage) => {
 
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -63,17 +63,19 @@ const CreateOrder = ({buildingNumber, buildingCoordinates}) => {
     console.log("picked an Image", result)
 
     if (!result.cancelled) {
-      handleChange(result.uri);
+      handleChangeImage(result.uri);
     }
   };
 
-  const uploadImage = (path, values) => {
-    let reference = firebase.storage().ref(values.buildingNumber+values.room+values.problem);
-    let task = reference.put(path);
+  const uploadImage = async(path, values) => {
+    const response = await fetch(path);
+    const blob = await response.blob();
+    let reference = firebase.storage().ref().child('images/'+buildingNumber+values.room+values.problem);
+    let task = reference.put(blob);
 
     task.then(() => {
       console.log('Image uploaded to the bucket!');
-      task.snapshot.ref.getDownloadURL().then( function(downloadURL) {
+      task.snapshot.ref.getDownloadURL().then( (downloadURL) => {
         values.image = downloadURL;
         console.log(values.image)
         addOrders(values)(dispatch)
