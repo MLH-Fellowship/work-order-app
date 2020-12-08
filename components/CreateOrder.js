@@ -19,8 +19,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   image: {
-    height: 200,
-    width: 200,
+    height: 100,
+    width: 100,
     resizeMode: "stretch",
   },
   button: {
