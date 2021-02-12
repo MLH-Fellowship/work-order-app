@@ -1,12 +1,11 @@
 import React from "react";
-import { StyleSheet, View, Text, Button, Card } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import Modal from "react-native-modal";
 import { useSelector, useDispatch } from "react-redux";
 import { deactivateModal } from "../actions/index";
 import CreateOrder from "./CreateOrder";
 import { theme } from "../core/theme";
-import Icon from "react-native-vector-icons/FontAwesome";
-import { IconButton, Colors } from "react-native-paper";
+import { IconButton } from "react-native-paper";
 
 const styles = StyleSheet.create({
   modalView: {
