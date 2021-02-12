@@ -41,7 +41,7 @@ const CreateOrder = ({ buildingNumber, buildingCoordinates }) => {
   const dispatch = useDispatch();
 
   const openImagePicker = async (handleImageChange) => {
-    let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
     if (permissionResult.granted === false) {
       alert("Permission to access camera roll is required!");
