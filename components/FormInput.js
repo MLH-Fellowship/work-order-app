@@ -6,24 +6,32 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     overflow: "hidden",
     width: "80%",
-    height: "10%",
-    marginTop: 10,
+    height: 32,
+    padding: 10,
     marginBottom: 10,
     borderRadius: 3,
   },
 });
 
-const FormInput = (props) => {
+const FormInput = ({
+  style = {},
+  placeholder,
+  onChangeText,
+  onBlur,
+  value,
+  multiline,
+  numberOfLines
+}) => {
   return (
     <TextInput
-      style={styles.input}
-      placeholder={props.placeholder}
+      style={StyleSheet.compose(styles.input, style)}
+      placeholder={placeholder}
       placeholderTextColor="gray"
-      onChangeText={props.onChangeText}
-      onBlur={props.onBlur}
-      value={props.value}
-      multiline={props.multiline}
-      numberOfLines={props.numberOfLines}
+      onChangeText={onChangeText}
+      onBlur={onBlur}
+      value={value}
+      multiline={multiline}
+      numberOfLines={numberOfLines}
     />
   );
 };
