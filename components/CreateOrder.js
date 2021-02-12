@@ -61,20 +61,21 @@ const CreateOrder = ({ buildingNumber, buildingCoordinates }) => {
       {({ handleChange, handleBlur, handleSubmit, values }) => (
         <View style={styles.container}>
           <FormInput
-            placeholder=" Room #"
+            placeholder="Room #"
             onChangeText={handleChange("room")}
             onBlur={handleBlur("room")}
             value={values.room}
           />
           <FormInput
-            placeholder=" Problem"
+            placeholder="Problem"
             onChangeText={handleChange("problem")}
             onBlur={handleBlur("problem")}
             value={values.problem}
           />
           <FormInput
-            placeholder=" Description"
+            placeholder="Description"
             multiline={true}
+            style={{height: 64}}
             numberOfLines={2}
             onChangeText={handleChange("description")}
             onBlur={handleBlur("description")}
