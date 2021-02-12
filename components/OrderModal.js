@@ -16,12 +16,12 @@ const styles = StyleSheet.create({
     height: "80%",
   },
   modal: {
-    justifyContent: "center",
     alignItems: "center",
     height: "80%",
   },
   text: {
-    fontSize: 20,
+    fontSize: 24,
+    marginBottom: 24,
     color: theme.colors.text,
   },
   closeButton: {
