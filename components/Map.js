@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Button, TouchableOpacity, Text } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import buildingData from "../buildings.json";
 import OrderModal from "./OrderModal";
@@ -27,10 +27,32 @@ const Map = () => {
   const dispatch = useDispatch();
 
   const [trackViewChanges, setTrackViewChanges] = useState(true);
+  const [addMarker, setAddMarker] = useState(false);
+
+  const [pinLongitude, setPinLongitude] = useState(32.340773);
+  const [pinLatitude, setPinLatitude] = useState(-84.976813);
+
+  const [pinMarker, setPinMarker] = useState(
+    [
+      {
+        latitude: 32.340773,
+        longitude: -84.976813,
+      }
+    ]
+  );
 
   const stopTrackingViewChanges = () => {
     setTrackViewChanges(false);
   };
+
+  const markers = [
+    {
+      latitude: 32.340773,
+      longitude: -84.976813,
+      title: 'Foo Place',
+      subtitle: '1234 Foo Drive',
+    }
+  ];
 
   return (
     <View style={styles.container}>
@@ -44,7 +66,32 @@ const Map = () => {
           latitudeDelta: 0.00922,
           longitudeDelta: 0.00421,
         }}
+        onPress={(e) => {
+          console.log(e.nativeEvent.coordinate);
+          setPinMarker(
+            [
+              e.nativeEvent.coordinate
+            ]
+          );
+        }}
       >
+
+        {pinMarker.map((added, index) => (
+          <View key={index}>
+            <Marker
+              key={index}
+              coordinate={{
+                latitude: added.latitude,
+                longitude: added.longitude,
+              }}
+              onPress={() => dispatch(activateModal(added))}
+            >
+            </Marker>
+          </View>
+        ))}
+
+
+
         {buildingData.buildings.map((marker, index) => (
           <View key={index}>
             <Marker
@@ -74,8 +121,24 @@ const Map = () => {
             </Marker>
           </View>
         ))}
-        
       </MapView>
+        <View>
+          <TouchableOpacity
+            onPress={() => {
+              setAddMarker(!addMarker);
+              console.log(!addMarker);
+            }}
+          >
+            <Text>Add Marker to Map</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              console.log('Add Marker to my Location');
+            }}
+          >
+            <Text>Add Marker at my Location</Text>
+          </TouchableOpacity>
+        </View>
       <OrderModal />
     </View>
   );
