@@ -1,15 +1,15 @@
 import { Formik } from "formik";
+
 import React from "react";
-import { StyleSheet, View, Image, Button } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import { useDispatch } from "react-redux";
 import { addOrders } from "../actions/index";
 import FormButton from "./FormButton";
 import FormInput from "./FormInput";
 import { deactivateModal } from "../actions/index";
 import { theme } from "../core/theme";
-import * as ImagePicker from "expo-image-picker";
+import ImageSelectButtonGroup, { uploadImage }  from "./ImageSelectionButtonGroup";
 
-import firebase from "../core/config";
 
 const styles = StyleSheet.create({
   container: {
@@ -23,14 +23,8 @@ const styles = StyleSheet.create({
     width: 100,
     resizeMode: "stretch",
   },
-  button: {
-    width: "80%",
-    backgroundColor: "blue",
-    borderRadius: 5,
-    height: 45,
-    alignItems: "center",
-    justifyContent: "center",
-    marginBottom: 10,
+  submitButton: {
+    backgroundColor: theme.colors.success,
   },
   buttonText: {
     color: "#fff",
@@ -39,78 +33,7 @@ const styles = StyleSheet.create({
 
 const CreateOrder = ({ buildingNumber, buildingCoordinates }) => {
   const dispatch = useDispatch();
-
-  const openImagePicker = async (handleImageChange) => {
     let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-    if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
-      return;
-    }
-
-    pickImage(handleImageChange);
-  };
-
-  const openCamera = async (handleImageChange) => {
-    let permissionResult = await ImagePicker.requestCameraPermissionsAsync();
-
-    if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
-      return;
-    }
-
-    takePicture(handleImageChange);
-  };
-
-  const takePicture = async (handleImageChange) => {
-    let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      quality: 1,
-    });
-
-    console.log("Took a picture!", result);
-
-    if (!result.cancelled) {
-      handleImageChange(result.uri);
-    }
-  };
-
-  const pickImage = async (handleImageChange) => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      quality: 1,
-    });
-
-    console.log("picked an Image!", result);
-
-    if (!result.cancelled) {
-      handleImageChange(result.uri);
-    }
-  };
-
-  const uploadImage = async (path, values) => {
-    const response = await fetch(path);
-    const blob = await response.blob();
-    let reference = firebase
-      .storage()
-      .ref()
-      .child("images/" + buildingNumber + values.room + values.problem);
-    let task = reference.put(blob);
-
-    task
-      .then(() => {
-        console.log("Image uploaded to the bucket!");
-        task.snapshot.ref.getDownloadURL().then((downloadURL) => {
-          values.image = downloadURL;
-          console.log(values.image);
-          addOrders(values)(dispatch);
-        });
-      })
-      .catch((e) => console.log("uploading image error => ", e));
-  };
-
   return (
     <Formik
       initialValues={{
@@ -125,7 +48,6 @@ const CreateOrder = ({ buildingNumber, buildingCoordinates }) => {
       }}
       // TODO: Add validation schema
       onSubmit={(values) => {
-        console.log(values);
         if (values.image != null) {
           let image = values.image;
           uploadImage(image, values);
@@ -158,17 +80,9 @@ const CreateOrder = ({ buildingNumber, buildingCoordinates }) => {
             onBlur={handleBlur("description")}
             value={values.description}
           />
-          <FormButton
-            style={styles.button}
-            text="Pick an image for work order"
-            onSubmit={() => openImagePicker(handleChange("image"))}
-          />
-          <FormButton
-            style={styles.button}
-            text="Take a picture for work order"
-            onSubmit={() => openCamera(handleChange("image"))}
-          />
-          {values.image && (
+          <ImageSelectButtonGroup handleChange={handleChange}></ImageSelectButtonGroup>
+          { // TODO: try to fit this image display into ImageSelectButtonGroup
+            values.image && (
             <Image
               style={styles.image}
               backgroundColor="#f0f"
@@ -177,7 +91,7 @@ const CreateOrder = ({ buildingNumber, buildingCoordinates }) => {
               }}
             />
           )}
-          <FormButton onSubmit={handleSubmit} text="Submit" />
+          <FormButton onSubmit={handleSubmit} style={styles.submitButton} text="Submit" />
         </View>
       )}
     </Formik>
