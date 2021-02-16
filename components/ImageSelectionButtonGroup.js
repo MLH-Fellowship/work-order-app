@@ -57,13 +57,14 @@ const pickImage = async (handleImageChange) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // width: '100%',
     flexDirection: 'row',
-    alignContent: 'space-between'
+    // justifyContent: 'space-between',
   },
   button: {
     // TODO: figure out how to set space-betweem
-    width: "40%",
+    width: 64,
+    height: 64,
     backgroundColor: theme.colors.primary,
   },
 })
@@ -89,19 +90,25 @@ export const uploadImage = async (path, values) => {
     .catch((e) => console.log("uploading image error => ", e));
 };
 
-const ImageSelectButtonGroup = ({ handleChange }) => {
+const ImageSelectButtonGroup = ({ handleChange, handleChangeProp }) => {
+  console.log(handleChange, handleChangeProp);
   return (
     <View style={styles.container}>
       <FormButton
-        style={styles.button}
-        onSubmit={() => openImagePicker(handleChange("image"))}
+        style={{...styles.button, marginRight: 5}}
+        onSubmit={() => openImagePicker(handleChange(handleChangeProp))}
         icon="image"
       />
       <FormButton
         style={styles.button}
-        onSubmit={() => openCamera(handleChange("image"))}
+        onSubmit={() => openCamera(handleChange(handleChangeProp))}
         icon="camera"
       />
+      {/* <FormButton
+        style={styles.button}
+        onSubmit={() => openCamera(handleChange(handleChangeProp))}
+        icon="file-image"
+      /> */}
     </View>
   )
 }
