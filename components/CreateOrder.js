@@ -1,7 +1,7 @@
 import { Formik } from "formik";
 
 import React from "react";
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View, Image, Text } from "react-native";
 import { useDispatch } from "react-redux";
 import { addOrders } from "../actions/index";
 import FormButton from "./FormButton";
@@ -18,12 +18,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  image: {
-    height: 100,
-    width: 100,
-    resizeMode: "stretch",
+  imagePlaceholderText: {
+    fontSize: 16,
+    color: theme.colors.accent,
+    alignSelf: 'center',
   },
+  imageContainer: {
+    justifyContent: 'center',
+    backgroundColor: theme.colors.disabled,
+    width: '100%',
+    marginBottom: 10,
+    borderRadius: 5,
+    overflow: 'hidden',
+    flexDirection: 'row',
+    height: 300
+  },
+  image: { flex: 1, resizeMode: 'stretch'},
   submitButton: {
+    height: 64,
+    width: null,
+    flex: 1,
+    alignSelf: 'stretch',
+    marginLeft: 6,
     backgroundColor: theme.colors.success,
   },
   buttonText: {
@@ -41,6 +57,7 @@ const CreateOrder = ({ buildingNumber, buildingCoordinates }) => {
         room: "",
         problem: "",
         description: "",
+        // image: 'file:///Users/vulcan/Library/Developer/CoreSimulator/Devices/F1C8E25E-E8E4-4ADE-BEBD-93534275204F/data/Containers/Data/Application/336D36DD-1E9A-45AD-A425-3695A8435367/Library/Caches/ExponentExperienceData/%2540anonymous%252FWork-Order-App-e54eeff5-86be-423f-b214-72a9dda0c9f7/ImagePicker/ECD67417-000E-4B25-B715-4E79C4F2A745.jpg',
         image: null,
         coordinates: buildingCoordinates,
         complete: false,
@@ -80,18 +97,28 @@ const CreateOrder = ({ buildingNumber, buildingCoordinates }) => {
             onBlur={handleBlur("description")}
             value={values.description}
           />
-          <ImageSelectButtonGroup handleChange={handleChange}></ImageSelectButtonGroup>
-          { // TODO: try to fit this image display into ImageSelectButtonGroup
-            values.image && (
-            <Image
-              style={styles.image}
-              backgroundColor="#f0f"
-              source={{
-                uri: values.image,
-              }}
-            />
-          )}
-          <FormButton onSubmit={handleSubmit} style={styles.submitButton} text="Submit" />
+          
+          <View style={styles.imageContainer}>
+            {values.image ? (
+              <Image
+                style={styles.image}
+                source={{
+                  uri: values.image,
+                }}
+              />
+            ) : (
+                <Text style={styles.imagePlaceholderText}>No image selected</Text>
+              )}
+            </View>
+          
+          <View style={{
+            width: '100%',
+            flexDirection: 'row',
+          }}>
+            <ImageSelectButtonGroup handleChange={handleChange} handleChangeProp="image"></ImageSelectButtonGroup>
+            <FormButton onSubmit={handleSubmit} style={styles.submitButton} text="Submit" />
+          </View>
+          
         </View>
       )}
     </Formik>
