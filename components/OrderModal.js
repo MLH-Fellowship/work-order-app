@@ -8,25 +8,34 @@ import { theme } from "../core/theme";
 import { IconButton } from "react-native-paper";
 
 const styles = StyleSheet.create({
-  modalView: {
+  model: {
     borderRadius: 6,
     backgroundColor: theme.colors.background,
     overflow: "hidden",
-    height: "80%",
+    padding: 16
   },
-  modal: {
+  modalContents: {
     alignItems: "center",
-    height: "80%",
   },
-  text: {
+  header: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 10,
+  },
+  headerTitle: {
     fontSize: 24,
-    marginBottom: 24,
+    marginBottom: 6,
     color: theme.colors.text,
   },
-  closeButton: {
-    alignSelf: "flex-end",
-    justifyContent: "flex-end",
+  headerSubtitle: {
+    fontSize: 16,
+    marginBottom: 10,
+    color: theme.colors.text,
   },
+  headerCloseIcon: {
+    margin: -16
+  }
 });
 
 const OrderModal = () => {
@@ -34,26 +43,33 @@ const OrderModal = () => {
   const dispatch = useDispatch();
   console.log(modalState);
 
+  const buildingName = modalState.buildingName == null
+              ? `Building ${modalState.buildingNumber}`
+    : modalState.buildingName
+  const buildingNameParts = buildingName.split('-', 2)
+
   return (
     <Modal
       isVisible={modalState.modalActive}
       swipeDirection="down"
       onSwipeComplete={() => dispatch(deactivateModal())}
     >
-      <View style={styles.modalView}>
-        <IconButton
-          icon="close"
-          color={"white"}
-          size={30}
-          onPress={() => dispatch(deactivateModal())}
-          style={styles.closeButton}
-        />
-        <View style={styles.modal}>
-          <Text style={styles.text}>
-            {modalState.buildingName == null
-              ? `Building ${modalState.buildingNumber}`
-              : modalState.buildingName}
-          </Text>
+      <View style={styles.model}>
+        <View style={styles.header}>
+          <View>
+            <Text style={styles.headerTitle}>{buildingNameParts[0]}</Text>
+            {buildingNameParts[1] && <Text style={styles.headerSubtitle}>{buildingNameParts[1]}</Text>}
+          </View>
+          <View style={styles.headerCloseIcon}>
+            <IconButton
+              icon="close"
+              color={"white"}
+              size={30}
+              onPress={() => dispatch(deactivateModal())}
+              />
+          </View>
+        </View>
+        <View style={styles.modalContents}>
           <CreateOrder
             buildingNumber={modalState.buildingNumber}
             buildingCoordinates={modalState.buildingCoordinates}
