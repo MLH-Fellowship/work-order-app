@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
 
 const CreateOrder = ({ buildingNumber, buildingCoordinates }) => {
   const dispatch = useDispatch();
-    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
   return (
     <Formik
       initialValues={{
