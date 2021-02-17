@@ -1,7 +1,7 @@
 import { Formik } from "formik";
 
 import React from "react";
-import { StyleSheet, View, Image, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { addOrders } from "../actions/index";
 import FormButton from "./FormButton";
@@ -18,22 +18,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  imagePlaceholderText: {
-    fontSize: 16,
-    color: theme.colors.accent,
-    alignSelf: 'center',
+  descriptionTextbox: {
+    height: 64
   },
-  imageContainer: {
-    justifyContent: 'center',
-    backgroundColor: theme.colors.disabled,
+  buttonGroupParanet: {
     width: '100%',
-    marginBottom: 10,
-    borderRadius: 5,
-    overflow: 'hidden',
     flexDirection: 'row',
-    height: 300
   },
-  image: { flex: 1, resizeMode: 'stretch'},
   submitButton: {
     height: 64,
     width: null,
@@ -41,9 +32,6 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     marginLeft: 6,
     backgroundColor: theme.colors.success,
-  },
-  buttonText: {
-    color: "#fff",
   },
 });
 
@@ -57,7 +45,6 @@ const CreateOrder = ({ buildingNumber, buildingCoordinates }) => {
         room: "",
         problem: "",
         description: "",
-        // image: 'file:///Users/vulcan/Library/Developer/CoreSimulator/Devices/F1C8E25E-E8E4-4ADE-BEBD-93534275204F/data/Containers/Data/Application/336D36DD-1E9A-45AD-A425-3695A8435367/Library/Caches/ExponentExperienceData/%2540anonymous%252FWork-Order-App-e54eeff5-86be-423f-b214-72a9dda0c9f7/ImagePicker/ECD67417-000E-4B25-B715-4E79C4F2A745.jpg',
         image: null,
         coordinates: buildingCoordinates,
         complete: false,
@@ -74,7 +61,13 @@ const CreateOrder = ({ buildingNumber, buildingCoordinates }) => {
         dispatch(deactivateModal());
       }}
     >
-      {({ handleChange, handleBlur, handleSubmit, values }) => (
+      {({ handleChange, handleBlur, handleSubmit, values }) => {
+        const { ImagePreview, ButtonGroup } = ImageSelectButtonGroup({
+          form: values,
+          onChange: handleChange,
+          formProp: 'image'
+        }) 
+        return (
         <View style={styles.container}>
           <FormInput
             placeholder="Room #"
@@ -91,36 +84,22 @@ const CreateOrder = ({ buildingNumber, buildingCoordinates }) => {
           <FormInput
             placeholder="Description"
             multiline={true}
-            style={{height: 64}}
+            style={styles.descriptionTextbox}
             numberOfLines={2}
             onChangeText={handleChange("description")}
             onBlur={handleBlur("description")}
             value={values.description}
           />
           
-          <View style={styles.imageContainer}>
-            {values.image ? (
-              <Image
-                style={styles.image}
-                source={{
-                  uri: values.image,
-                }}
-              />
-            ) : (
-                <Text style={styles.imagePlaceholderText}>No image selected</Text>
-              )}
-            </View>
+          <ImagePreview />
           
-          <View style={{
-            width: '100%',
-            flexDirection: 'row',
-          }}>
-            <ImageSelectButtonGroup handleChange={handleChange} handleChangeProp="image"></ImageSelectButtonGroup>
+          <View style={styles.buttonGroupParanet}>
+            <ButtonGroup/>
             <FormButton onSubmit={handleSubmit} style={styles.submitButton} text="Submit" />
           </View>
           
         </View>
-      )}
+      )}}
     </Formik>
   );
 };

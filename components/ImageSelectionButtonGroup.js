@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text, Image } from "react-native";
 import FormButton from "./FormButton";
 import * as ImagePicker from "expo-image-picker";
 import firebase from "../core/config";
@@ -57,16 +57,29 @@ const pickImage = async (handleImageChange) => {
 
 const styles = StyleSheet.create({
   container: {
-    // width: '100%',
     flexDirection: 'row',
-    // justifyContent: 'space-between',
   },
   button: {
-    // TODO: figure out how to set space-betweem
     width: 64,
     height: 64,
     backgroundColor: theme.colors.primary,
   },
+  imagePlaceholderText: {
+    fontSize: 16,
+    color: theme.colors.accent,
+    alignSelf: 'center',
+  },
+  imageContainer: {
+    justifyContent: 'center',
+    backgroundColor: theme.colors.disabled,
+    width: '100%',
+    marginBottom: 10,
+    borderRadius: 5,
+    overflow: 'hidden',
+    flexDirection: 'row',
+    height: 300
+  },
+  image: { flex: 1, resizeMode: 'stretch'},
 })
 
 export const uploadImage = async (path, values) => {
@@ -90,27 +103,37 @@ export const uploadImage = async (path, values) => {
     .catch((e) => console.log("uploading image error => ", e));
 };
 
-const ImageSelectButtonGroup = ({ handleChange, handleChangeProp }) => {
-  console.log(handleChange, handleChangeProp);
-  return (
-    <View style={styles.container}>
-      <FormButton
-        style={{...styles.button, marginRight: 5}}
-        onSubmit={() => openImagePicker(handleChange(handleChangeProp))}
-        icon="image"
-      />
-      <FormButton
-        style={styles.button}
-        onSubmit={() => openCamera(handleChange(handleChangeProp))}
-        icon="camera"
-      />
-      {/* <FormButton
-        style={styles.button}
-        onSubmit={() => openCamera(handleChange(handleChangeProp))}
-        icon="file-image"
-      /> */}
+const ImageSelectButtonGroup = ({ form, formProp, onChange,  }) => {
+  return {
+    ImagePreview: () => (
+      <View style={styles.imageContainer}>
+        {form[formProp] ? (
+          <Image
+            style={styles.image}
+            source={{
+              uri: form[formProp],
+            }}
+          />
+        ) : (
+            <Text style={styles.imagePlaceholderText}>No image selected</Text>
+          )}
+      </View>
+    ),
+    ButtonGroup: () => (
+      <View style={styles.container}>
+        <FormButton
+          style={{...styles.button, marginRight: 5}}
+          onSubmit={() => openImagePicker(onChange(formProp))}
+          icon="image"
+        />
+        <FormButton
+          style={styles.button}
+          onSubmit={() => openCamera(onChange(formProp))}
+          icon="camera"
+        />
     </View>
-  )
+    )
+  }
 }
 
 export default ImageSelectButtonGroup; 
