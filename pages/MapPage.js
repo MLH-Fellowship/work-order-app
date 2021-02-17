@@ -41,6 +41,15 @@ const MapPage = () => {
               onPress={() => navigation.navigate("Search")}
             ></Icon.Button>
           ),
+          headerLeft: () => (
+            <Icon.Button
+              name="plus"
+              backgroundColor={theme.colors.primary}
+              size={25}
+              style={styles.button}
+              onPress={() => console.log(addMarker)}
+            ></Icon.Button>
+          ),
         })}
       />
       <MapStack.Screen
