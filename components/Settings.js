@@ -2,6 +2,7 @@ import React from "react";
 import {
   Container,
   Content,
+  List,
   ListItem,
   Text,
   Left,
@@ -34,6 +35,7 @@ const Settings = () => {
     <View style={styles.container}>
       <Container style={styles.container}>
         <Content>
+          <List>
           {/* <Separator />
           <ListItem avatar>
             <Left>
@@ -100,7 +102,8 @@ const Settings = () => {
             <Left>
               <Text style={styles.text}>Version: 1.0.0</Text>
             </Left>
-          </ListItem>
+            </ListItem>
+            </List>
         </Content>
       </Container>
     </View>
