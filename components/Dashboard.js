@@ -17,19 +17,20 @@ const Dashboard = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const getOrderArray = () => {
-    let orderValues = Object.values(orderState.orders);
-    let orderKeys = Object.keys(orderState.orders);
-    let orderArray = [];
-
-    if (orderValues.length === orderKeys.length) {
-      for (let i = 0; i < orderKeys.length; i++) {
-        if (orderValues[i].complete == false) {
-          orderArray.push([orderKeys[i], orderValues[i]]);
-        }
-      }
-      console.log(orderArray);
-    }
-    return orderArray;
+    const { orders } = orderState
+    return Object.keys(orders)
+      .reduce(
+        (prev, id) =>
+          orders[id].complete
+            ? prev
+            : [
+              ...prev,
+              {
+                id,
+                ...orders[id]
+              }
+            ],
+        [])
   };
 
   useEffect(

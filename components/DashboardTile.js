@@ -31,29 +31,27 @@ const styles = StyleSheet.create({
 
 const DashboardTile = ({ order, navigation }) => {
   const dispatch = useDispatch();
-  const key = order[0];
-  const value = order[1];
   return (
     <View style={styles.container}>
       <Card
         style={styles.card}
         onPress={() => {
           dispatch(getDashboardDetailData(order));
-          navigation.navigate("DashboardDetail", value);
+          navigation.navigate("DashboardDetail", order);
         }}
       >
         <Card.Title
-          title={`Building ${value.building}`}
+          title={`Building ${order.building}`}
           titleStyle={styles.cardText}
           subtitleStyle={styles.cardText}
         />
         <Card.Content>
-          <Paragraph style={styles.cardText}>{`Room ${value.room}`}</Paragraph>
+          <Paragraph style={styles.cardText}>{`Room ${order.room}`}</Paragraph>
           <Paragraph
             style={styles.cardText}
-          >{`${value.description}`}</Paragraph>
+          >{`${order.description}`}</Paragraph>
           <Paragraph style={styles.cardText}>{`Status: ${
-            value.complete ? "complete" : "incomplete"
+            order.complete ? "complete" : "incomplete"
           }   `}</Paragraph>
         </Card.Content>
       </Card>
