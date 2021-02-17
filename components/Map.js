@@ -30,7 +30,6 @@ const Map = () => {
   const [trackViewChanges, setTrackViewChanges] = useState(true);
   const [addMarker, setAddMarker] = useState(false);
   const [pinMarker, setPinMarker] = useState([]);
-
   const [someText, setSomeText] = useState('Add Pin to Custom Location');
 
   const stopTrackingViewChanges = () => {
@@ -53,7 +52,11 @@ const Map = () => {
           if(addMarker) {
             setPinMarker(
               [
-                e.nativeEvent.coordinate
+                {
+                  coordinates: e.nativeEvent.coordinate,
+                  name: 'Problem outside of building',
+                  number: null
+                }
               ]
             );
           }
@@ -65,13 +68,19 @@ const Map = () => {
             <Marker draggable
               key={index}
               coordinate={{
-                latitude: added.latitude,
-                longitude: added.longitude,
+                latitude: added.coordinates.latitude,
+                longitude: added.coordinates.longitude,
               }}
               onPress={() => {
                 dispatch(activateModal(added));
               }}
-              onDragEnd={(e) => setPinMarker([e.nativeEvent.coordinate])}
+              onDragEnd={(e) => setPinMarker([
+                {
+                  coordinates: e.nativeEvent.coordinate,
+                  name: 'Problem outside of building',
+                  number: null
+                }
+              ])}
             >
             </Marker>
           </View>
@@ -114,7 +123,13 @@ const Map = () => {
         ))}
       </MapView>
         <View>
-          <TouchableOpacity
+          <TouchableOpacity style={
+            {
+              height: 50, 
+              alignItems: "center",
+              justifyContent: 'center',
+              backgroundColor: '#3c343c',
+            }}
             onPress={() => {
               setAddMarker(!addMarker);
               if(addMarker) {
@@ -126,23 +141,12 @@ const Map = () => {
               }
             }}
           >
-            <Text>{someText}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              console.log('remove button');
-              setPinMarker([]);
-            }}
-          >
-            <Text>Remove Marker from Map</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              console.log('remove button');
-              setPinMarker([]);
-            }}
-          >
-            <Text>Add Marker at my Location</Text>
+            <Text style={
+            {
+              color: 'white'
+            }}>
+              {someText}
+            </Text>
           </TouchableOpacity>
         </View>
       <OrderModal />
