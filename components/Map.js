@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Button, TouchableOpacity, Text } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import buildingData from "../buildings.json";
 import OrderModal from "./OrderModal";
@@ -13,6 +13,7 @@ import Gym from "./MapMarkers/Gym";
 import Medical from "./MapMarkers/Medical";
 import Office from "./MapMarkers/Office";
 import Dining from "./MapMarkers/Dining";
+import { some } from "lodash";
 
 const styles = StyleSheet.create({
   container: {
@@ -27,6 +28,10 @@ const Map = () => {
   const dispatch = useDispatch();
 
   const [trackViewChanges, setTrackViewChanges] = useState(true);
+  const [addMarker, setAddMarker] = useState(false);
+  const [pinMarker, setPinMarker] = useState([]);
+
+  const [someText, setSomeText] = useState('Add Pin to Custom Location');
 
   const stopTrackingViewChanges = () => {
     setTrackViewChanges(false);
@@ -44,7 +49,36 @@ const Map = () => {
           latitudeDelta: 0.00922,
           longitudeDelta: 0.00421,
         }}
+        onPress={(e) => {
+          if(addMarker) {
+            setPinMarker(
+              [
+                e.nativeEvent.coordinate
+              ]
+            );
+          }
+        }}
       >
+
+        {pinMarker.map((added, index) => (
+          <View key={index}>
+            <Marker draggable
+              key={index}
+              coordinate={{
+                latitude: added.latitude,
+                longitude: added.longitude,
+              }}
+              onPress={() => {
+                dispatch(activateModal(added));
+              }}
+              onDragEnd={(e) => setPinMarker([e.nativeEvent.coordinate])}
+            >
+            </Marker>
+          </View>
+        ))}
+
+
+
         {buildingData.buildings.map((marker, index) => (
           <View key={index}>
             <Marker
@@ -53,7 +87,11 @@ const Map = () => {
                 latitude: marker.coordinates[0],
                 longitude: marker.coordinates[1],
               }}
-              onPress={() => dispatch(activateModal(marker))}
+              onPress={() => {
+                if(!addMarker) {
+                  dispatch(activateModal(marker));
+                }
+              }}
               tracksViewChanges={trackViewChanges}
             >
               {marker.purpose === "Office" ? (
@@ -74,8 +112,39 @@ const Map = () => {
             </Marker>
           </View>
         ))}
-        
       </MapView>
+        <View>
+          <TouchableOpacity
+            onPress={() => {
+              setAddMarker(!addMarker);
+              if(addMarker) {
+                setSomeText('Add Pin to Custom Location');
+                setPinMarker([]);
+              }
+              else {
+                setSomeText('Cancel');
+              }
+            }}
+          >
+            <Text>{someText}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              console.log('remove button');
+              setPinMarker([]);
+            }}
+          >
+            <Text>Remove Marker from Map</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              console.log('remove button');
+              setPinMarker([]);
+            }}
+          >
+            <Text>Add Marker at my Location</Text>
+          </TouchableOpacity>
+        </View>
       <OrderModal />
     </View>
   );
