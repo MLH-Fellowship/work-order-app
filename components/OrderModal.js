@@ -44,7 +44,7 @@ const OrderModal = () => {
   console.log(modalState);
 
   const buildingName = modalState.buildingName == null
-              ? `Building ${modalState.buildingNumber}`
+              ? ``
     : modalState.buildingName
   const buildingNameParts = buildingName.split('-', 2)
 

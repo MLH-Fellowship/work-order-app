@@ -54,8 +54,6 @@ const Map = () => {
               [
                 {
                   coordinates: e.nativeEvent.coordinate,
-                  name: 'Problem outside of building',
-                  number: null
                 }
               ]
             );
@@ -77,8 +75,6 @@ const Map = () => {
               onDragEnd={(e) => setPinMarker([
                 {
                   coordinates: e.nativeEvent.coordinate,
-                  name: 'Problem outside of building',
-                  number: null
                 }
               ])}
             >
