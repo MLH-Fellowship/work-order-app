@@ -12,6 +12,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MainContainer from "./components/MainContainer";
 import LoginContainer from "./components/LoginContainer";
 
+// Theme
+import getTheme from './native-base-theme/components';
+import { StyleProvider } from 'native-base'
+
 const Tab = createBottomTabNavigator();
 
 export default function App() {
@@ -25,12 +29,14 @@ export default function App() {
   });
 
   return (
-    <StoreProvider store={store}>
-      {user ? (
-        <MainContainer Tab={Tab} user={user} />
-      ) : (
-        <LoginContainer Tab={Tab} user={user} />
-      )}
-    </StoreProvider>
+    <StyleProvider  style={getTheme()}>
+      <StoreProvider store={store}>
+        {user ? (
+          <MainContainer Tab={Tab} user={user} />
+        ) : (
+          <LoginContainer Tab={Tab} user={user} />
+        )}
+      </StoreProvider>
+    </StyleProvider>
   );
 }
