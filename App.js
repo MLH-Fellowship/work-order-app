@@ -21,11 +21,7 @@ export default function App() {
   const [user, setUser] = useState();
 
   firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      setUser(user);
-    } else {
-      setUser(user);
-    }
+    setUser(user);
   });
 
   return (
