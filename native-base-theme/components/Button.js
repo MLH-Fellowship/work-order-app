@@ -188,6 +188,9 @@ export default (variables /* : * */ = variable) => {
       '.bordered': {
         ...primaryCommon
       },
+      'NativeBase.Text': {
+        color: variable.inverseTextColor
+      },
       backgroundColor: variables.buttonPrimaryBg
     },
 
