@@ -1,5 +1,5 @@
 import React, { memo, useState } from "react";
-import { StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
+import { StyleSheet, KeyboardAvoidingView, Platform, Modal, View, Text } from "react-native";
 import Logo from "../components/Logo";
 import Header from "../components/Header";
 import Button from "../components/Button";
@@ -14,6 +14,22 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState({ value: "", error: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const [newEmail, setNewEmail] = useState({ value: "", error: "" });
+  const [newPassword, setNewPassword] = useState({ value: "", error: "" });
+  const [phoneNumber, setPhoneNumber] = useState({ value: "", error: "" });
+  const [altPhoneNumber, setAltPhoneNumber] = useState({ value: "", error: "" });
+  const [serviceRole, setServiceRole] = useState({ value: "", error: "" });
+
+
+  const _onCreateAccountPressed = async () => {
+    setModalVisible(true);
+  }
+
+  const _onCancelCreateAccountPressed = async () => {
+    setModalVisible(false);
+  }
 
   const _onLoginPressed = async () => {
     if (loading) return;
@@ -59,10 +75,10 @@ const LoginScreen = ({ navigation }) => {
       <TextInput
         label="Email"
         returnKeyType="next"
-        value={email.value}
-        onChangeText={(text) => setEmail({ value: text, error: "" })}
-        error={!!email.error}
-        errorText={email.error}
+        value={newEmail.value}
+        onChangeText={(text) => setNewEmail({ value: text, error: "" })}
+        error={!!newEmail.error}
+        errorText={newEmail.error}
         autoCapitalize="none"
         autoCompleteType="email"
         textContentType="emailAddress"
@@ -80,8 +96,87 @@ const LoginScreen = ({ navigation }) => {
         autoCapitalize="none"
       />
 
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View>
+          <Text>Hello World!</Text>
+          <TextInput
+            label="Email"
+            returnKeyType="next"
+            value={email.value}
+            onChangeText={(text) => setEmail({ value: text, error: "" })}
+            error={!!email.error}
+            errorText={email.error}
+            autoCapitalize="none"
+            autoCompleteType="email"
+            textContentType="emailAddress"
+            keyboardType="email-address"
+          />
+          
+          <TextInput
+            label="Password"
+            returnKeyType="next"
+            value={newPassword.value}
+            onChangeText={(text) => setNewPassword({ value: text, error: "" })}
+            error={!!newPassword.error}
+            errorText={newPassword.error}
+            secureTextEntry
+            autoCapitalize="none"
+          />
+          
+          <TextInput
+            label="Phone Number"
+            returnKeyType="done"
+            value={phoneNumber.value}
+            onChangeText={(text) => setPhoneNumber({ value: text, error: "" })}
+            error={!!phoneNumber.error}
+            errorText={phoneNumber.error}
+            autoCapitalize="none"
+          />
+
+          <TextInput
+            label="Alt. Phone Number"
+            returnKeyType="done"
+            value={altPhoneNumber.value}
+            onChangeText={(text) => setAltPhoneNumber({ value: text, error: "" })}
+            error={!!altPhoneNumber.error}
+            errorText={altPhoneNumber.error}
+            autoCapitalize="none"
+          />
+
+          <TextInput
+            label="Service Role"
+            returnKeyType="done"
+            value={serviceRole.value}
+            onChangeText={(text) => setServiceRole({ value: text, error: "" })}
+            error={!!serviceRole.error}
+            errorText={serviceRole.error}
+            autoCapitalize="none"
+          />
+
+          <Button loading={loading} mode="contained" onPress={_onCancelCreateAccountPressed}>
+            Cancel
+          </Button>
+
+          <Button loading={loading} mode="contained" onPress={_onCancelCreateAccountPressed}>
+            Submit
+          </Button>
+
+        </View>
+      </Modal>
+
       <Button loading={loading} mode="contained" onPress={_onLoginPressed}>
         Login
+      </Button>
+
+      <Button loading={loading} mode="contained" onPress={_onCreateAccountPressed}>
+        Create Account
       </Button>
 
       <Toast message={error} onDismiss={() => setError("")} />
