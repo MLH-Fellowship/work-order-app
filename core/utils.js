@@ -18,3 +18,16 @@ export const nameValidator = (name) => {
 
   return "";
 };
+
+export const serviceRoleValidator = (role) => {
+  if (!role || role.length <= 0) return "Service role cannot be empty.";
+
+  return "";
+};
+
+export const phoneNumberValidator = (phoneNumber, required) => {
+  if (!phoneNumber) return "Phone number cannot be empty"
+  if(phoneNumber.length < 10) return "Phone number not long enough";
+
+  return "";
+};
