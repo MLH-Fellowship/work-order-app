@@ -14,7 +14,7 @@ import LoginContainer from "./components/LoginContainer";
 
 // Theme
 import getTheme from './native-base-theme/components';
-import { StyleProvider } from 'native-base'
+import commonColor from './native-base-theme/variables/commonColor';
 import { StyleProvider, Root } from 'native-base'
 
 const Tab = createBottomTabNavigator();
@@ -30,7 +30,7 @@ export default function App() {
   });
 
   return (
-    <StyleProvider  style={getTheme()}>
+    <StyleProvider  style={getTheme(commonColor)}>
       <StoreProvider store={store}>
         <Root>
           {user ? (
