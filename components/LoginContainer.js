@@ -11,10 +11,7 @@ import { NavigationContainer } from "@react-navigation/native";
 const LoginContainer = ({ Tab, user }) => {
   return (
     <NavigationContainer>
-      <StatusBar
-        backgroundColor={theme.colors.primary}
-        barStyle="light-content"
-      />
+      <StatusBar barStyle="light-content" backgroundColor="#fff" />
       <Tab.Navigator initialRouteName="Login">
         <Tab.Screen
           name="Login"

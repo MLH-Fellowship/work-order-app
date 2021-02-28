@@ -30,10 +30,7 @@ const MainContainer = ({ Tab, user }) => {
   }, []);
   return (
     <NavigationContainer>
-      <StatusBar
-        backgroundColor={theme.colors.primary}
-        barStyle="light-content"
-      />
+      <StatusBar barStyle="light-content" backgroundColor="#fff" />
       <Tab.Navigator
         initialRouteName="Map"
         screenOptions={({ route }) => ({
@@ -65,6 +62,7 @@ const MainContainer = ({ Tab, user }) => {
           style: {
             backgroundColor: theme.colors.primary,
             borderTopWidth: 0,
+            // position: 'absolute'
           },
         }}
       >
