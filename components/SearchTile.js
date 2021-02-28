@@ -1,5 +1,4 @@
 import React, { memo } from "react";
-import { StyleSheet } from "react-native";
 import { Card, CardItem, Text, Right, Left } from "native-base";
 import { useDispatch } from "react-redux";
 import { activateModal } from "../actions/index";
@@ -11,19 +10,6 @@ import Gym from "./MapMarkers/Gym";
 import Medical from "./MapMarkers/Medical";
 import Office from "./MapMarkers/Office";
 import Dining from "./MapMarkers/Dining";
-
-const styles = StyleSheet.create({
-  card: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-});
 
 const purposeToIcon = {
   "Office" : Office,
