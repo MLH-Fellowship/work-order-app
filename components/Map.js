@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as Location from "expo-location";
-import { StyleSheet, View, Button, TouchableOpacity, Text } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text } from "native-base";
 import MapView, { Marker } from "react-native-maps";
 import buildingData from "../buildings.json";
 import OrderModal from "./OrderModal";
@@ -13,7 +14,6 @@ import Gym from "./MapMarkers/Gym";
 import Medical from "./MapMarkers/Medical";
 import Office from "./MapMarkers/Office";
 import Dining from "./MapMarkers/Dining";
-import { some } from "lodash";
 
 const styles = StyleSheet.create({
   container: {
