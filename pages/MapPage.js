@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
   },
   button: {
-    paddingLeft: 15,
+    paddingRight: 15,
   },
 });
 
