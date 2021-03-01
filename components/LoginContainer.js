@@ -2,9 +2,6 @@ import React from "react";
 import { StatusBar } from "react-native";
 import LoginPage from "../pages/LoginPage";
 
-// Theme
-import { theme } from "../core/theme";
-
 // Navigation
 import { NavigationContainer } from "@react-navigation/native";
 

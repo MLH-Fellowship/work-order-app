@@ -1,9 +1,10 @@
 import React from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { StyleSheet,  } from "react-native";
+import { View, Text, Image } from "native-base";
 import FormButton from "./FormButton";
 import * as ImagePicker from "expo-image-picker";
 import firebase from "../core/config";
-import { theme } from "../core/theme";
+import theme from "../native-base-theme/variables/commonColor";
 
 const openImagePicker = async (handleImageChange) => {
   let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -62,16 +63,15 @@ const styles = StyleSheet.create({
   button: {
     width: 64,
     height: 64,
-    backgroundColor: theme.colors.primary,
+    backgroundColor: theme.brandPrimary,
   },
   imagePlaceholderText: {
     fontSize: 16,
-    color: theme.colors.accent,
     alignSelf: 'center',
   },
   imageContainer: {
     justifyContent: 'center',
-    backgroundColor: theme.colors.disabled,
+    backgroundColor: theme.brandDisabled,
     width: '100%',
     marginBottom: 10,
     borderRadius: 5,

@@ -7,14 +7,13 @@ import { addOrders } from "../actions/index";
 import FormButton from "./FormButton";
 import FormInput from "./FormInput";
 import { deactivateModal } from "../actions/index";
-import { theme } from "../core/theme";
+import theme from '../native-base-theme/variables/commonColor';
 import ImageSelectButtonGroup, { uploadImage }  from "./ImageSelectionButtonGroup";
 
 
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    backgroundColor: theme.colors.background,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -31,7 +30,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'stretch',
     marginLeft: 6,
-    backgroundColor: theme.colors.success,
+    backgroundColor: theme.brandSuccess,
   },
 });
 
