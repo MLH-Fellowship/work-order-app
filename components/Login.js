@@ -1,31 +1,27 @@
 import React, { memo, useState } from "react";
 import { StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
-import Logo from "../components/Logo";
-import Header from "../components/Header";
-import Button from "../components/Button";
-import TextInput from "../components/TextInput";
-import { theme } from "../core/theme";
-import { emailValidator, passwordValidator } from "../core/utils";
+import { Toast, Text, Container, Button, Spinner, Input, Item, Label } from "native-base";
+import Logo from "../components/Logo";;
+// import { emailValidator, passwordValidator } from "../core/utils";
 import { loginUser } from "../api/auth-api";
-import Toast from "../components/Toast";
 
 const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState({ value: "", error: "" });
-  const [password, setPassword] = useState({ value: "", error: "" });
+  const [email, setEmail] = useState({ value: "", error: undefined });
+  const [password, setPassword] = useState({ value: "", error: undefined });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
-  const _onLoginPressed = async () => {
+  const onLoginPressed = async () => {
     if (loading) return;
 
-    const emailError = emailValidator(email.value);
-    const passwordError = passwordValidator(password.value);
+    // TODO: move this to signup not login
+    // const emailError = emailValidator(email.value);
+    // const passwordError = passwordValidator(password.value);
 
-    if (emailError || passwordError) {
-      setEmail({ ...email, error: emailError });
-      setPassword({ ...password, error: passwordError });
-      return;
-    }
+    // if (emailError || passwordError) {
+    //   setEmail({ ...email, error: emailError });
+    //   setPassword({ ...password, error: passwordError });
+    //   return;
+    // }
 
     setLoading(true);
 
@@ -35,7 +31,11 @@ const LoginScreen = ({ navigation }) => {
     });
 
     if (response.error) {
-      setError(response.error);
+      Toast.show({
+        text: response.error,
+        type: 'danger',
+        duration: 3000,
+      })
     }
 
     setLoading(false);
@@ -50,42 +50,42 @@ const LoginScreen = ({ navigation }) => {
   });
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS == "ios" ? "padding" : "height"}
-    >
-      <Logo />
+    <Container>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+      >
+        <Logo />
 
-      <TextInput
-        label="Email"
-        returnKeyType="next"
-        value={email.value}
-        onChangeText={(text) => setEmail({ value: text, error: "" })}
-        error={!!email.error}
-        errorText={email.error}
-        autoCapitalize="none"
-        autoCompleteType="email"
-        textContentType="emailAddress"
-        keyboardType="email-address"
-      />
+        <Item floatingLabel error={email.error !== undefined}>
+          <Label>Email</Label>
+          <Input
+            keyboardType="email-address"
+            textContentType="emailAddress"
+            autoCompleteType="email"
+            autoCapitalize="none"
+            value={email.value}
+            onChangeText={value =>  setEmail({ value })}
+          />
+        </Item>
 
-      <TextInput
-        label="Password"
-        returnKeyType="done"
-        value={password.value}
-        onChangeText={(text) => setPassword({ value: text, error: "" })}
-        error={!!password.error}
-        errorText={password.error}
-        secureTextEntry
-        autoCapitalize="none"
-      />
-
-      <Button loading={loading} mode="contained" onPress={_onLoginPressed}>
-        Login
-      </Button>
-
-      <Toast message={error} onDismiss={() => setError("")} />
-    </KeyboardAvoidingView>
+        <Item floatingLabel error={password.error !== undefined} style={{marginVertical: 20 }}>
+          <Label>Password</Label>
+          <Input
+            textContentType="password"
+            autoCompleteType="password"
+            autoCapitalize="none"
+            passwordRules="minlength: 7; maxlength: 20; required: lower; required: upper; required: digit;"
+            secureTextEntry
+            value={password.value}
+            onChangeText={value =>  setPassword({ value })}
+          />
+        </Item>
+        <Button disabled={loading} primary={!loading} block onPress={onLoginPressed}>
+          {loading && <Spinner /> || <Text>Login</Text>}
+        </Button>
+      </KeyboardAvoidingView>
+    </Container>
   );
 };
 

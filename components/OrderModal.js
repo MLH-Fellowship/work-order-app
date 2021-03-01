@@ -1,16 +1,16 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import { Text, View, Icon } from 'native-base';
 import Modal from "react-native-modal";
 import { useSelector, useDispatch } from "react-redux";
 import { deactivateModal } from "../actions/index";
 import CreateOrder from "./CreateOrder";
-import { theme } from "../core/theme";
-import { IconButton } from "react-native-paper";
+import theme from "../native-base-theme/variables/commonColor";
 
 const styles = StyleSheet.create({
   model: {
     borderRadius: 6,
-    backgroundColor: theme.colors.background,
+    backgroundColor: theme.containerBgColor,
     overflow: "hidden",
     padding: 16
   },
@@ -26,28 +26,21 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 24,
     marginBottom: 6,
-    color: theme.colors.text,
   },
   headerSubtitle: {
     fontSize: 16,
     marginBottom: 10,
-    color: theme.colors.text,
-  },
-  headerCloseIcon: {
-    margin: -16
   }
 });
 
 const OrderModal = () => {
   const modalState = useSelector((state) => state.modalReducer);
   const dispatch = useDispatch();
-  console.log(modalState);
-
+  // console.log(modalState);
   const buildingName = modalState.buildingName == null
               ? ``
     : modalState.buildingName
   const buildingNameParts = buildingName.split('-', 2)
-
   return (
     <Modal
       isVisible={modalState.modalActive}
@@ -61,12 +54,9 @@ const OrderModal = () => {
             {buildingNameParts[1] && <Text style={styles.headerSubtitle}>{buildingNameParts[1]}</Text>}
           </View>
           <View style={styles.headerCloseIcon}>
-            <IconButton
-              icon="close"
-              color={"white"}
-              size={30}
-              onPress={() => dispatch(deactivateModal())}
-              />
+            <TouchableOpacity onPress={() => dispatch(deactivateModal())}>
+                <Icon name="close"/>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.modalContents}>

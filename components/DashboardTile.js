@@ -1,61 +1,41 @@
 import React, { memo } from "react";
-import { StyleSheet, View } from "react-native";
-import { Card, Paragraph } from "react-native-paper";
-import { theme } from "../core/theme";
+import { TouchableOpacity } from "react-native";
+import { View, Card, CardItem, Text, H1, Body } from "native-base";
 import { useDispatch } from "react-redux";
 import { getDashboardDetailData } from "../actions/index";
-import { get } from "react-native/Libraries/Utilities/PixelRatio";
 
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingHorizontal: 15,
-  },
-  card: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    backgroundColor: theme.colors.primary,
-
-    elevation: 5,
-  },
-  cardText: {
-    color: "white",
-  },
-});
-
-const DashboardTile = ({ order, navigation }) => {
+// needs work on the text display
+const DashboardTile = ({ order, navigation, style }) => {
   const dispatch = useDispatch();
   return (
-    <View style={styles.container}>
-      <Card
-        style={styles.card}
-        onPress={() => {
-          dispatch(getDashboardDetailData(order));
-          navigation.navigate("DashboardDetail", order);
-        }}
-      >
-        <Card.Title
-          title={`Building ${order.building}`}
-          titleStyle={styles.cardText}
-          subtitleStyle={styles.cardText}
-        />
-        <Card.Content>
-          <Paragraph style={styles.cardText}>{`Room ${order.room}`}</Paragraph>
-          <Paragraph
-            style={styles.cardText}
-          >{`${order.description}`}</Paragraph>
-          <Paragraph style={styles.cardText}>{`Status: ${
-            order.complete ? "complete" : "incomplete"
-          }   `}</Paragraph>
-        </Card.Content>
+    <TouchableOpacity onPress={() => {
+      dispatch(getDashboardDetailData(order));
+      navigation.navigate("DashboardDetail", order);
+    }}>
+      <Card style={style}>
+        <CardItem header>
+          <H1>{`Building ${order.building}`}</H1>
+        </CardItem>
+        <CardItem>
+          <Text>Room:</Text>
+          <Body/>
+          <Text>{order.room}</Text>
+        </CardItem>
+        <CardItem>
+          <View style={{flex: 1}}>
+          <Text>Description:</Text>
+            <View style={{ marginTop: 10 }}>
+              <Text>{order.description || 'No description provided.' }</Text>
+            </View>
+          </View>
+        </CardItem>
+        <CardItem>
+          <Text>Status:</Text>
+          <Body/>
+          <Text>{order.complete ? "Complete" : "Incomplete"}</Text>
+        </CardItem>
       </Card>
-    </View>
+    </TouchableOpacity>
   );
 };
 

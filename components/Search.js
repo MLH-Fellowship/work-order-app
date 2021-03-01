@@ -1,21 +1,17 @@
-import React, { useState, useMemo } from "react";
-import { Searchbar } from "react-native-paper";
-
-import { StyleSheet, View, FlatList, Text } from "react-native";
-import { theme } from "../core/theme";
+import React, { useState } from "react";
+import { FlatList, StyleSheet } from "react-native";
+import { Container, Header, Item, Icon, Input, Text } from "native-base";
 import buildingData from "../buildings.json";
 import SearchTile from "./SearchTile";
 import filter from "lodash/filter";
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-  searchbar: {
-    margin: "2%",
-  },
-});
+  listItem: {
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 10,
+  }
+})
 
 const Search = () => {
   const jsonData = buildingData.buildings;
@@ -49,19 +45,21 @@ const Search = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Searchbar
-        placeholder="Search"
-        onChangeText={onChangeSearch}
-        value={searchQuery}
-        style={styles.searchbar}
-      />
+    <Container>
+      <Header searchBar rounded style={{ borderColor: 'transparent' }}>
+        <Item >
+          <Icon name="ios-search" />
+          <Input placeholder="Search" value={searchQuery} onChangeText={onChangeSearch} />
+          <Icon name="ios-close" />
+        </Item>
+      </Header>
       <FlatList
         data={data}
-        renderItem={({ item }) => <SearchTile item={item}></SearchTile>}
-        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item }) => <SearchTile style={styles.listItem} item={item}></SearchTile>}
+        keyExtractor={({ number }) => number.toString()}
+        ListFooterComponent={<Text></Text>}
       />
-    </View>
+    </Container>
   );
 };
 

@@ -1,28 +1,18 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { memo } from "react";
 import { StyleSheet, View, Image } from "react-native";
-import { Title, Text } from "react-native-paper";
-import { useDispatch } from "react-redux";
-import { theme } from "../core/theme";
+import { Container, Text, Title } from "native-base";
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   upperView: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: theme.colors.background,
   },
   bottomView: {
     flex: 1,
     justifyContent: "flex-start", // vertical alignment
     alignItems: "flex-start", // horizontal alignment
     padding: "2%",
-    backgroundColor: theme.colors.background,
-  },
-  text: {
-    color: theme.colors.text,
   },
 });
 
@@ -40,7 +30,7 @@ const DashboardDetail = ({ route, navigation }) => {
   console.log(image);
 
   return (
-    <View style={styles.container}>
+    <Container>
       <View style={styles.upperView}>
         {image == null ? (
           <Title style={styles.text}>No image uploaded</Title>
@@ -50,14 +40,14 @@ const DashboardDetail = ({ route, navigation }) => {
       </View>
 
       <View style={styles.bottomView}>
-        <Title style={styles.text}>Room:</Title>
-        <Text style={styles.text}>{room}</Text>
-        <Title style={styles.text}>Work Order Description:</Title>
-        <Text style={styles.text}>{description}</Text>
-        <Title style={styles.text}>Work Order Problem:</Title>
-        <Text style={styles.text}>{problem}</Text>
+        <Title>Room:</Title>
+        <Text>{room}</Text>
+        <Title>Work Order Description:</Title>
+        <Text>{description}</Text>
+        <Title>Work Order Problem:</Title>
+        <Text>{problem}</Text>
       </View>
-    </View>
+    </Container>
   );
 };
 
