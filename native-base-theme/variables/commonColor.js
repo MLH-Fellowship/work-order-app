@@ -10,6 +10,7 @@ export const PLATFORM = {
   WEB: 'web',
 };
 
+
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 const platform = Platform.OS;
@@ -26,7 +27,7 @@ export default {
   platform,
 
   // Accordion
-  headerStyle: '#edebed',
+  headerStyle: '#241c24',
   iconStyle: '#000',
   contentStyle: '#f5f4f5',
   expandedIconStyle: '#000',
@@ -113,8 +114,12 @@ export default {
   },
 
   // Card
-  cardDefaultBg: '#fff',
-  cardBorderColor: '#ccc',
+  get cardDefaultBg() {
+    return this.brandPrimary
+  },
+  get cardBorderColor() {
+    return this.brandPrimary
+  },
   cardBorderRadius: 2,
   cardItemPadding: platform === PLATFORM.IOS ? 10 : 12,
 
@@ -131,16 +136,21 @@ export default {
   checkboxTickColor: '#fff',
 
   // Color
-  brandPrimary: platform === PLATFORM.IOS ? '#007aff' : '#3F51B5',
+  brandPrimary: '#241c24',
+  brandSecondary: '#3c343c',
+  brandAccent: '#f8c024',
   brandInfo: '#62B1F6',
-  brandSuccess: '#5cb85c',
-  brandDanger: '#d9534f',
+  brandSuccess: '#00B386',
+  brandDanger: '#f13a59',
   brandWarning: '#f0ad4e',
   brandDark: '#000',
   brandLight: '#a9a9a9',
+  brandDisabled: 'rgba(0, 0, 0, 0.26)',
 
   // Container
-  containerBgColor: '#fff',
+  get containerBgColor() {
+    return this.brandSecondary
+  },
 
   // Date Picker
   datePickerTextColor: '#000',
@@ -178,15 +188,20 @@ export default {
 
   // Header
   toolbarBtnColor: platform === PLATFORM.IOS ? '#007aff' : '#fff',
-  toolbarDefaultBg: platform === PLATFORM.IOS ? '#F8F8F8' : '#3F51B5',
-  toolbarHeight: platform === PLATFORM.IOS ? 64 : 56,
+  get toolbarDefaultBg() {
+    return this.brandPrimary
+  },
+  toolbarHeight: 70, // platform === PLATFORM.IOS ? 64 : 56,
   toolbarSearchIconSize: platform === PLATFORM.IOS ? 20 : 23,
-  toolbarInputColor: platform === PLATFORM.IOS ? '#CECDD2' : '#fff',
+  
+  get toolbarInputColor() {
+    return this.brandSecondary
+  },
   searchBarHeight: platform === PLATFORM.IOS ? 30 : 40,
   searchBarInputHeight: platform === PLATFORM.IOS ? 30 : 50,
   toolbarBtnTextColor: platform === PLATFORM.IOS ? '#007aff' : '#fff',
   iosStatusbar: 'dark-content',
-  toolbarDefaultBorder: platform === PLATFORM.IOS ? '#a7a6ab' : '#3F51B5',
+  toolbarDefaultBorder: null, // platform === PLATFORM.IOS ? '#a7a6ab' : '#3F51B5',
   get statusBarColor() {
     return color(this.toolbarDefaultBg).darken(0.2).hex();
   },
@@ -209,7 +224,7 @@ export default {
     return this.textColor;
   },
   get inputColorPlaceholder() {
-    return '#575757';
+    return '#858585';
   },
 
   // Line Height
@@ -222,7 +237,7 @@ export default {
   // List
   listBg: 'transparent',
   listBorderColor: '#c9c9c9',
-  listDividerBg: '#f4f4f4',
+  listDividerBg: '#000',
   listBtnUnderlayColor: '#DDD',
   listItemPadding: platform === PLATFORM.IOS ? 10 : 12,
   listNoteColor: '#808080',
@@ -250,7 +265,9 @@ export default {
   segmentBorderColorMain: platform === PLATFORM.IOS ? '#a7a6ab' : '#3F51B5',
 
   // Spinner
-  defaultSpinnerColor: '#3c343c',
+  get defaultSpinnerColor() {
+    return this.brandSecondary
+  },
   inverseSpinnerColor: '#1A191B',
 
   // Tab
@@ -265,8 +282,8 @@ export default {
   tabFontSize: 15,
 
   // Text
-  textColor: '#000',
-  inverseTextColor: '#fff',
+  textColor: '#fff',
+  inverseTextColor: '#000',
   noteFontSize: 14,
   get defaultTextColor() {
     return this.textColor;
@@ -276,14 +293,14 @@ export default {
   titleFontfamily: platform === PLATFORM.IOS ? 'System' : 'Roboto_medium',
   titleFontSize: platform === PLATFORM.IOS ? 17 : 19,
   subTitleFontSize: platform === PLATFORM.IOS ? 11 : 14,
-  subtitleColor: platform === PLATFORM.IOS ? '#000' : '#fff',
-  titleFontColor: platform === PLATFORM.IOS ? '#000' : '#fff',
+  subtitleColor: '#fff',
+  titleFontColor: '#fff',
 
   // Other
   borderRadiusBase: platform === PLATFORM.IOS ? 5 : 2,
   borderWidth: 1 / PixelRatio.getPixelSizeForLayoutSize(1),
   contentPadding: 10,
-  dropdownLinkColor: '#414142',
+  dropdownLinkColor: '#212121',
   inputLineHeight: 24,
   deviceWidth,
   deviceHeight,
