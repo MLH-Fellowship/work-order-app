@@ -1,5 +1,5 @@
 import React, { memo, useState } from "react";
-import { StyleSheet, KeyboardAvoidingView, Platform, Modal, View, Text } from "react-native";
+import { StyleSheet, KeyboardAvoidingView, Platform, Modal, View} from "react-native";
 import Logo from "../components/Logo";
 import Header from "../components/Header";
 import Button from "../components/Button";
@@ -8,6 +8,7 @@ import { theme } from "../core/theme";
 import { emailValidator, passwordValidator, serviceRoleValidator, phoneNumberValidator } from "../core/utils";
 import { loginUser } from "../api/auth-api";
 import Toast from "../components/Toast";
+import {Picker} from '@react-native-picker/picker';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: "", error: "" });
@@ -18,10 +19,10 @@ const LoginScreen = ({ navigation }) => {
 
   const [newAccountEmail, setNewAccountEmail] = useState({ value: "", error: "" });
   const [newAccountPassword, setNewAccountPassword] = useState({ value: "", error: "" });
+  const [verifyAccountPassword, setVerifyAccountPassword] = useState({ value: "", error: "" });
   const [phoneNumber, setPhoneNumber] = useState({ value: "", error: "" });
   const [altPhoneNumber, setAltPhoneNumber] = useState({ value: "", error: "" });
-  const [serviceRole, setServiceRole] = useState({ value: "", error: "" });
-
+  const [serviceRole, setServiceRole] = useState();
 
   const _onCreateNewAccountPressed = async () => {
     setModalVisible(true);
@@ -34,14 +35,16 @@ const LoginScreen = ({ navigation }) => {
     const passwordError = passwordValidator(newAccountPassword.value);
     const phoneNumberError = phoneNumberValidator(phoneNumber.value);
     const altPhoneNumberError = phoneNumberValidator(altPhoneNumber.value);
-    const serviceRoleError = serviceRoleValidator(serviceRole.value);
+    //const serviceRoleError = serviceRoleValidator(serviceRole.value);
     
+    console.log('phone number: ' + phoneNumber.value);
+
     if (emailError || passwordError || phoneNumberError || altPhoneNumberError || serviceRoleError) {
       setNewAccountEmail({ ...newAccountEmail, error: emailError });
       setNewAccountPassword({ ...newAccountPassword, error: passwordError });
-      setPhoneNumber({ ...phoneNumberError, error: phoneNumberError });
+      setPhoneNumber({ ...phoneNumber, error: phoneNumberError });
       setAltPhoneNumber({ ...altPhoneNumber, error: altPhoneNumberError });
-      setServiceRole({ ...serviceRole, error: serviceRoleError });
+      //setServiceRole({ ...serviceRole, error: serviceRoleError });
 
       return;
     }
@@ -50,6 +53,8 @@ const LoginScreen = ({ navigation }) => {
 
   const _onCancelCreateAccountPressed = async () => {
     setModalVisible(false);
+    //setPhoneNumber({ value: "", error: "" });
+    //setAltPhoneNumber({ value: "", error: "" });
   }
 
   const _onLoginPressed = async () => {
@@ -80,6 +85,8 @@ const LoginScreen = ({ navigation }) => {
 
   const styles = StyleSheet.create({
     container: {
+      //flex:1, 
+      flexDirection:'column', 
       justifyContent: "center",
       alignItems: "center",
       margin: "5%",
@@ -159,8 +166,20 @@ const LoginScreen = ({ navigation }) => {
             />
 
             <TextInput
-              label="Phone Number"
-              //returnKeyType="done"
+              label="Confirm Password"
+              returnKeyType="next"
+              value={verifyAccountPassword.value}
+              onChangeText={(text) => setVerifyAccountPassword({ value: text, error: "" })}
+              error={!!verifyAccountPassword.error}
+              errorText={verifyAccountPassword.error}
+              secureTextEntry
+              autoCapitalize="none"
+              returnKeyType="done"
+            />
+
+            <TextInput
+              label="Phone Number (Required)"
+              returnKeyType="done"
               value={phoneNumber.value}
               onChangeText={(text) => setPhoneNumber({ value: text, error: "" })}
               error={!!phoneNumber.error}
@@ -171,8 +190,8 @@ const LoginScreen = ({ navigation }) => {
             />  
 
             <TextInput
-              label="Alt. Phone Number"
-              //returnKeyType="done"
+              label="Alt. Phone Number (Optional)"
+              returnKeyType="done"
               value={altPhoneNumber.value}
               onChangeText={(text) => setAltPhoneNumber({ value: text, error: "" })}
               error={!!altPhoneNumber.error}
@@ -182,16 +201,17 @@ const LoginScreen = ({ navigation }) => {
               returnKeyType="done"
             />
 
-            <TextInput
-              label="Service Role"
-              returnKeyType="done"
-              value={serviceRole.value}
-              onChangeText={(text) => setServiceRole({ value: text, error: "" })}
-              error={!!serviceRole.error}
-              errorText={serviceRole.error}
-              autoCapitalize="none"
-              returnKeyType="done"
-            />
+            
+            <Picker
+              style={{height:'30%', width:'80%'}}
+              selectedValue={serviceRole}
+              onValueChange={(itemValue, itemIndex) =>
+                setServiceRole(itemValue)
+              }>
+              <Picker.Item label="Tenant" value="tenant" />
+              <Picker.Item label="Technican" value="technician" />
+              <Picker.Item label="Admin" value="admin" />
+            </Picker>
 
             <Button loading={loading} mode="contained" onPress={_onCancelCreateAccountPressed}>
               Cancel
@@ -199,6 +219,7 @@ const LoginScreen = ({ navigation }) => {
             <Button loading={loading} mode="contained" onPress={_onSubmitAccountPressed}>
               Submit
             </Button>
+            
 
           
           </KeyboardAvoidingView>
