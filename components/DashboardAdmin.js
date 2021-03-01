@@ -1,16 +1,17 @@
 import React, { useEffect, memo } from "react";
-import { StyleSheet, View, FlatList } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
+import { Container, Text } from "native-base";
 import { useSelector, useDispatch } from "react-redux";
 import { getOrders } from "../actions";
-import { theme } from "../core/theme";
 import DashboardTile from "./DashboardTile";
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
-  },
-});
+  listItem: {
+    marginLeft: 10,
+    marginRight: 10,
+    marginTop: 10,
+  }
+})
 
 const DashboardAdmin = ({ navigation }) => {
   const orderState = useSelector((state) => state.orderReducer);
@@ -35,15 +36,16 @@ const DashboardAdmin = ({ navigation }) => {
   );
 
   return (
-    <View style={styles.container}>
+    <Container>
       <FlatList
         data={getOrderArray()}
         renderItem={({ item }) => (
-          <DashboardTile order={item} navigation={navigation} />
+          <DashboardTile style={styles.listItem} order={item} navigation={navigation} />
         )}
         keyExtractor={(item, index) => index.toString()}
-      ></FlatList>
-    </View>
+        ListFooterComponent={<Text></Text>}
+      />
+    </Container>
   );
 };
 

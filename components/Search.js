@@ -6,7 +6,7 @@ import SearchTile from "./SearchTile";
 import filter from "lodash/filter";
 
 const styles = StyleSheet.create({
-  tile: {
+  listItem: {
     marginLeft: 10,
     marginRight: 10,
     marginTop: 10,
@@ -55,7 +55,7 @@ const Search = () => {
       </Header>
       <FlatList
         data={data}
-        renderItem={({ item }) => <SearchTile style={styles.tile} item={item}></SearchTile>}
+        renderItem={({ item }) => <SearchTile style={styles.listItem} item={item}></SearchTile>}
         keyExtractor={({ number }) => number.toString()}
         ListFooterComponent={<Text></Text>}
       />
