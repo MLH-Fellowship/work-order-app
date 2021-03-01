@@ -1,42 +1,42 @@
-import React, { useEffect, memo } from "react";
-import { FlatList, StyleSheet } from "react-native";
-import { Container } from "native-base";
-import { useSelector, useDispatch } from "react-redux";
-import { getOrders } from "../actions";
-import DashboardTile from "./DashboardTile";
+import React, { useEffect, memo } from 'react';
+import { FlatList, StyleSheet } from 'react-native';
+import { Container } from 'native-base';
+import { useSelector, useDispatch } from 'react-redux';
+import { getOrders } from '../actions';
+import DashboardTile from './DashboardTile';
 
 const styles = StyleSheet.create({
   listItem: {
     marginLeft: 10,
     marginRight: 10,
     marginTop: 10,
-  }
-})
+  },
+});
 
 const Dashboard = ({ navigation }) => {
   const orderState = useSelector((state) => state.orderReducer);
   const dispatch = useDispatch();
 
   const getOrderArray = () => {
-    const { orders } = orderState
+    const { orders } = orderState;
     return Object.keys(orders)
       .reduce(
-        (prev, id) =>
-          orders[id].complete
-            ? prev
-            : [
-              ...prev,
-              {
-                id,
-                ...orders[id]
-              }
-            ],
-        [])
+        (prev, id) => (orders[id].complete
+          ? prev
+          : [
+            ...prev,
+            {
+              id,
+              ...orders[id],
+            },
+          ]),
+        [],
+      );
   };
 
   useEffect(
-    () => navigation.addListener("focus", () => dispatch(getOrders())),
-    []
+    () => navigation.addListener('focus', () => dispatch(getOrders())),
+    [],
   );
 
   return (
@@ -47,7 +47,7 @@ const Dashboard = ({ navigation }) => {
           <DashboardTile style={styles.listItem} order={item} navigation={navigation} />
         )}
         keyExtractor={(item, index) => index.toString()}
-        ListFooterComponent={<Text></Text>}
+        ListFooterComponent={<Text />}
       />
     </Container>
   );

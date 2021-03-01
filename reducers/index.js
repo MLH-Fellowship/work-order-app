@@ -1,5 +1,5 @@
-import { combineReducers } from "redux";
-import * as actionTypes from "../actions/types";
+import { combineReducers } from 'redux';
+import * as actionTypes from '../actions/types';
 
 const orderState = {
   orders: {},
@@ -18,8 +18,8 @@ const dashboardDetailState = {
 };
 
 const userState = {
-  username: "",
-  role: "",
+  username: '',
+  role: '',
 };
 
 const modalReducer = (state = modalState, action) => {

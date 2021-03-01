@@ -1,21 +1,21 @@
-import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import React from 'react';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, View, Icon } from 'native-base';
-import Modal from "react-native-modal";
-import { useSelector, useDispatch } from "react-redux";
-import { deactivateModal } from "../actions/index";
-import CreateOrder from "./CreateOrder";
-import theme from "../native-base-theme/variables/commonColor";
+import Modal from 'react-native-modal';
+import { useSelector, useDispatch } from 'react-redux';
+import { deactivateModal } from '../actions/index';
+import CreateOrder from './CreateOrder';
+import theme from '../native-base-theme/variables/commonColor';
 
 const styles = StyleSheet.create({
   model: {
     borderRadius: 6,
     backgroundColor: theme.containerBgColor,
-    overflow: "hidden",
-    padding: 16
+    overflow: 'hidden',
+    padding: 16,
   },
   modalContents: {
-    alignItems: "center",
+    alignItems: 'center',
   },
   header: {
     width: '100%',
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   headerSubtitle: {
     fontSize: 16,
     marginBottom: 10,
-  }
+  },
 });
 
 const OrderModal = () => {
@@ -38,9 +38,9 @@ const OrderModal = () => {
   const dispatch = useDispatch();
   // console.log(modalState);
   const buildingName = modalState.buildingName == null
-              ? ``
-    : modalState.buildingName
-  const buildingNameParts = buildingName.split('-', 2)
+    ? ''
+    : modalState.buildingName;
+  const buildingNameParts = buildingName.split('-', 2);
   return (
     <Modal
       isVisible={modalState.modalActive}
@@ -55,7 +55,7 @@ const OrderModal = () => {
           </View>
           <View style={styles.headerCloseIcon}>
             <TouchableOpacity onPress={() => dispatch(deactivateModal())}>
-                <Icon name="close"/>
+              <Icon name="close" />
             </TouchableOpacity>
           </View>
         </View>

@@ -1,13 +1,15 @@
-import React, { memo, useState } from "react";
-import { StyleSheet, KeyboardAvoidingView, Platform } from "react-native";
-import { Toast, Text, Container, Button, Spinner, Input, Item, Label } from "native-base";
-import Logo from "../components/Logo";;
+import React, { memo, useState } from 'react';
+import { StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
+import {
+  Toast, Text, Container, Button, Spinner, Input, Item, Label,
+} from 'native-base';
+import Logo from './Logo';
 // import { emailValidator, passwordValidator } from "../core/utils";
-import { loginUser } from "../api/auth-api";
+import { loginUser } from '../api/auth-api';
 
 const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState({ value: "", error: undefined });
-  const [password, setPassword] = useState({ value: "", error: undefined });
+  const [email, setEmail] = useState({ value: '', error: undefined });
+  const [password, setPassword] = useState({ value: '', error: undefined });
   const [loading, setLoading] = useState(false);
 
   const onLoginPressed = async () => {
@@ -35,7 +37,7 @@ const LoginScreen = ({ navigation }) => {
         text: response.error,
         type: 'danger',
         duration: 3000,
-      })
+      });
     }
 
     setLoading(false);
@@ -43,9 +45,9 @@ const LoginScreen = ({ navigation }) => {
 
   const styles = StyleSheet.create({
     container: {
-      justifyContent: "center",
-      alignItems: "center",
-      margin: "5%",
+      justifyContent: 'center',
+      alignItems: 'center',
+      margin: '5%',
     },
   });
 
@@ -53,7 +55,7 @@ const LoginScreen = ({ navigation }) => {
     <Container>
       <KeyboardAvoidingView
         style={styles.container}
-        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
       >
         <Logo />
 
@@ -65,11 +67,11 @@ const LoginScreen = ({ navigation }) => {
             autoCompleteType="email"
             autoCapitalize="none"
             value={email.value}
-            onChangeText={value =>  setEmail({ value })}
+            onChangeText={(value) => setEmail({ value })}
           />
         </Item>
 
-        <Item floatingLabel error={password.error !== undefined} style={{marginVertical: 20 }}>
+        <Item floatingLabel error={password.error !== undefined} style={{ marginVertical: 20 }}>
           <Label>Password</Label>
           <Input
             textContentType="password"
@@ -78,7 +80,7 @@ const LoginScreen = ({ navigation }) => {
             passwordRules="minlength: 7; maxlength: 20; required: lower; required: upper; required: digit;"
             secureTextEntry
             value={password.value}
-            onChangeText={value =>  setPassword({ value })}
+            onChangeText={(value) => setPassword({ value })}
           />
         </Item>
         <Button disabled={loading} primary={!loading} block onPress={onLoginPressed}>

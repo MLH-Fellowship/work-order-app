@@ -1,21 +1,21 @@
-import React, { useState } from "react";
-import firebase from "./core/config";
+import React, { useState } from 'react';
+import { createStore, applyMiddleware } from 'redux';
+import { Provider as StoreProvider, useSelector } from 'react-redux';
+import thunk from 'redux-thunk';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { StyleProvider, Root } from 'native-base';
+import firebase from './core/config';
 
 // Redux
-import { createStore, applyMiddleware } from "redux";
-import { Provider as StoreProvider, useSelector } from "react-redux";
-import rootReducer from "./reducers";
-import thunk from "redux-thunk";
+import rootReducer from './reducers';
 
 // Navigation
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import MainContainer from "./components/MainContainer";
-import LoginContainer from "./components/LoginContainer";
+import MainContainer from './components/MainContainer';
+import LoginContainer from './components/LoginContainer';
 
 // Theme
 import getTheme from './native-base-theme/components';
 import commonColor from './native-base-theme/variables/commonColor';
-import { StyleProvider, Root } from 'native-base'
 
 const Tab = createBottomTabNavigator();
 
@@ -30,7 +30,7 @@ export default function App() {
   });
 
   return (
-    <StyleProvider  style={getTheme(commonColor)}>
+    <StyleProvider style={getTheme(commonColor)}>
       <StoreProvider store={store}>
         <Root>
           {user ? (

@@ -1,25 +1,25 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { StatusBar } from "react-native";
-import MapPage from "../pages/MapPage";
-import DashboardPage from "../pages/DashboardPage";
-import SettingsPage from "../pages/SettingsPage";
-import { setCurrentUser } from "../actions/index";
-import theme from "../native-base-theme/variables/commonColor";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { StatusBar } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { NavigationContainer } from '@react-navigation/native';
+import MapPage from '../pages/MapPage';
+import DashboardPage from '../pages/DashboardPage';
+import SettingsPage from '../pages/SettingsPage';
+import { setCurrentUser } from '../actions/index';
+import theme from '../native-base-theme/variables/commonColor';
 
-//Icons
-//cheatsheet: https://ionicons.com/v4/cheatsheet.html
-import Icon from "react-native-vector-icons/Ionicons";
+// Icons
+// cheatsheet: https://ionicons.com/v4/cheatsheet.html
 
 // Navigation
-import { NavigationContainer } from "@react-navigation/native";
 
 const MainContainer = ({ Tab, user }) => {
   const dispatch = useDispatch();
-  const username = user.email.split("@")[0];
+  const username = user.email.split('@')[0];
 
   const userState = useSelector((state) => state.userReducer);
-  let role = userState.role;
+  const { role } = userState;
 
   useEffect(() => {
     setCurrentUser(username)(dispatch);
@@ -35,14 +35,14 @@ const MainContainer = ({ Tab, user }) => {
             let iconName;
 
             switch (route.name) {
-              case "Map":
-                iconName = "ios-map";
+              case 'Map':
+                iconName = 'ios-map';
                 break;
-              case "Dashboard":
-                iconName = "md-list";
+              case 'Dashboard':
+                iconName = 'md-list';
                 break;
-              case "Settings":
-                iconName = "md-settings";
+              case 'Settings':
+                iconName = 'md-settings';
                 break;
 
               default:
@@ -63,7 +63,7 @@ const MainContainer = ({ Tab, user }) => {
         }}
       >
         <Tab.Screen name="Map" component={MapPage} />
-        {role === "service-member" ? null : (
+        {role === 'service-member' ? null : (
           <Tab.Screen name="Dashboard" component={DashboardPage} />
         )}
         <Tab.Screen name="Settings" component={SettingsPage} />
