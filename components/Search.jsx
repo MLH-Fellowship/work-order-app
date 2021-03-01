@@ -15,6 +15,22 @@ const styles = StyleSheet.create({
   },
 });
 
+const contains = (item, query) => {
+  const name = (`${item.name}`).toLowerCase();
+  const number = `${item.number}`;
+  const numberWithBuilding = `Building ${item.number}`.toLowerCase();
+
+  if (
+    name.includes(query)
+    || number.includes(query)
+    || numberWithBuilding.includes(query)
+  ) {
+    return true;
+  }
+
+  return false;
+};
+
 const Search = () => {
   const jsonData = buildingData.buildings;
 
@@ -26,22 +42,6 @@ const Search = () => {
     const filteredData = filter(jsonData, (building) => contains(building, formattedQuery));
     setData(filteredData.sort((a, b) => a.number > b.number));
     setSearchQuery(query);
-  };
-
-  const contains = (item, query) => {
-    const name = (`${item.name}`).toLowerCase();
-    const number = `${item.number}`;
-    const numberWithBuilding = `Building ${item.number}`.toLowerCase();
-
-    if (
-      name.includes(query)
-      || number.includes(query)
-      || numberWithBuilding.includes(query)
-    ) {
-      return true;
-    }
-
-    return false;
   };
 
   return (

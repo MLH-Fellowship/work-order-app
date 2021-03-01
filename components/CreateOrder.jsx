@@ -37,7 +37,6 @@ const CreateOrder = ({ buildingNumber, buildingCoordinates }) => {
   const dispatch = useDispatch();
 
   if (!buildingNumber) {
-    console.log('building number undefined');
     return (
       <Formik
         initialValues={{
@@ -169,6 +168,7 @@ const CreateOrder = ({ buildingNumber, buildingCoordinates }) => {
     </Formik>
   );
 };
+
 export default CreateOrder;
 
 /*

@@ -18,16 +18,20 @@ const DashboardAdmin = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const getOrderArray = () => {
-    const orderValues = Object.values(orderState.orders);
-    const orderKeys = Object.keys(orderState.orders);
-    const orderArray = [];
-
-    if (orderValues.length === orderKeys.length) {
-      for (let i = 0; i < orderKeys.length; i++) {
-        orderArray.push([orderKeys[i], orderValues[i]]);
-      }
-    }
-    return orderArray;
+    const { orders } = orderState;
+    return Object.keys(orders)
+      .reduce(
+        (prev, id) => (orders[id].complete
+          ? prev
+          : [
+            ...prev,
+            {
+              id,
+              ...orders[id],
+            },
+          ]),
+        [],
+      );
   };
 
   useEffect(
