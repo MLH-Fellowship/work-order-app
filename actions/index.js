@@ -1,3 +1,5 @@
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from 'uuid';
 import * as actionTypes from './types';
 import firebase from '../core/config';
 
@@ -45,7 +47,19 @@ export const updateOrders = (orderName) => (data) => (dispatch) => {
   db.ref('/orders').child(orderName).set(data);
 };
 
-export const addOrders = (order) => (dispatch) => {
+const uploadImage = async (imagePath, imageRef) => {
+  const response = await fetch(imagePath);
+  const blob = await response.blob();
+  const reference = firebase
+    .storage()
+    .ref()
+    .child(`images/${imageRef}`);
+  const imageUpload = await reference.put(blob);
+  const imageUrl = await imageUpload.ref.getDownloadURL();
+  return imageUrl;
+};
+
+export const addOrders = (order) => async (dispatch) => {
   dispatch({ type: actionTypes.ADD_ORDERS });
   db.ref('/orders').push(order);
 };
