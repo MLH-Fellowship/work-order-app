@@ -27,6 +27,7 @@
     "react-native-androw": "0.0.34",
     "react-native-dynamic-vector-icons": "^1.1.4",
     "react-native-gesture-handler": "~1.8.0",
+    "react-native-get-random-values": "^1.6.0",
     "react-native-maps": "0.27.1",
     "react-native-maps-directions": "^1.8.0",
     "react-native-modal": "^11.5.6",
@@ -39,7 +40,8 @@
     "react-navigation-stack": "^2.10.2",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

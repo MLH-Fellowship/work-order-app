@@ -1,10 +1,21 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
-import { View, Text, Image } from 'native-base';
+import { StyleSheet, Image } from 'react-native';
+import { View, Text } from 'native-base';
 import * as ImagePicker from 'expo-image-picker';
 import FormButton from './FormButton';
-import firebase from '../core/config';
 import theme from '../native-base-theme/variables/commonColor';
+
+const pickImage = async (handleImageChange) => {
+  const result = await ImagePicker.launchImageLibraryAsync({
+    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+    allowsEditing: true,
+    quality: 1,
+  });
+
+  if (!result.cancelled) {
+    handleImageChange(result.uri);
+  }
+};
 
 const openImagePicker = async (handleImageChange) => {
   const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -15,17 +26,6 @@ const openImagePicker = async (handleImageChange) => {
   }
 
   pickImage(handleImageChange);
-};
-
-const openCamera = async (handleImageChange) => {
-  const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
-
-  if (permissionResult.granted === false) {
-    alert('Permission to access camera roll is required!');
-    return;
-  }
-
-  takePicture(handleImageChange);
 };
 
 const takePicture = async (handleImageChange) => {
@@ -42,18 +42,15 @@ const takePicture = async (handleImageChange) => {
   }
 };
 
-const pickImage = async (handleImageChange) => {
-  const result = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ImagePicker.MediaTypeOptions.Images,
-    allowsEditing: true,
-    quality: 1,
-  });
+const openCamera = async (handleImageChange) => {
+  const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
 
-  console.log('picked an Image!', result);
-
-  if (!result.cancelled) {
-    handleImageChange(result.uri);
+  if (permissionResult.granted === false) {
+    alert('Permission to access camera roll is required!');
+    return;
   }
+
+  takePicture(handleImageChange);
 };
 
 const styles = StyleSheet.create({
@@ -81,27 +78,6 @@ const styles = StyleSheet.create({
   },
   image: { flex: 1, resizeMode: 'stretch' },
 });
-
-export const uploadImage = async (path, values) => {
-  const response = await fetch(path);
-  const blob = await response.blob();
-  const reference = firebase
-    .storage()
-    .ref()
-    .child(`images/${buildingNumber}${values.room}${values.problem}`);
-  const task = reference.put(blob);
-
-  task
-    .then(() => {
-      console.log('Image uploaded to the bucket!');
-      task.snapshot.ref.getDownloadURL().then((downloadURL) => {
-        values.image = downloadURL;
-        console.log(values.image);
-        addOrders(values)(dispatch);
-      });
-    })
-    .catch((e) => console.log('uploading image error => ', e));
-};
 
 const ImageSelectButtonGroup = ({ form, formProp, onChange }) => ({
   ImagePreview: () => (
