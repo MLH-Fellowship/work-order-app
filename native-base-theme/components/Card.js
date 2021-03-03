@@ -1,6 +1,6 @@
 // @flow
 
-import variable from './../variables/platform';
+import variable from '../variables/platform';
 
 export default (variables /* : * */ = variable) => {
   const cardTheme = {
@@ -11,13 +11,13 @@ export default (variables /* : * */ = variable) => {
       shadowRadius: null,
       elevation: null,
       backgroundColor: 'transparent',
-      borderWidth: 0
+      borderWidth: 0,
     },
     '.noShadow': {
       shadowColor: null,
       shadowOffset: null,
       shadowOpacity: null,
-      elevation: null
+      elevation: null,
     },
     marginVertical: 5,
     marginHorizontal: 2,

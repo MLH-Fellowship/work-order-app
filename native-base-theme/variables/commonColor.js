@@ -10,17 +10,15 @@ export const PLATFORM = {
   WEB: 'web',
 };
 
-
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 const platform = Platform.OS;
 const platformStyle = undefined;
-const isIphoneX =
-  platform === PLATFORM.IOS &&
-  (deviceHeight === 812 ||
-    deviceWidth === 812 ||
-    deviceHeight === 896 ||
-    deviceWidth === 896);
+const isIphoneX = platform === PLATFORM.IOS
+  && (deviceHeight === 812
+    || deviceWidth === 812
+    || deviceHeight === 896
+    || deviceWidth === 896);
 
 export default {
   platformStyle,
@@ -115,10 +113,10 @@ export default {
 
   // Card
   get cardDefaultBg() {
-    return this.brandPrimary
+    return this.brandPrimary;
   },
   get cardBorderColor() {
-    return this.brandPrimary
+    return this.brandPrimary;
   },
   cardBorderRadius: 2,
   cardItemPadding: platform === PLATFORM.IOS ? 10 : 12,
@@ -149,7 +147,7 @@ export default {
 
   // Container
   get containerBgColor() {
-    return this.brandSecondary
+    return this.brandSecondary;
   },
 
   // Date Picker
@@ -189,13 +187,13 @@ export default {
   // Header
   toolbarBtnColor: platform === PLATFORM.IOS ? '#007aff' : '#fff',
   get toolbarDefaultBg() {
-    return this.brandPrimary
+    return this.brandPrimary;
   },
   toolbarHeight: 70, // platform === PLATFORM.IOS ? 64 : 56,
   toolbarSearchIconSize: platform === PLATFORM.IOS ? 20 : 23,
-  
+
   get toolbarInputColor() {
-    return this.brandSecondary
+    return this.brandSecondary;
   },
   searchBarHeight: platform === PLATFORM.IOS ? 30 : 40,
   searchBarInputHeight: platform === PLATFORM.IOS ? 30 : 50,
@@ -266,7 +264,7 @@ export default {
 
   // Spinner
   get defaultSpinnerColor() {
-    return this.brandSecondary
+    return this.brandSecondary;
   },
   inverseSpinnerColor: '#1A191B',
 

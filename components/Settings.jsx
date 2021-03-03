@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Container,
   Content,
@@ -8,14 +8,13 @@ import {
   Left,
   Right,
   Icon,
-} from "native-base";
-import { logoutUser } from "../api/auth-api";
+} from 'native-base';
+import { logoutUser } from '../api/auth-api';
 
-const Settings = () => {
-  return (
-    <Container>
-      <Content>
-        <List>
+const Settings = () => (
+  <Container>
+    <Content>
+      <List>
         <ListItem itemHeader>
           <Text>ACCOUNT</Text>
         </ListItem>
@@ -69,11 +68,10 @@ const Settings = () => {
           <Left>
             <Text>Version: 1.0.0</Text>
           </Left>
-          </ListItem>
-          </List>
-      </Content>
-    </Container>
-  );
-};
+        </ListItem>
+      </List>
+    </Content>
+  </Container>
+);
 
 export default Settings;

@@ -1,18 +1,18 @@
-import React, { memo } from "react";
-import { StyleSheet, View, Image } from "react-native";
-import { Container, Text, Title } from "native-base";
+import React, { memo } from 'react';
+import { StyleSheet, View, Image } from 'react-native';
+import { Container, Text, Title } from 'native-base';
 
 const styles = StyleSheet.create({
   upperView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   bottomView: {
     flex: 1,
-    justifyContent: "flex-start", // vertical alignment
-    alignItems: "flex-start", // horizontal alignment
-    padding: "2%",
+    justifyContent: 'flex-start', // vertical alignment
+    alignItems: 'flex-start', // horizontal alignment
+    padding: '2%',
   },
 });
 

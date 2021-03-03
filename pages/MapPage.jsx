@@ -1,10 +1,10 @@
-import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
-import Map from "../components/Map";
-import theme from "../native-base-theme/variables/commonColor";
-import { Icon } from "native-base";
-import { StyleSheet } from "react-native";
-import Search from "../components/Search";
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Icon } from 'native-base';
+import { StyleSheet } from 'react-native';
+import Map from '../components/Map';
+import theme from '../native-base-theme/variables/commonColor';
+import Search from '../components/Search';
 
 const MapStack = createStackNavigator();
 
@@ -25,9 +25,9 @@ const MapPage = () => {
     headerStyle: styles.headerStyle,
     headerTintColor: theme.textColor,
     headerTitleStyle: {
-      fontWeight: "bold",
+      fontWeight: 'bold',
     },
-  }
+  };
   return (
     <MapStack.Navigator>
       <MapStack.Screen
@@ -40,7 +40,7 @@ const MapPage = () => {
               name="search"
               size={25}
               style={styles.button}
-              onPress={() => navigation.navigate("Search")}
+              onPress={() => navigation.navigate('Search')}
             />
           ),
         })}

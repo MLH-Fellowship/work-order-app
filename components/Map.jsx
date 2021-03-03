@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
-import * as Location from "expo-location";
-import { StyleSheet, TouchableOpacity } from "react-native";
-import { View, Text } from "native-base";
-import MapView, { Marker } from "react-native-maps";
-import buildingData from "../buildings.json";
-import OrderModal from "./OrderModal";
-import { useSelector, useDispatch } from "react-redux";
-import { activateModal } from "../actions/index";
-import Building from "./MapMarkers/Building";
-import Barracks from "./MapMarkers/Barracks";
-import CarShop from "./MapMarkers/CarShop";
-import Gym from "./MapMarkers/Gym";
-import Medical from "./MapMarkers/Medical";
-import Office from "./MapMarkers/Office";
-import Dining from "./MapMarkers/Dining";
+import React, { useState, useEffect } from 'react';
+import * as Location from 'expo-location';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text } from 'native-base';
+import MapView, { Marker } from 'react-native-maps';
+import { useSelector, useDispatch } from 'react-redux';
+import buildingData from '../buildings.json';
+import OrderModal from './OrderModal';
+import { activateModal } from '../actions/index';
+import Building from './MapMarkers/Building';
+import Barracks from './MapMarkers/Barracks';
+import CarShop from './MapMarkers/CarShop';
+import Gym from './MapMarkers/Gym';
+import Medical from './MapMarkers/Medical';
+import Office from './MapMarkers/Office';
+import Dining from './MapMarkers/Dining';
 
 const styles = StyleSheet.create({
   container: {
@@ -39,7 +39,7 @@ const Map = () => {
   return (
     <View style={styles.container}>
       <MapView
-        showsUserLocation={true}
+        showsUserLocation
         moveOnMarkerPress={false}
         style={styles.map}
         initialRegion={{
@@ -49,13 +49,13 @@ const Map = () => {
           longitudeDelta: 0.00421,
         }}
         onPress={(e) => {
-          if(addMarker) {
+          if (addMarker) {
             setPinMarker(
               [
                 {
                   coordinates: e.nativeEvent.coordinate,
-                }
-              ]
+                },
+              ],
             );
           }
         }}
@@ -63,7 +63,8 @@ const Map = () => {
 
         {pinMarker.map((added, index) => (
           <View key={index}>
-            <Marker draggable
+            <Marker
+              draggable
               key={index}
               coordinate={{
                 latitude: added.coordinates.latitude,
@@ -75,14 +76,11 @@ const Map = () => {
               onDragEnd={(e) => setPinMarker([
                 {
                   coordinates: e.nativeEvent.coordinate,
-                }
+                },
               ])}
-            >
-            </Marker>
+            />
           </View>
         ))}
-
-
 
         {buildingData.buildings.map((marker, index) => (
           <View key={index}>
@@ -93,23 +91,23 @@ const Map = () => {
                 longitude: marker.coordinates[1],
               }}
               onPress={() => {
-                if(!addMarker) {
+                if (!addMarker) {
                   dispatch(activateModal(marker));
                 }
               }}
               tracksViewChanges={trackViewChanges}
             >
-              {marker.purpose === "Office" ? (
+              {marker.purpose === 'Office' ? (
                 <Office onLoad={stopTrackingViewChanges} fadeDuration={0} />
-              ) : marker.purpose === "Barracks" ? (
+              ) : marker.purpose === 'Barracks' ? (
                 <Barracks onLoad={stopTrackingViewChanges} fadeDuration={0} />
-              ) : marker.purpose === "Gym" ? (
+              ) : marker.purpose === 'Gym' ? (
                 <Gym onLoad={stopTrackingViewChanges} fadeDuration={0} />
-              ) : marker.purpose === "Medical" ? (
+              ) : marker.purpose === 'Medical' ? (
                 <Medical onLoad={stopTrackingViewChanges} fadeDuration={0} />
-              ) : marker.purpose === "Dining Facility" ? (
+              ) : marker.purpose === 'Dining Facility' ? (
                 <Dining onLoad={stopTrackingViewChanges} fadeDuration={0} />
-              ) : marker.purpose === "Car Shop" ? (
+              ) : marker.purpose === 'Car Shop' ? (
                 <CarShop onLoad={stopTrackingViewChanges} fadeDuration={0} />
               ) : (
                 <Building onLoad={stopTrackingViewChanges} fadeDuration={0} />
@@ -118,33 +116,36 @@ const Map = () => {
           </View>
         ))}
       </MapView>
-        <View>
-          <TouchableOpacity style={
+      <View>
+        <TouchableOpacity
+          style={
             {
-              height: 50, 
-              alignItems: "center",
+              height: 50,
+              alignItems: 'center',
               justifyContent: 'center',
               backgroundColor: '#3c343c',
-            }}
-            onPress={() => {
-              setAddMarker(!addMarker);
-              if(addMarker) {
-                setSomeText('Add Pin to Custom Location');
-                setPinMarker([]);
-              }
-              else {
-                setSomeText('Cancel');
-              }
-            }}
-          >
-            <Text style={
+            }
+}
+          onPress={() => {
+            setAddMarker(!addMarker);
+            if (addMarker) {
+              setSomeText('Add Pin to Custom Location');
+              setPinMarker([]);
+            } else {
+              setSomeText('Cancel');
+            }
+          }}
+        >
+          <Text style={
             {
-              color: 'white'
-            }}>
-              {someText}
-            </Text>
-          </TouchableOpacity>
-        </View>
+              color: 'white',
+            }
+}
+          >
+            {someText}
+          </Text>
+        </TouchableOpacity>
+      </View>
       <OrderModal />
     </View>
   );

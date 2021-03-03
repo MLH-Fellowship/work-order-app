@@ -1,5 +1,5 @@
-import * as actionTypes from "./types";
-import firebase from "../core/config";
+import * as actionTypes from './types';
+import firebase from '../core/config';
 
 export const db = firebase.database();
 
@@ -17,15 +17,15 @@ export const deactivateModal = () => ({
 
 // Order Actions
 export const getOrders = () => (dispatch) => {
-  db.ref("/orders").on("value", (snap) => {
-    let data = snap.val() ? snap.val() : {};
+  db.ref('/orders').on('value', (snap) => {
+    const data = snap.val() ? snap.val() : {};
     dispatch({ type: actionTypes.GET_ORDERS, payload: data });
   });
 };
 
 export const getUserOrders = (user) => (dispatch) => {
-  db.ref("/orders").on("value", (snap) => {
-    let data = snap.val() ? snap.val() : {};
+  db.ref('/orders').on('value', (snap) => {
+    const data = snap.val() ? snap.val() : {};
     console.log(data);
     // let orders = Object.values(data);
 
@@ -42,27 +42,27 @@ export const getUserOrders = (user) => (dispatch) => {
 export const updateOrders = (orderName) => (data) => (dispatch) => {
   console.log(data);
   dispatch({ type: actionTypes.UPDATE_ORDERS, payload: data });
-  db.ref("/orders").child(orderName).set(data);
+  db.ref('/orders').child(orderName).set(data);
 };
 
 export const addOrders = (order) => (dispatch) => {
   dispatch({ type: actionTypes.ADD_ORDERS });
-  db.ref("/orders").push(order);
+  db.ref('/orders').push(order);
 };
 
 export const getDashboardDetailData = (order) => ({
   type: actionTypes.GET_DASHBOARD_DETAIL_DATA,
-  order: order,
+  order,
 });
 
 export const setCurrentUser = (username) => (dispatch) => {
-  db.ref("/users")
+  db.ref('/users')
     .child(username)
-    .on("value", (snap) => {
-      let data = snap.val() ? snap.val() : { role: "service-member" };
+    .on('value', (snap) => {
+      const data = snap.val() || { role: 'admin' };
       dispatch({
         type: actionTypes.SET_CURRENT_USER,
-        username: username,
+        username,
         role: data.role,
       });
     });
