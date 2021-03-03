@@ -61,7 +61,12 @@ const uploadImage = async (imagePath, imageRef) => {
 
 export const addOrders = (order) => async (dispatch) => {
   dispatch({ type: actionTypes.ADD_ORDERS });
-  db.ref('/orders').push(order);
+  const image = order.image !== null ? await uploadImage(order.image, uuidv4()) : null;
+  db.ref('/orders').push({
+    ...order,
+    image,
+    issue_opened_on: firebase.database.ServerValue.TIMESTAMP,
+  });
 };
 
 export const getDashboardDetailData = (order) => ({
