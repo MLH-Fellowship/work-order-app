@@ -16,7 +16,8 @@ import { NavigationContainer } from "@react-navigation/native";
 
 const MainContainer = ({ Tab, user }) => {
   const dispatch = useDispatch();
-  const username = user.email.split("@")[0];
+  console.log(user);
+  const username = user.uid;
 
   const userState = useSelector((state) => state.userReducer);
   let role = userState.role;

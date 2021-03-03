@@ -7,7 +7,8 @@ import {
 } from 'native-base';
 import Logo from './Logo';
 // import { emailValidator, passwordValidator } from '../core/utils';
-import { loginUser } from '../api/auth-api';
+import { loginUser, registerUser } from '../api/auth-api';
+
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: '', error: undefined });
@@ -32,27 +33,13 @@ const LoginScreen = ({ navigation }) => {
 
     // validate email
     //const emailEnding = '@socom.mil';
-    const emailRegex1 = /[.0-9A-Za-z]+@socom.mil/g;
-    const emailRegex2 = /[^A-Za-z0-9.]+/g;
-
-    console.log('email: ' + newEmail.value);
-    console.log('!newEmail: ' + !newEmail.value);
-    console.log('!emailRegex1: ' + !emailRegex1.test(newEmail.value));
-    console.log('!emailRegex2: ' + !emailRegex2.test(newEmail.value));
-    //console.log('..: ' + newEmail.value.includes('..'));
-    //console.log('newEmail.length > 320: ' + newEmail.value.length > 320);
-
-    console.log('result: ' + (!newEmail.value || 
-      !emailRegex1.test(newEmail.value)
-      
-      ));
+    const domain = '@socom.mil';
 
     let emailError = undefined;
     if(!newEmail.value || 
-      !emailRegex1.test(newEmail.value) ||
-      emailRegex2.test(newEmail.value) ||
-      newEmail.value.includes('..') ||
-      newEmail.length > 320) {
+      newEmail.value.length <= domain.length ||
+      !newEmail.value.endsWith(domain)) {
+    //  newEmail.length > 320) {
       emailError = 'invalid email';
     }
 
@@ -91,10 +78,6 @@ const LoginScreen = ({ navigation }) => {
       altPhoneNumberError = 'invalid phone number';
     }
 
-
-    //const passwordError = passwordValidator(newAccountPassword.value);
-    //const phoneNumberError = phoneNumberValidator(phoneNumber.value);
-    //const altPhoneNumberError = phoneNumberValidator(altPhoneNumber.value);
     //const serviceRoleError = serviceRoleValidator(serviceRole.value);
 
     setNewEmail({ ...newEmail, error: emailError });
@@ -104,10 +87,32 @@ const LoginScreen = ({ navigation }) => {
     setAltPhoneNumber({ ...altPhoneNumber, error: altPhoneNumberError });
     //setServiceRole({ ...serviceRole, error: serviceRoleError });
 
-    if (emailError || passwordError || confirmPasswordError || phoneNumberError || altPhoneNumberError) {
+
+    if (emailError || 
+      passwordError || 
+      confirmPasswordError || 
+      phoneNumberError || 
+      altPhoneNumberError) {
       return;
     }
 
+    setLoading(true);
+
+    const response = await registerUser({
+      //name: 'testUser',
+      email: newEmail.value,
+      password: newPassword.value,
+    });
+    //console.log(response);
+    if (response.error) {
+      Toast.show({
+        text: response.error,
+        type: 'danger',
+        duration: 3000,
+      });
+    }
+    setLoading(false);
+    //setModalVisible(false);
   }
 
   const onCancelCreateAccountPressed = async () => {
@@ -126,15 +131,17 @@ const LoginScreen = ({ navigation }) => {
     //   setPassword({ ...password, error: passwordError });
     //   return;
     // }
-
+    
     setLoading(true);
-
+    //console.log('loading...');
     const response = await loginUser({
       email: email.value,
       password: password.value,
     });
 
+    //console.log('response received');
     if (response.error) {
+      console.log(response.error);
       Toast.show({
         text: response.error,
         type: 'danger',
@@ -143,6 +150,7 @@ const LoginScreen = ({ navigation }) => {
     }
 
     setLoading(false);
+    //console.log('done');
   };
 
   const styles = StyleSheet.create({

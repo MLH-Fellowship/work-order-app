@@ -26,6 +26,21 @@ export default function App() {
   const [user, setUser] = useState();
 
   firebase.auth().onAuthStateChanged((user) => {
+    console.log(user);
+    if(user) {
+      if(user.emailVerified) {
+          console.log('email is verified');
+      }
+      else {
+        user.sendEmailVerification().then(function() {
+          console.log('issue verification email sent');
+        }).catch((error) => {
+          console.log(error);
+        });
+        firebase.auth().signOut()
+        return;
+      }
+    }
     setUser(user);
   });
 
