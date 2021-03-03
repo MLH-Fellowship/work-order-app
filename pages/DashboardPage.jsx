@@ -30,8 +30,6 @@ const DashboardPage = () => {
   const dispatch = useDispatch();
 
   const { role } = userState;
-  const key = detailState.order[0] === undefined ? '' : detailState.order[0];
-  const value = detailState.order[1] === undefined ? {} : detailState.order[1];
 
   const DashboardStackOptions = {
     headerStyle: styles.headerStyle,
@@ -61,14 +59,16 @@ const DashboardPage = () => {
         component={DashboardDetail}
         options={({ navigation }) => ({
           ...DashboardStackOptions,
-          title: `Building ${value.building}`,
+          title: `Building ${detailState.order.building}`,
           headerRight: () => (
             <Icon
               name="md-checkmark"
               size={25}
               style={styles.button}
               onPress={() => {
-                updateOrders(key)({ ...value, complete: true })(dispatch);
+                updateOrders(detailState.order.id)({
+                  ...detailState.order, complete: true,
+                })(dispatch);
                 navigation.goBack();
               }}
             />
