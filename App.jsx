@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import { createStore, applyMiddleware } from 'redux';
-import { Provider as StoreProvider, useSelector } from 'react-redux';
-import thunk from 'redux-thunk';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StyleProvider, Root } from 'native-base';
-import firebase from './core/config';
+import React, { useState } from "react";
+import firebase from "./core/config";
 
 // Redux
-import rootReducer from './reducers';
+import { createStore, applyMiddleware } from "redux";
+import { Provider as StoreProvider, useSelector } from "react-redux";
+import rootReducer from "./reducers";
+import thunk from "redux-thunk";
 
 // Navigation
-import MainContainer from './components/MainContainer';
-import LoginContainer from './components/LoginContainer';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import MainContainer from "./components/MainContainer";
+import LoginContainer from "./components/LoginContainer";
 
 // Theme
 import getTheme from './native-base-theme/components';
 import commonColor from './native-base-theme/variables/commonColor';
+import { StyleProvider, Root } from 'native-base'
 
 const Tab = createBottomTabNavigator();
 
@@ -26,11 +26,26 @@ export default function App() {
   const [user, setUser] = useState();
 
   firebase.auth().onAuthStateChanged((user) => {
+    console.log(user);
+    if(user) {
+      if(user.emailVerified) {
+          console.log('email is verified');
+      }
+      else {
+        user.sendEmailVerification().then(function() {
+          console.log('issue verification email sent');
+        }).catch((error) => {
+          console.log(error);
+        });
+        firebase.auth().signOut()
+        return;
+      }
+    }
     setUser(user);
   });
 
   return (
-    <StyleProvider style={getTheme(commonColor)}>
+    <StyleProvider  style={getTheme(commonColor)}>
       <StoreProvider store={store}>
         <Root>
           {user ? (
