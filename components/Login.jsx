@@ -8,7 +8,7 @@ import {
 import Logo from './Logo';
 // import { emailValidator, passwordValidator } from '../core/utils';
 import { loginUser, registerUser } from '../api/auth-api';
-
+import theme from '../native-base-theme/variables/commonColor';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: '', error: undefined });
@@ -26,84 +26,82 @@ const LoginScreen = ({ navigation }) => {
 
   const onCreateAccountPressed = async () => {
     setModalVisible(true);
-  }
+  };
 
   const onSubmitAccountPressed = async () => {
     if (loading) return;
 
     // validate email
-    //const emailEnding = '@socom.mil';
+    // const emailEnding = '@socom.mil';
     const domain = '@socom.mil';
 
-    let emailError = undefined;
-    if(!newEmail.value || 
-      newEmail.value.length <= domain.length ||
-      !newEmail.value.endsWith(domain)) {
+    let emailError;
+    if (!newEmail.value
+      || newEmail.value.length <= domain.length
+      || !newEmail.value.endsWith(domain)) {
     //  newEmail.length > 320) {
       emailError = 'invalid email';
     }
 
-    //Validate password
+    // Validate password
     // Contains at least one capital letter, lowercase letter, number, and a special character
     // Is at least 9 characters long or at most 30 characters
     const passwordRegex1 = /(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[#@$=+%^!*_])\S{9,30}/g;
     // Make sure that the password consists of only these characters
     const passwordRegex2 = /[^A-Za-z0-9#@$=+%^!*_]+/g;
 
-    let passwordError = undefined;
-    if(!newPassword.value || !passwordRegex1.test(newPassword.value) || passwordRegex2.test(newPassword.value)) {
+    let passwordError;
+    if (!newPassword.value || !passwordRegex1.test(newPassword.value) || passwordRegex2.test(newPassword.value)) {
       passwordError = 'invalid password';
     }
-    
 
     // Make sure the passwords are the same in both cases
-    let confirmPasswordError = undefined;
+    let confirmPasswordError;
 
-    if(!newPassword || newPassword.value !== confirmPassword.value) {
+    if (!newPassword || newPassword.value !== confirmPassword.value) {
       confirmPasswordError = 'passwords do not match';
     }
 
     // Confirm that provided phone number is valid
-    let phoneNumberError = undefined;
+    let phoneNumberError;
     const phoneNumberRegex = /([^0-9])*/g;
-    if(!phoneNumber.value || phoneNumber.value.length !== 10 || !phoneNumberRegex.test(phoneNumber.value)) {
+    if (!phoneNumber.value || phoneNumber.value.length !== 10 || !phoneNumberRegex.test(phoneNumber.value)) {
       phoneNumberError = 'invalid phone number';
     }
 
     // Confirm that alternate phone number is valid if it is entered
-    let altPhoneNumberError = undefined;
-    if(phoneNumber.value &&
-      altPhoneNumber.value.length > 0 &&
-      (altPhoneNumber.value.length !== 10 || !phoneNumberRegex.test(altPhoneNumber.value))) {
+    let altPhoneNumberError;
+    if (phoneNumber.value
+      && altPhoneNumber.value.length > 0
+      && (altPhoneNumber.value.length !== 10 || !phoneNumberRegex.test(altPhoneNumber.value))) {
       altPhoneNumberError = 'invalid phone number';
     }
 
-    //const serviceRoleError = serviceRoleValidator(serviceRole.value);
+    // const serviceRoleError = serviceRoleValidator(serviceRole.value);
 
     setNewEmail({ ...newEmail, error: emailError });
-    setNewPassword({...newPassword, error: passwordError});
+    setNewPassword({ ...newPassword, error: passwordError });
     setConfirmPassword({ ...confirmPassword, error: confirmPasswordError });
     setPhoneNumber({ ...phoneNumber, error: phoneNumberError });
     setAltPhoneNumber({ ...altPhoneNumber, error: altPhoneNumberError });
-    //setServiceRole({ ...serviceRole, error: serviceRoleError });
+    // setServiceRole({ ...serviceRole, error: serviceRoleError });
 
-
-    if (emailError || 
-      passwordError || 
-      confirmPasswordError || 
-      phoneNumberError || 
-      altPhoneNumberError) {
+    if (emailError
+      || passwordError
+      || confirmPasswordError
+      || phoneNumberError
+      || altPhoneNumberError) {
       return;
     }
 
     setLoading(true);
 
     const response = await registerUser({
-      //name: 'testUser',
+      // name: 'testUser',
       email: newEmail.value,
       password: newPassword.value,
     });
-    //console.log(response);
+    // console.log(response);
     if (response.error) {
       Toast.show({
         text: response.error,
@@ -112,8 +110,8 @@ const LoginScreen = ({ navigation }) => {
       });
     }
     setLoading(false);
-    //setModalVisible(false);
-  }
+    // setModalVisible(false);
+  };
 
   const onCancelCreateAccountPressed = async () => {
     setModalVisible(false);
@@ -131,15 +129,15 @@ const LoginScreen = ({ navigation }) => {
     //   setPassword({ ...password, error: passwordError });
     //   return;
     // }
-    
+
     setLoading(true);
-    //console.log('loading...');
+    // console.log('loading...');
     const response = await loginUser({
       email: email.value,
       password: password.value,
     });
 
-    //console.log('response received');
+    // console.log('response received');
     if (response.error) {
       console.log(response.error);
       Toast.show({
@@ -150,7 +148,7 @@ const LoginScreen = ({ navigation }) => {
     }
 
     setLoading(false);
-    //console.log('done');
+    // console.log('done');
   };
 
   const styles = StyleSheet.create({
@@ -161,7 +159,7 @@ const LoginScreen = ({ navigation }) => {
     },
     fontColor: {
       color: 'black',
-    }
+    },
   });
 
   return (
@@ -175,7 +173,6 @@ const LoginScreen = ({ navigation }) => {
         <Item floatingLabel error={email.error !== undefined}>
           <Label>Email</Label>
           <Input
-            style={styles.fontColor}
             keyboardType="email-address"
             textContentType="emailAddress"
             autoCompleteType="email"
@@ -198,140 +195,152 @@ const LoginScreen = ({ navigation }) => {
           />
         </Item>
 
-
-
         <Modal
           animationType="slide"
-          transparent={false}
+          presentationStyle="fullScreen"
           visible={modalVisible}
           onRequestClose={() => {
             setModalVisible(!modalVisible);
           }}
         >
-          <KeyboardAvoidingView style={styles.container}>
-            <Item 
-              floatingLabel
-              error={newEmail.error !== undefined}
-              style={{ marginVertical: 20}}
-            >
-              <Label>Email</Label>
-              <Input
-                style={{color: 'black'}}
-                keyboardType="email-address"
-                textContentType="emailAddress"
-                autoCompleteType="email"
-                autoCapitalize="none"
-                value={newEmail.value}
-                onChangeText={(value) => setNewEmail({ value })}
-              />
-            </Item>
+          <View
+            style={{
+              height: '100%',
+              backgroundColor: theme.containerBgColor,
+              paddingTop: 60,
+            }}
+          >
+            <KeyboardAvoidingView style={styles.container}>
+              <Item
+                floatingLabel
+                error={newEmail.error !== undefined}
+                style={{ marginVertical: 20 }}
+              >
+                <Label>Email</Label>
+                <Input
+                  // style={{ color: 'black' }}
+                  keyboardType="email-address"
+                  textContentType="emailAddress"
+                  autoCompleteType="email"
+                  autoCapitalize="none"
+                  value={newEmail.value}
+                  onChangeText={(value) => setNewEmail({ value })}
+                />
+              </Item>
 
-            <Item
-              floatingLabel
-              error={newPassword.error !== undefined}
-              style={{ marginVertical: 20 }}
-            >
-              <Label>Password</Label>
-              <Input
-                style={{color: 'black'}}
-                textContentType="password"
-                autoCompleteType="password"
-                autoCapitalize="none"
-                //passwordRules="minlength: 7; maxlength: 20; required: lower; required: upper; required: digit;"
-                secureTextEntry
-                value={newPassword.value}
-                onChangeText={(value) => setNewPassword({ value })}
-              />
-            </Item>
+              <Item
+                floatingLabel
+                error={newPassword.error !== undefined}
+                style={{ marginVertical: 20 }}
+              >
+                <Label>Password</Label>
+                <Input
+                  // style={{ color: 'black' }}
+                  textContentType="password"
+                  autoCompleteType="password"
+                  autoCapitalize="none"
+                  // passwordRules="minlength: 7; maxlength: 20; required: lower; required: upper; required: digit;"
+                  secureTextEntry
+                  value={newPassword.value}
+                  onChangeText={(value) => setNewPassword({ value })}
+                />
+              </Item>
 
-            <Item
-              floatingLabel
-              error={confirmPassword.error !== undefined}
-              style={{ marginVertical: 20 }}
-            >
-              <Label>Confirm Password</Label>
-              <Input
-                style={{color: 'black'}}
-                textContentType="password"
-                autoCompleteType="password"
-                autoCapitalize="none"
-                //="minlength: 7; maxlength: 20; required: lower; required: upper; required: digit;"
-                secureTextEntry
-                value={confirmPassword.value}
-                onChangeText={(value) => setConfirmPassword({ value })}
-              />
-            </Item>
+              <Item
+                floatingLabel
+                error={confirmPassword.error !== undefined}
+                style={{ marginVertical: 20 }}
+              >
+                <Label>Confirm Password</Label>
+                <Input
+                  // style={{ color: 'black' }}
+                  textContentType="password"
+                  autoCompleteType="password"
+                  autoCapitalize="none"
+                  //= "minlength: 7; maxlength: 20; required: lower; required: upper; required: digit;"
+                  secureTextEntry
+                  value={confirmPassword.value}
+                  onChangeText={(value) => setConfirmPassword({ value })}
+                />
+              </Item>
 
-            <Item
-              floatingLabel
-              error={phoneNumber.error !== undefined}
-              style={{ marginVertical: 20 }}
-            >
-              <Label>Phone Number</Label>
-              <Input
-                style={{color: 'black'}}
-                keyboardType="phone-pad"
-                returnKeyType="done"
-                autoCapitalize="none"
-                value={phoneNumber.value}
-                onChangeText={(value) => setPhoneNumber({ value })}
-              />
-            </Item>
+              <Item
+                floatingLabel
+                error={phoneNumber.error !== undefined}
+                style={{ marginVertical: 20 }}
+              >
+                <Label>Phone Number</Label>
+                <Input
+                  // style={{ color: 'black' }}
+                  keyboardType="phone-pad"
+                  returnKeyType="done"
+                  autoCapitalize="none"
+                  value={phoneNumber.value}
+                  onChangeText={(value) => setPhoneNumber({ value })}
+                />
+              </Item>
 
-            <Item
-              floatingLabel
-              error={altPhoneNumber.error !== undefined}
-              style={{ marginVertical: 20 }}
-            >
-              <Label>Alt. Phone Number</Label>
-              <Input
-                style={{color: 'black'}}
-                keyboardType="number-pad"
-                returnKeyType="done"
-                autoCapitalize="none"
-                value={altPhoneNumber.value}
-                onChangeText={(value) => setAltPhoneNumber({ value })}
-              />
-            </Item>
+              <Item
+                floatingLabel
+                error={altPhoneNumber.error !== undefined}
+                style={{ marginVertical: 20 }}
+              >
+                <Label>Alt. Phone Number</Label>
+                <Input
+                  // style={{ color: 'black' }}
+                  keyboardType="number-pad"
+                  returnKeyType="done"
+                  autoCapitalize="none"
+                  value={altPhoneNumber.value}
+                  onChangeText={(value) => setAltPhoneNumber({ value })}
+                />
+              </Item>
 
-            <Item
-              floatingLabel
-              error={serviceRole.error !== undefined}
-              style={{ marginVertical: 20 }}
-            >
-              <Label>Service Role</Label>
-              <Input
-                style={{color: 'black'}}
-                returnKeyType="done"
-                autoCapitalize="none"
-                value={serviceRole.value}
-                onChangeText={(value) => setServiceRole({ value })}
-              />
-            </Item>
+              <Item
+                floatingLabel
+                error={serviceRole.error !== undefined}
+                style={{ marginVertical: 20 }}
+              >
+                <Label>Service Role</Label>
+                <Input
+                  // style={{ color: 'black' }}
+                  returnKeyType="done"
+                  autoCapitalize="none"
+                  value={serviceRole.value}
+                  onChangeText={(value) => setServiceRole({ value })}
+                />
+              </Item>
 
-            <Button
-              disabled={loading}
-              primary={!loading}
-              block
-              onPress={onCancelCreateAccountPressed}
-            >
-              {loading ? <Spinner /> : <Text>Cancel</Text>}
-            </Button>
-            <Button
-              disabled={loading}
-              primary={!loading}
-              block
-              onPress={onSubmitAccountPressed}
-            >
-              {loading ? <Spinner /> : <Text>Submit</Text>}
-            </Button>
-          </KeyboardAvoidingView>
+              <Button
+                disabled={loading}
+                primary={!loading}
+                block
+                onPress={onCancelCreateAccountPressed}
+                style={{
+                  marginBottom: 10,
+                }}
+              >
+                {loading ? <Spinner /> : <Text>Cancel</Text>}
+              </Button>
+              <Button
+                disabled={loading}
+                primary={!loading}
+                block
+                onPress={onSubmitAccountPressed}
+              >
+                {loading ? <Spinner /> : <Text>Submit</Text>}
+              </Button>
+            </KeyboardAvoidingView>
+          </View>
         </Modal>
         <Button
           disabled={loading}
           primary={!loading}
           block
           onPress={onLoginPressed}
+          style={{
+            marginBottom: 10,
+          }}
         >
           {loading ? <Spinner /> : <Text>Login</Text>}
         </Button>
