@@ -1,20 +1,23 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
+//import { useDispatch } from 'react-redux';
+import { createUserInfo } from '../actions';
+
+//const dispatch = useDispatch();
 
 export const logoutUser = () => {
   firebase.auth().signOut();
 };
 
-export const registerUser = async ({ name, email, password }) => {
-
+export const registerUser = async ( email, password, data ) => {
+  let user = null;
   await firebase.auth().createUserWithEmailAndPassword(email, password)
-  .then((user) => {
-    //console.log('supposedly sent');
-    //handleStatusMessage(AUTH_SUCCESS) //Show success message
-    //firebase.auth().signOut()
-    //console.log('supposedly signed out');
-
-    console.log('user successfully created!')
+  .then((userCredential) => {
+    //let user = userCredential.user;
+    console.log('attempting to add data to db');
+    createUserInfo(userCredential.user.uid, data);
+    //console.log(data);
+    //console.log('user successfully created!')
   })
   .catch((error) => {
     //console.log('Error was caught while registering!')
@@ -42,6 +45,11 @@ export const registerUser = async ({ name, email, password }) => {
         };
     }
   });
+
+  //if(user) {
+  //  console.log(user);
+  //}
+  //console.log(firebase.auth().currentUser.uid);
 
   //firebase.auth().onAuthStateChanged((user) => {
   //  console.log(user);

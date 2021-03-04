@@ -41,11 +41,22 @@ export const getUserOrders = (user) => (dispatch) => {
   });
 };
 
-export const updateOrders = (orderName) => (data) => (dispatch) => {
+export const updateOrders = (orderName) => (data) => {
   console.log(data);
-  dispatch({ type: actionTypes.UPDATE_ORDERS, payload: data });
+  //dispatch({ type: actionTypes.UPDATE_ORDERS, payload: data });
   db.ref('/orders').child(orderName).set(data);
 };
+
+export const createUserInfo = (userId, data) => {
+  //console.log(data);
+  //dispatch({ type: actionTypes.CREATE_INFO_ABOUT_USER, payload: userId });
+  //console.log('User ID:' + userId);
+  console.log(data);
+  db.ref('/users').child(userId).set(data)
+  .then(() => console.log('success'))
+  .catch((error) => console.log(error));
+  //db.ref('/users').set({userId});
+}
 
 const uploadImage = async (imagePath, imageRef) => {
   const response = await fetch(imagePath);

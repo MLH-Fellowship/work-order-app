@@ -9,6 +9,8 @@ import Logo from './Logo';
 // import { emailValidator, passwordValidator } from '../core/utils';
 import { loginUser, registerUser } from '../api/auth-api';
 import theme from '../native-base-theme/variables/commonColor';
+import { createUserInfo } from '../actions';
+//import { useDispatch } from 'react-redux';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: '', error: undefined });
@@ -24,6 +26,8 @@ const LoginScreen = ({ navigation }) => {
   const [altPhoneNumber, setAltPhoneNumber] = useState({ value: '', error: undefined });
   const [serviceRole, setServiceRole] = useState({ value: '', error: undefined });
 
+  
+
   const onCreateAccountPressed = async () => {
     setModalVisible(true);
   };
@@ -31,14 +35,15 @@ const LoginScreen = ({ navigation }) => {
   const onSubmitAccountPressed = async () => {
     if (loading) return;
 
+
     // validate email
     // const emailEnding = '@socom.mil';
     const domain = '@socom.mil';
 
     let emailError;
     if (!newEmail.value
-      || newEmail.value.length <= domain.length
-      || !newEmail.value.endsWith(domain)) {
+      || newEmail.value.length <= domain.length) {
+    //  || !newEmail.value.endsWith(domain)) {
     //  newEmail.length > 320) {
       emailError = 'invalid email';
     }
@@ -96,19 +101,26 @@ const LoginScreen = ({ navigation }) => {
 
     setLoading(true);
 
-    const response = await registerUser({
+    //createUserInfo('randomUser1')(data)(dispatch);
+
+    const response = await registerUser(
       // name: 'testUser',
-      email: newEmail.value,
-      password: newPassword.value,
-    });
+      newEmail.value,
+      newPassword.value,
+      {
+        phoneNumber: phoneNumber.value,
+        altPhoneNumber: altPhoneNumber.value,
+        role: serviceRole.value
+      }
+    );
     // console.log(response);
-    if (response.error) {
-      Toast.show({
-        text: response.error,
-        type: 'danger',
-        duration: 3000,
-      });
-    }
+    //if (response.error) {
+    //  Toast.show({
+    //    text: response.error,
+    //    type: 'danger',
+    //    duration: 3000,
+    //  });
+    //}
     setLoading(false);
     // setModalVisible(false);
   };
@@ -135,17 +147,20 @@ const LoginScreen = ({ navigation }) => {
     const response = await loginUser({
       email: email.value,
       password: password.value,
+      phoneNumber: phoneNumber.value,
+      altPhoneNumber: altPhoneNumber.value,
+      serviceRole: serviceRole.value
     });
 
     // console.log('response received');
-    if (response.error) {
-      console.log(response.error);
-      Toast.show({
-        text: response.error,
-        type: 'danger',
-        duration: 3000,
-      });
-    }
+    //if (response.error) {
+    //  console.log(response.error);
+    //  Toast.show({
+    //    text: response.error,
+    //    type: 'danger',
+    //    duration: 3000,
+    //  });
+    //}
 
     setLoading(false);
     // console.log('done');
