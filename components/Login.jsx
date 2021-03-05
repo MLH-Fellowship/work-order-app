@@ -3,7 +3,7 @@ import {
   StyleSheet, KeyboardAvoidingView, Platform, Modal,
 } from 'react-native';
 import {
-  Toast, Text, Container, Button, Spinner, Input, Item, Label, View,
+  Toast, Text, Container, Button, Spinner, Input, Item, Label, View, ActionSheet
 } from 'native-base';
 import Logo from './Logo';
 // import { emailValidator, passwordValidator } from '../core/utils';
@@ -17,6 +17,9 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState({ value: '', error: undefined });
   const [loading, setLoading] = useState(false);
 
+  const BUTTONS = ["Tenant", "Technician", "Admin", "Cancel"];
+  const CANCEL_INDEX = 3;
+
   const [error, setError] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [newEmail, setNewEmail] = useState({ value: '', error: undefined });
@@ -24,9 +27,7 @@ const LoginScreen = ({ navigation }) => {
   const [confirmPassword, setConfirmPassword] = useState({ value: '', error: undefined });
   const [phoneNumber, setPhoneNumber] = useState({ value: '', error: undefined });
   const [altPhoneNumber, setAltPhoneNumber] = useState({ value: '', error: undefined });
-  const [serviceRole, setServiceRole] = useState({ value: '', error: undefined });
-
-  
+  const [serviceRole, setServiceRole] = useState({ value: BUTTONS[0] });  
 
   const onCreateAccountPressed = async () => {
     setModalVisible(true);
@@ -311,20 +312,28 @@ const LoginScreen = ({ navigation }) => {
                 />
               </Item>
 
-              <Item
-                floatingLabel
-                error={serviceRole.error !== undefined}
-                style={{ marginVertical: 20 }}
+
+              <Button
+                style={{ 
+                  marginBottom: 10,
+                }}
+                onPress={() =>
+                  ActionSheet.show(
+                    {
+                      options: BUTTONS,
+                      cancelButtonIndex: CANCEL_INDEX,
+                      title: "Select Service Role"
+                    },
+                    buttonIndex => {
+                      //console.log("selected " + BUTTONS[buttonIndex]);
+                      if(buttonIndex != CANCEL_INDEX) {
+                        setServiceRole({value: BUTTONS[buttonIndex]});
+                      }
+                    }
+                  )}
               >
-                <Label>Service Role</Label>
-                <Input
-                  // style={{ color: 'black' }}
-                  returnKeyType="done"
-                  autoCapitalize="none"
-                  value={serviceRole.value}
-                  onChangeText={(value) => setServiceRole({ value })}
-                />
-              </Item>
+                <Text>{serviceRole.value}</Text>
+              </Button>
 
               <Button
                 disabled={loading}
