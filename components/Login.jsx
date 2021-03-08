@@ -3,14 +3,17 @@ import {
   StyleSheet, KeyboardAvoidingView, Platform, Modal,
 } from 'react-native';
 import {
-  Toast, Text, Container, Button, Spinner, Input, Item, Label, View, ActionSheet
+  Toast, Text, Container, Button, Spinner, Input, Item, Label, View, ActionSheet, Picker, Root
 } from 'native-base';
 import Logo from './Logo';
 // import { emailValidator, passwordValidator } from '../core/utils';
 import { loginUser, registerUser } from '../api/auth-api';
 import theme from '../native-base-theme/variables/commonColor';
-import { createUserInfo } from '../actions';
+//import { createUserInfo } from '../actions';
+import { ScrollView } from 'react-native-gesture-handler';
 //import { useDispatch } from 'react-redux';
+
+
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: '', error: undefined });
@@ -34,8 +37,14 @@ const LoginScreen = ({ navigation }) => {
   };
 
   const onSubmitAccountPressed = async () => {
+    Toast.show({
+      text: 'Response on creating account',
+      type: 'danger',
+      duration: 3000,
+    });
     if (loading) return;
 
+    
 
     // validate email
     // const emailEnding = '@socom.mil';
@@ -116,11 +125,7 @@ const LoginScreen = ({ navigation }) => {
     );
     // console.log(response);
     //if (response.error) {
-    //  Toast.show({
-    //    text: response.error,
-    //    type: 'danger',
-    //    duration: 3000,
-    //  });
+      
     //}
     setLoading(false);
     // setModalVisible(false);
@@ -174,10 +179,11 @@ const LoginScreen = ({ navigation }) => {
       margin: '5%',
     },
     fontColor: {
-      color: 'black',
+      color: 'white',
     },
   });
 
+  //if(true) {}
   return (
     <Container>
       <KeyboardAvoidingView
@@ -204,14 +210,18 @@ const LoginScreen = ({ navigation }) => {
             textContentType="password"
             autoCompleteType="password"
             autoCapitalize="none"
-            passwordRules="minlength: 7; maxlength: 20; required: lower; required: upper; required: digit;"
+            //passwordRules="minlength: 9; maxlength: 30; required: lower; required: upper; required: digit;"
             secureTextEntry
             value={password.value}
             onChangeText={(value) => setPassword({ value })}
           />
         </Item>
 
+        
         <Modal
+          style={{
+            justifyContent: 'flex-end',
+          }}
           animationType="slide"
           presentationStyle="fullScreen"
           visible={modalVisible}
@@ -219,18 +229,28 @@ const LoginScreen = ({ navigation }) => {
             setModalVisible(!modalVisible);
           }}
         >
+          <Root>
+            <Container>
           <View
             style={{
               height: '100%',
               backgroundColor: theme.containerBgColor,
-              paddingTop: 60,
+              paddingTop: '10%',
             }}
           >
-            <KeyboardAvoidingView style={styles.container}>
+            <KeyboardAvoidingView
+                enabled
+                style={styles.container}
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            >
+              <ScrollView
+                scrollEnabled={true}
+                keyboardShouldPersistTaps="handled"
+              >
               <Item
                 floatingLabel
                 error={newEmail.error !== undefined}
-                style={{ marginVertical: 20 }}
+                style={{ marginVertical: 10 }}
               >
                 <Label>Email</Label>
                 <Input
@@ -243,17 +263,19 @@ const LoginScreen = ({ navigation }) => {
                   onChangeText={(value) => setNewEmail({ value })}
                 />
               </Item>
+              <Text>Use your military email</Text>
 
               <Item
                 floatingLabel
                 error={newPassword.error !== undefined}
-                style={{ marginVertical: 20 }}
+                style={{ marginVertical: 10 }}
               >
                 <Label>Password</Label>
                 <Input
                   // style={{ color: 'black' }}
                   textContentType="password"
                   autoCompleteType="password"
+                  returnKeyType="done"
                   autoCapitalize="none"
                   // passwordRules="minlength: 7; maxlength: 20; required: lower; required: upper; required: digit;"
                   secureTextEntry
@@ -261,17 +283,19 @@ const LoginScreen = ({ navigation }) => {
                   onChangeText={(value) => setNewPassword({ value })}
                 />
               </Item>
+              <Text>Use 9-30 characters and at least one lowercase, uppercase, number, and symbol</Text>
 
               <Item
                 floatingLabel
                 error={confirmPassword.error !== undefined}
-                style={{ marginVertical: 20 }}
+                style={{ marginVertical: 10 }}
               >
                 <Label>Confirm Password</Label>
                 <Input
                   // style={{ color: 'black' }}
                   textContentType="password"
                   autoCompleteType="password"
+                  returnKeyType="done"
                   autoCapitalize="none"
                   //= "minlength: 7; maxlength: 20; required: lower; required: upper; required: digit;"
                   secureTextEntry
@@ -279,11 +303,11 @@ const LoginScreen = ({ navigation }) => {
                   onChangeText={(value) => setConfirmPassword({ value })}
                 />
               </Item>
-
+              
               <Item
                 floatingLabel
                 error={phoneNumber.error !== undefined}
-                style={{ marginVertical: 20 }}
+                style={{ marginVertical: 10 }}
               >
                 <Label>Phone Number</Label>
                 <Input
@@ -295,11 +319,12 @@ const LoginScreen = ({ navigation }) => {
                   onChangeText={(value) => setPhoneNumber({ value })}
                 />
               </Item>
+              <Text>Use 10-digit phone number</Text>
 
               <Item
                 floatingLabel
                 error={altPhoneNumber.error !== undefined}
-                style={{ marginVertical: 20 }}
+                style={{ marginVertical: 10 }}
               >
                 <Label>Alt. Phone Number</Label>
                 <Input
@@ -311,10 +336,11 @@ const LoginScreen = ({ navigation }) => {
                   onChangeText={(value) => setAltPhoneNumber({ value })}
                 />
               </Item>
-
+              <Text>Use 10-digit phone number or leave empty</Text>
 
               <Button
-                style={{ 
+                style={{
+                  marginVertical: 10,
                   marginBottom: 10,
                 }}
                 onPress={() =>
@@ -332,8 +358,13 @@ const LoginScreen = ({ navigation }) => {
                     }
                   )}
               >
-                <Text>{serviceRole.value}</Text>
+                <Text style={{color:'white'}}>{serviceRole.value}</Text>
               </Button>
+
+              <Item>
+              
+              </Item>
+
 
               <Button
                 disabled={loading}
@@ -354,9 +385,14 @@ const LoginScreen = ({ navigation }) => {
               >
                 {loading ? <Spinner /> : <Text>Submit</Text>}
               </Button>
-            </KeyboardAvoidingView>
+              </ScrollView>
+              </KeyboardAvoidingView>
           </View>
+          </Container>
+          </Root>
         </Modal>
+
+
         <Button
           disabled={loading}
           primary={!loading}
