@@ -48,9 +48,7 @@ export const updateOrders = (orderName) => (data) => {
 };
 
 export const createUserInfo = (userId, data) => {
-  //console.log(data);
-  //dispatch({ type: actionTypes.CREATE_INFO_ABOUT_USER, payload: userId });
-  //console.log('User ID:' + userId);
+  data['verificationSent'] = Date.now();
   console.log(data);
   db.ref('/users').child(userId).set(data)
   .then(() => console.log('success'))
