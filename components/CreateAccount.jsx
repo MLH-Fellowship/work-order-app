@@ -3,7 +3,8 @@ import {
   StyleSheet, KeyboardAvoidingView, Platform, Modal,
 } from 'react-native';
 import {
-  Toast, Text, Container, Body, Title, Header, Button, Spinner, Input, Item, Label, View, ActionSheet, Picker
+  Toast, Text, Container, Content, Body, Title, Header, Button, 
+  Spinner, Input, Item, Label, View, ActionSheet, Picker, Icon, Form
 } from 'native-base';
 import Logo from './Logo';
 // import { emailValidator, passwordValidator } from '../core/utils';
@@ -16,42 +17,25 @@ import { ScrollView } from 'react-native-gesture-handler';
 export const CreateAccount = () => {
 
     const [loading, setLoading] = useState(false);
-  
-    const BUTTONS = ["Tenant", "Technician", "Admin", "Cancel"];
-    const CANCEL_INDEX = 3;
-  
-    //const [error, setError] = useState('');
-    //const [modalVisible, setModalVisible] = useState(false);
     const [newEmail, setNewEmail] = useState({ value: '', error: undefined });
     const [newPassword, setNewPassword] = useState({ value: '', error: undefined });
     const [confirmPassword, setConfirmPassword] = useState({ value: '', error: undefined });
     const [phoneNumber, setPhoneNumber] = useState({ value: '', error: undefined });
     const [altPhoneNumber, setAltPhoneNumber] = useState({ value: '', error: undefined });
-    const [serviceRole, setServiceRole] = useState({ value: BUTTONS[0] });
-
-    const onCreateAccountPressed = async () => {
-        setModalVisible(true);
-      };
+    const [serviceRole, setServiceRole] = useState({ value: undefined });
     
       const onSubmitAccountPressed = async () => {
-        Toast.show({
-          text: 'Response on creating account',
-          type: 'danger',
-          duration: 3000,
-        });
+        //console.log(Date.now())
         if (loading) return;
-    
-        
     
         // validate email
         // const emailEnding = '@socom.mil';
-        const domain = '@socom.mil';
+        const domain1 = '@socom.mil';
+        const domain2 = '@mail.mil';
     
         let emailError;
-        if (!newEmail.value
-          || newEmail.value.length <= domain.length) {
-        //  || !newEmail.value.endsWith(domain)) {
-        //  newEmail.length > 320) {
+        if (!newEmail.value || 
+           (!newEmail.value.endsWith(domain1) && !newEmail.value.endsWith(domain2))) {
           emailError = 'invalid email';
         }
     
@@ -96,40 +80,51 @@ export const CreateAccount = () => {
         setConfirmPassword({ ...confirmPassword, error: confirmPasswordError });
         setPhoneNumber({ ...phoneNumber, error: phoneNumberError });
         setAltPhoneNumber({ ...altPhoneNumber, error: altPhoneNumberError });
-        // setServiceRole({ ...serviceRole, error: serviceRoleError });
     
         if (emailError
           || passwordError
           || confirmPasswordError
           || phoneNumberError
           || altPhoneNumberError) {
-          return;
+            Toast.show({
+                text: "One or more fields invalid",
+                type: 'danger',
+                duration: 3000,
+              });
         }
-    
-        setLoading(true);
-    
-        //createUserInfo('randomUser1')(data)(dispatch);
-    
-        const response = await registerUser(
-          // name: 'testUser',
-          newEmail.value,
-          newPassword.value,
-          {
-            phoneNumber: phoneNumber.value,
-            altPhoneNumber: altPhoneNumber.value,
-            role: serviceRole.value
-          }
-        );
-        // console.log(response);
-        //if (response.error) {
-          
-        //}
-        setLoading(false);
-        // setModalVisible(false);
-      };
-    
-      const onCancelCreateAccountPressed = async () => {
-        setModalVisible(false);
+        else {
+            setLoading(true);
+            
+            //createUserInfo('randomUser1')(data)(dispatch);
+            
+            const response = await registerUser(
+              // name: 'testUser',
+              newEmail.value,
+              newPassword.value,
+              {
+                phoneNumber: phoneNumber.value,
+                altPhoneNumber: altPhoneNumber.value,
+                role: serviceRole.value
+              }
+            );
+            
+            if(response.message.length > 0) {
+              Toast.show({
+                text: response.message,
+                type: 'success',
+                duration: 3000,
+              });
+            }
+            if(response.error.length > 0) {
+              Toast.show({
+                    text: response.error,
+                    type: 'danger',
+                    duration: 3000,
+                  });
+            }
+
+            setLoading(false);
+        }
       };
     
       const styles = StyleSheet.create({
@@ -145,139 +140,139 @@ export const CreateAccount = () => {
 
     return(
         <View>
-            <Header>
-                <Body>
-                    <Title>Create New Account</Title>
-                </Body>
-            </Header>
-
-              <Item
-                floatingLabel
-                error={newEmail.error !== undefined}
-                style={{ marginVertical: 10 }}
-              >
-                <Label>Email</Label>
-                <Input
-                  // style={{ color: 'black' }}
-                  keyboardType="email-address"
-                  textContentType="emailAddress"
-                  autoCompleteType="email"
-                  autoCapitalize="none"
-                  value={newEmail.value}
-                  onChangeText={(value) => setNewEmail({ value })}
-                />
-              </Item>
-              <Text>Use your military email</Text>
-
-              <Item
-                floatingLabel
-                error={newPassword.error !== undefined}
-                style={{ marginVertical: 10 }}
-              >
-                <Label>Password</Label>
-                <Input
-                  // style={{ color: 'black' }}
-                  textContentType="password"
-                  autoCompleteType="password"
-                  returnKeyType="done"
-                  autoCapitalize="none"
-                  // passwordRules="minlength: 7; maxlength: 20; required: lower; required: upper; required: digit;"
-                  secureTextEntry
-                  value={newPassword.value}
-                  onChangeText={(value) => setNewPassword({ value })}
-                />
-              </Item>
-              <Text>Use 9-30 characters and at least one lowercase, uppercase, number, and symbol</Text>
-
-              <Item
-                floatingLabel
-                error={confirmPassword.error !== undefined}
-                style={{ marginVertical: 10 }}
-              >
-                <Label>Confirm Password</Label>
-                <Input
-                  // style={{ color: 'black' }}
-                  textContentType="password"
-                  autoCompleteType="password"
-                  returnKeyType="done"
-                  autoCapitalize="none"
-                  //= "minlength: 7; maxlength: 20; required: lower; required: upper; required: digit;"
-                  secureTextEntry
-                  value={confirmPassword.value}
-                  onChangeText={(value) => setConfirmPassword({ value })}
-                />
-              </Item>
-              
-              <Item
-                floatingLabel
-                error={phoneNumber.error !== undefined}
-                style={{ marginVertical: 10 }}
-              >
-                <Label>Phone Number</Label>
-                <Input
-                  // style={{ color: 'black' }}
-                  keyboardType="phone-pad"
-                  returnKeyType="done"
-                  autoCapitalize="none"
-                  value={phoneNumber.value}
-                  onChangeText={(value) => setPhoneNumber({ value })}
-                />
-              </Item>
-              <Text>Use 10-digit phone number</Text>
-
-              <Item
-                floatingLabel
-                error={altPhoneNumber.error !== undefined}
-                style={{ marginVertical: 10 }}
-              >
-                <Label>Alt. Phone Number</Label>
-                <Input
-                  // style={{ color: 'black' }}
-                  keyboardType="number-pad"
-                  returnKeyType="done"
-                  autoCapitalize="none"
-                  value={altPhoneNumber.value}
-                  onChangeText={(value) => setAltPhoneNumber({ value })}
-                />
-              </Item>
-              <Text>Use 10-digit phone number or leave empty</Text>
-
-              <Button
-                style={{
-                  marginVertical: 10,
-                  marginBottom: 10,
+          <Header>
+              <Body>
+                  <Title>Create New Account</Title>
+              </Body>
+          </Header>
+          <Content>
+            <View
+                style={{marginLeft: '5%', marginRight: '5%'}}
+            >
+            <Item
+              floatingLabel
+              error={newEmail.error !== undefined}
+              style={{ marginVertical: 10 }}
+            >
+              <Label>Email</Label>
+              <Input
+                keyboardType="email-address"
+                textContentType="emailAddress"
+                autoCompleteType="email"
+                autoCapitalize="none"
+                value={newEmail.value}
+                onChangeText={(value) => setNewEmail({ value })}
+              />
+            </Item>
+            <Text>Use your military email</Text>
+            <Item
+              floatingLabel
+              error={newPassword.error !== undefined}
+              style={{ marginVertical: 10 }}
+            >
+              <Label>Password</Label>
+              <Input
+                textContentType="password"
+                autoCompleteType="password"
+                returnKeyType="done"
+                autoCapitalize="none"
+                secureTextEntry
+                value={newPassword.value}
+                onChangeText={(value) => setNewPassword({ value })}
+              />
+            </Item>
+            <Text>Use 9-30 characters and at least one lowercase, uppercase, number, and symbol</Text>
+            <Item
+              floatingLabel
+              error={confirmPassword.error !== undefined}
+              style={{ marginVertical: 10 }}
+            >
+              <Label>Confirm Password</Label>
+              <Input
+                textContentType="password"
+                autoCompleteType="password"
+                returnKeyType="done"
+                autoCapitalize="none"
+                secureTextEntry
+                value={confirmPassword.value}
+                onChangeText={(value) => setConfirmPassword({ value })}
+              />
+            </Item>
+            
+            <Item
+              floatingLabel
+              error={phoneNumber.error !== undefined}
+              style={{ marginVertical: 10 }}
+            >
+              <Label>Phone Number</Label>
+              <Input
+                keyboardType="phone-pad"
+                returnKeyType="done"
+                autoCapitalize="none"
+                value={phoneNumber.value}
+                onChangeText={(value) => setPhoneNumber({ value })}
+              />
+            </Item>
+            <Text>Use 10-digit phone number</Text>
+            <Item
+              floatingLabel
+              error={altPhoneNumber.error !== undefined}
+              style={{ 
+                marginVertical: 10 
+              }}>
+              <Label>Alt. Phone Number</Label>
+              <Input
+                // style={{ color: 'black' }}
+                keyboardType="number-pad"
+                returnKeyType="done"
+                autoCapitalize="none"
+                value={altPhoneNumber.value}
+                onChangeText={(value) => setAltPhoneNumber({ value })}
+              />
+            </Item>
+            <Text>Use 10-digit phone number or leave empty</Text>
+            <Item 
+                picker
+                style={{ 
+                    marginVertical: 15,
+                    paddingLeft: 0,
+                    marginLeft: 0
                 }}
-                onPress={() =>
-                  ActionSheet.show(
-                    {
-                      options: BUTTONS,
-                      cancelButtonIndex: CANCEL_INDEX,
-                      title: "Select Service Role"
-                    },
-                    buttonIndex => {
-                      //console.log("selected " + BUTTONS[buttonIndex]);
-                      if(buttonIndex != CANCEL_INDEX) {
-                        setServiceRole({value: BUTTONS[buttonIndex]});
-                      }
-                    }
-                  )}
+            >
+              <Label style={{ 
+                  marginRight: '22%',
+                  //justifyContent: 'left',
+              }}>Service Role:</Label>
+              <Picker
+                mode="dropdown"
+                iosIcon={<Icon name="arrow-down" />}
+                style={{ width: undefined }}
+                placeholder="Select Your Role"
+                placeholderStyle={{ color: "#bfc6ea" }}
+                placeholderIconColor="#007aff"
+                selectedValue={serviceRole.value}
+                onValueChange={(temp) => {setServiceRole({value:temp})}}
               >
-                <Text style={{color:'white'}}>{serviceRole.value}</Text>
-              </Button>
-     
-              <Button
-                disabled={loading}
-                primary={!loading}
-                block
-                onPress={onSubmitAccountPressed}
-                style={{
-                  marginBottom: 10,
-                }}
-              >
-                {loading ? <Spinner /> : <Text>Submit</Text>}
-              </Button>
-              </View>
+                    <Picker.Item label="Tenant" value="tenant" />
+                    <Picker.Item label="Technician" value="techincian" />
+                    <Picker.Item label="Admin" value="admin" />
+                </Picker>
+            </Item>
+    
+            <Button
+              disabled={loading}
+              primary={!loading}
+              block
+              onPress={onSubmitAccountPressed}
+              style={{
+                marginVertical: 10,
+                marginBottom: 10,
+              }}
+            >
+              {loading ? <Spinner /> : <Text>Submit</Text>}
+            </Button>
+            </View>
+          </Content>
+        </View>
     );
 };
-
-//export default memo(CreateAccount);

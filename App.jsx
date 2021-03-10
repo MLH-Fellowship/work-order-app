@@ -29,6 +29,7 @@ export default function App() {
   async function onAuthStateChanged(newUserState) {
     if (newUserState && !newUserState.emailVerified) {
       try {
+        console.log(newUserState.user.uid);
         await newUserState.sendEmailVerification();
         console.log('Verification email sent.');
       } catch (e) {

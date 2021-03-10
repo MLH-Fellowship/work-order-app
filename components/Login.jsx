@@ -3,7 +3,7 @@ import {
   StyleSheet, KeyboardAvoidingView, Platform, Modal,
 } from 'react-native';
 import {
-  Toast, Text, Container, Button, Spinner, Input, Item, Label, View, ActionSheet, Picker, Root
+  Toast, Text, Container, Header, Body, Title, Button, Spinner, Input, Item, Label, View, ActionSheet, Picker, Root
 } from 'native-base';
 import Logo from './Logo';
 // import { emailValidator, passwordValidator } from '../core/utils';
@@ -14,24 +14,13 @@ import { ScrollView } from 'react-native-gesture-handler';
 //import { useDispatch } from 'react-redux';
 import {CreateAccount} from './CreateAccount';
 
-
-
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: '', error: undefined });
   const [password, setPassword] = useState({ value: '', error: undefined });
   const [loading, setLoading] = useState(false);
 
-  const BUTTONS = ["Tenant", "Technician", "Admin", "Cancel"];
-  const CANCEL_INDEX = 3;
-
   const [error, setError] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-  const [newEmail, setNewEmail] = useState({ value: '', error: undefined });
-  const [newPassword, setNewPassword] = useState({ value: '', error: undefined });
-  const [confirmPassword, setConfirmPassword] = useState({ value: '', error: undefined });
-  const [phoneNumber, setPhoneNumber] = useState({ value: '', error: undefined });
-  const [altPhoneNumber, setAltPhoneNumber] = useState({ value: '', error: undefined });
-  const [serviceRole, setServiceRole] = useState({ value: BUTTONS[0] });  
 
   const onCreateAccountPressed = async () => {
     setModalVisible(true);
@@ -59,20 +48,16 @@ const LoginScreen = ({ navigation }) => {
     const response = await loginUser({
       email: email.value,
       password: password.value,
-      phoneNumber: phoneNumber.value,
-      altPhoneNumber: altPhoneNumber.value,
-      serviceRole: serviceRole.value
     });
 
-    // console.log('response received');
-    //if (response.error) {
-    //  console.log(response.error);
-    //  Toast.show({
-    //    text: response.error,
-    //    type: 'danger',
-    //    duration: 3000,
-    //  });
-    //}
+    if (response.error.length > 0) {
+      console.log(response.error);
+      Toast.show({
+        text: response.error,
+        type: 'danger',
+        duration: 3000,
+      });
+    }
 
     setLoading(false);
   };
@@ -135,31 +120,27 @@ const LoginScreen = ({ navigation }) => {
         >
           <Root>
             <Container>
-
-            <KeyboardAvoidingView
-                enabled
-                //style={styles.container}
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            <KeyboardAvoidingView 
+              enabled
             >
               <ScrollView
                 scrollEnabled={true}
                 keyboardShouldPersistTaps="handled"
               >
-              
                 <CreateAccount/>
-
-              <Button
-                disabled={loading}
-                primary={!loading}
-                block
-                onPress={onCancelCreateAccountPressed}
-                style={{
-                  marginBottom: 10,
-                }}
-              >
-                {loading ? <Spinner /> : <Text>Back</Text>}
-              </Button>
-
+                <View
+                  style={{marginLeft: '5%', marginRight: '5%'}}
+                >
+                <Button
+                  disabled={loading}
+                  primary={!loading}
+                  block
+                  onPress={onCancelCreateAccountPressed}
+                  style={{marginBottom: 10}}
+                >
+                  {loading ? <Spinner /> : <Text>Back</Text>}
+                </Button>
+                </View>
               </ScrollView>
               </KeyboardAvoidingView>
           
