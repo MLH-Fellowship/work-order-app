@@ -235,8 +235,12 @@ export default {
   // List
   listBg: 'transparent',
   listBorderColor: '#c9c9c9',
-  listDividerBg: '#000',
-  listBtnUnderlayColor: '#DDD',
+  listDividerBg: 'transparent',
+  // listSeparatorBg: 'rgba(0, 0, 0, 0.5)',
+  get listSeparatorBg() {
+    return this.brandPrimary;
+  },
+  listBtnUnderlayColor: 'rgba(252, 252, 252, 0.26)',
   listItemPadding: platform === PLATFORM.IOS ? 10 : 12,
   listNoteColor: '#808080',
   listNoteSize: 13,

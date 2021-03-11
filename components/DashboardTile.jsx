@@ -1,44 +1,42 @@
 import React, { memo } from 'react';
-import { TouchableOpacity } from 'react-native';
 import {
-  View, Card, CardItem, Text, H1, Body,
+  View, Text, Body, ListItem,
 } from 'native-base';
 import { useDispatch } from 'react-redux';
 import { getDashboardDetailData } from '../actions/index';
+import theme from '../native-base-theme/variables/commonColor';
+
+const StatusDot = ({ done }) => (
+  <View style={{
+    height: 10,
+    width: 10,
+    borderRadius: 100,
+    backgroundColor: done ? theme.brandSuccess : theme.brandDanger,
+  }}
+  />
+);
 
 // needs work on the text display
-const DashboardTile = ({ order, navigation, style }) => {
+const DashboardTile = ({ order, navigation }) => {
   const dispatch = useDispatch();
   return (
-    <TouchableOpacity onPress={() => {
-      dispatch(getDashboardDetailData(order));
-      navigation.navigate('DashboardDetail', order);
-    }}
+    <ListItem
+      last
+      onPress={() => {
+        dispatch(getDashboardDetailData(order));
+        navigation.navigate('DashboardDetail', order);
+      }}
     >
-      <Card style={style}>
-        <CardItem header>
-          <H1>{`Building ${order.building}`}</H1>
-        </CardItem>
-        <CardItem>
-          <Text>Room:</Text>
-          <Body />
-          <Text>{order.room}</Text>
-        </CardItem>
-        <CardItem>
-          <View style={{ flex: 1 }}>
-            <Text>Description:</Text>
-            <View style={{ marginTop: 10 }}>
-              <Text>{order.description || 'No description provided.' }</Text>
-            </View>
-          </View>
-        </CardItem>
-        <CardItem>
-          <Text>Status:</Text>
-          <Body />
-          <Text>{order.complete ? 'Complete' : 'Incomplete'}</Text>
-        </CardItem>
-      </Card>
-    </TouchableOpacity>
+      <Body>
+        <View>
+          <Text style={{ fontWeight: 'bold' }}>{order.room || 'No room provided.'}</Text>
+        </View>
+        <View>
+          <Text>{order.description || 'No description provided.'}</Text>
+        </View>
+      </Body>
+      <StatusDot done={order.complete} />
+    </ListItem>
   );
 };
 
