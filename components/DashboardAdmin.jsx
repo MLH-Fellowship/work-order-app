@@ -1,9 +1,16 @@
 import React, { useEffect, memo } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
-import { Container, Text } from 'native-base';
+import {
+  Container, Text, List, Separator,
+} from 'native-base';
 import { useSelector, useDispatch } from 'react-redux';
+import R from 'ramda';
 import { getOrders } from '../actions';
 import DashboardTile from './DashboardTile';
+
+const DashboardTileSepatator = ({ group }) => (
+  <Separator bordered><Text style={{ fontWeight: 'bold' }}>{group === 'MISC' ? 'MISC' : `Building ${group}`.toUpperCase() }</Text></Separator>
+);
 
 const styles = StyleSheet.create({
   listItem: {
@@ -19,36 +26,52 @@ const DashboardAdmin = ({ navigation }) => {
 
   const getOrderArray = () => {
     const { orders } = orderState;
-    return Object.keys(orders)
-      .reduce(
-        (prev, id) => (orders[id].complete
-          ? prev
-          : [
-            ...prev,
-            {
-              id,
-              ...orders[id],
-            },
-          ]),
-        [],
-      );
+    const ordersArray = Object.keys(orders).map((id) => ({
+      id,
+      ...orders[id],
+    }));
+
+    const grouped = R.groupBy(R.propOr('MISC', 'building'), ordersArray);
+    const orderedWithSeparators = Object.keys(grouped)
+      .sort(R.identity)
+      .reduce((col, group) => [...col, { group }, ...grouped[group]], []);
+    // console.log(orderedWithSeparators);
+    // console.log(, ordersArray));
+    // return Object.keys(orders)
+    //   .reduce(
+    //     (prev, id) => (orders[id].complete
+    //       ? prev
+    //       : [
+    //         ...prev,
+    //         {
+    //           id,
+    //           ...orders[id],
+    //         },
+    //       ]),
+    //     [],
+    //   );
+    return orderedWithSeparators;
   };
 
   useEffect(
     () => navigation.addListener('focus', () => dispatch(getOrders())),
     [],
   );
-
+  { /* <ListItem itemHeader>
+          <Text>ACCOUNT</Text>
+        </ListItem> */ }
   return (
     <Container>
-      <FlatList
-        data={getOrderArray()}
-        renderItem={({ item }) => (
-          <DashboardTile style={styles.listItem} order={item} navigation={navigation} />
-        )}
-        keyExtractor={(item, index) => index.toString()}
-        ListFooterComponent={<Text />}
-      />
+      <List>
+        <FlatList
+          data={getOrderArray()}
+          renderItem={({ item }) => (
+            item.group ? <DashboardTileSepatator {...item} /> : <DashboardTile order={item} navigation={navigation} />
+          )}
+          keyExtractor={(item, index) => index.toString()}
+          ListFooterComponent={<Text />}
+        />
+      </List>
     </Container>
   );
 };
