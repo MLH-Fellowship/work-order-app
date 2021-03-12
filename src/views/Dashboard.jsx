@@ -2,8 +2,8 @@ import React, { useEffect, memo } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import { Container, Text } from 'native-base';
 import { useSelector, useDispatch } from 'react-redux';
-import { getOrders } from '../actions';
-import DashboardTile from './DashboardTile';
+import { getOrders } from '@/actions';
+import DashboardTile from '@/components/DashboardTile';
 
 const styles = StyleSheet.create({
   listItem: {

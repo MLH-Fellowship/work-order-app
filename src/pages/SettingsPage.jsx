@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Settings from '../components/Settings';
+import Settings from '@/views/Settings';
 import theme from '../native-base-theme/variables/commonColor';
 
 const SettingsStack = createStackNavigator();

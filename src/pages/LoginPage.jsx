@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Login from '../components/Login';
+import Login from '@/views/Login';
 import theme from '../native-base-theme/variables/commonColor';
 
 const LoginStack = createStackNavigator();

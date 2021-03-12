@@ -4,8 +4,8 @@ import {
   Container, Header, Item, Icon, Input, Text,
 } from 'native-base';
 import filter from 'lodash/filter';
-import buildingData from '../buildings.json';
-import SearchTile from './SearchTile';
+import buildingData from '@/buildings.json';
+import SearchTile from '@/components/SearchTile';
 
 const styles = StyleSheet.create({
   listItem: {

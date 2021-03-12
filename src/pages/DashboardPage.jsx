@@ -3,10 +3,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { Icon } from 'native-base';
-import Dashboard from '../components/Dashboard';
-import DashboardAdmin from '../components/DashboardAdmin';
-import DashboardDetail from '../components/DashboardDetail';
-import theme from '../native-base-theme/variables/commonColor';
+import Dashboard from '@/views/Dashboard';
+import DashboardAdmin from '@/views/DashboardAdmin';
+import DashboardDetail from '@/components/DashboardDetail';
+import theme from '@/native-base-theme/variables/commonColor';
 
 import { updateOrders } from '../actions';
 

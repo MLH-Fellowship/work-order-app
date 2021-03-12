@@ -5,8 +5,8 @@ import {
 } from 'native-base';
 import { useSelector, useDispatch } from 'react-redux';
 import R from 'ramda';
-import { getOrders } from '../actions';
-import DashboardTile from './DashboardTile';
+import { getOrders } from '@/actions';
+import DashboardTile from '@/components/DashboardTile';
 
 const DashboardTileSepatator = ({ group }) => (
   <Separator bordered><Text style={{ fontWeight: 'bold' }}>{group === 'MISC' ? 'MISC' : `Building ${group}`.toUpperCase() }</Text></Separator>

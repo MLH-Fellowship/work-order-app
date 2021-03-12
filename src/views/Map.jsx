@@ -4,16 +4,16 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { View, Text } from 'native-base';
 import MapView, { Marker } from 'react-native-maps';
 import { useSelector, useDispatch } from 'react-redux';
-import buildingData from '../buildings.json';
-import OrderModal from './OrderModal';
-import { activateModal } from '../actions/index';
-import Building from './MapMarkers/Building';
-import Barracks from './MapMarkers/Barracks';
-import CarShop from './MapMarkers/CarShop';
-import Gym from './MapMarkers/Gym';
-import Medical from './MapMarkers/Medical';
-import Office from './MapMarkers/Office';
-import Dining from './MapMarkers/Dining';
+import buildingData from '@/buildings.json';
+import OrderModal from '@/components/OrderModal';
+import { activateModal } from '@/actions/index';
+import Building from '@/components/MapMarkers/Building';
+import Barracks from '@/components/MapMarkers/Barracks';
+import CarShop from '@/components/MapMarkers/CarShop';
+import Gym from '@/components/MapMarkers/Gym';
+import Medical from '@/components/MapMarkers/Medical';
+import Office from '@/components/MapMarkers/Office';
+import Dining from '@/components/MapMarkers/Dining';
 
 const styles = StyleSheet.create({
   container: {

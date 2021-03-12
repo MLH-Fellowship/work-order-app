@@ -2,9 +2,9 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Icon } from 'native-base';
 import { StyleSheet } from 'react-native';
-import Map from '../components/Map';
+import Map from '@/views/Map';
 import theme from '../native-base-theme/variables/commonColor';
-import Search from '../components/Search';
+import Search from '../views/Search';
 
 const MapStack = createStackNavigator();
 

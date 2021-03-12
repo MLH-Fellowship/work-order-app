@@ -5,14 +5,14 @@ import {
 import {
   Toast, Text, Container, Header, Body, Title, Button, Spinner, Input, Item, Label, View, ActionSheet, Picker, Root
 } from 'native-base';
-import Logo from './Logo';
-// import { emailValidator, passwordValidator } from '../core/utils';
-import { loginUser, registerUser } from '../api/auth-api';
-import theme from '../native-base-theme/variables/commonColor';
-//import { createUserInfo } from '../actions';
+import Logo from '@/components/Logo';
+// import { emailValidator, passwordValidator } from '@/core/utils';
+import { loginUser, registerUser } from '@/api/auth-api';
+import theme from '@/native-base-theme/variables/commonColor';
+//import { createUserInfo } from '@/actions';
 import { ScrollView } from 'react-native-gesture-handler';
 //import { useDispatch } from 'react-redux';
-import {CreateAccount} from './CreateAccount';
+import {CreateAccount} from '@/components/CreateAccount';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: '', error: undefined });
