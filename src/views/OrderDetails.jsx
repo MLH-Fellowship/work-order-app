@@ -5,9 +5,9 @@ import {
 import {
   Container, Text, Title, List, ListItem, Body, H3, Item, Input, Button, Icon,
 } from 'native-base';
-import ProgressiveImage from './ProgressiveImage';
-import theme from '../native-base-theme/variables/commonColor';
-import { callNumber } from '../utils';
+import ProgressiveImage from '@/components/ProgressiveImage';
+import theme from '@/native-base-theme/variables/commonColor';
+import { callNumber } from '@/utils';
 
 const styles = StyleSheet.create({
   imageContainer: {
@@ -134,7 +134,7 @@ const DashboardDetail = ({ route, navigation }) => {
           }
 
             <ListItem noIndent noBorder last>
-              <Item style>
+              <Item>
                 <Input placeholder="Message" onChangeText={setNewMessage} />
                 <Button
                   success
