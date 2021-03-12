@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StatusBar } from "react-native";
-import MapPage from "../pages/MapPage";
-import DashboardPage from "../pages/DashboardPage";
-import SettingsPage from "../pages/SettingsPage";
-import { setCurrentUser } from "../actions/index";
-import theme from "../native-base-theme/variables/commonColor";
+import MapPage from "@/pages/MapPage";
+import DashboardPage from "@/pages/DashboardPage";
+import SettingsPage from "@/pages/SettingsPage";
+import { setCurrentUser } from "@/actions/index";
+import theme from "@/native-base-theme/variables/commonColor";
 
 //Icons
 //cheatsheet: https://ionicons.com/v4/cheatsheet.html
