@@ -8,7 +8,7 @@ import {
 } from 'native-base';
 import Logo from './Logo';
 // import { emailValidator, passwordValidator } from '../core/utils';
-import { loginUser, registerUser } from '../api/auth-api';
+import { loginUser, registerUser } from '../api/auth';
 import theme from '../native-base-theme/variables/commonColor';
 import { createUserInfo } from '../actions';
 import { ScrollView } from 'react-native-gesture-handler';

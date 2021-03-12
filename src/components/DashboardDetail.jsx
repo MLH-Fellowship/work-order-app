@@ -7,7 +7,7 @@ import {
 } from 'native-base';
 import ProgressiveImage from './ProgressiveImage';
 import theme from '../native-base-theme/variables/commonColor';
-import { callNumber } from '../core/utils';
+import { callNumber } from '../utils';
 
 const styles = StyleSheet.create({
   imageContainer: {
