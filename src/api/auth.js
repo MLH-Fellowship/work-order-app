@@ -1,5 +1,5 @@
 import firebase from './firebase'
-import { createUserInfo } from '@/actions';
+import { createUserInfo } from '@/api/user';
 
 export const logoutUser = () => {
   firebase.auth().signOut();
