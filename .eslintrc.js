@@ -17,10 +17,27 @@ module.exports = {
   },
   plugins: [
     'react',
+    'import',
   ],
   rules: {
     'react/prop-types': 0,
     'no-alert': 0,
     'no-console': 0,
   },
+  settings: {
+    'import/resolver': {
+      node: {
+        paths: ['./src/'],
+        alias: {
+          '@': './src/',
+          '!': './',
+        },
+      },
+    },
+  },
+  files: [
+    {
+      patterns: '**/*.png',
+    },
+  ],
 };
