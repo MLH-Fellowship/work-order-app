@@ -1,5 +1,6 @@
 {
   "expo": {
+    "entryPoint": "./src/App.jsx",
     "name": "Work-Order-App",
     "slug": "Work-Order-App",
     "version": "1.0.0",

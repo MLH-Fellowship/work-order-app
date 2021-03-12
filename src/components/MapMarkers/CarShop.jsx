@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 import { Image, StyleSheet } from 'react-native';
 
-const Office = () => (
-  <Image source={require('../../assets/office.png')} style={styles.image} />
+const CarShop = () => (
+  <Image source={require('!/assets/carshop.png')} style={styles.image} />
 );
 
 const styles = StyleSheet.create({
@@ -12,4 +12,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(Office);
+export default memo(CarShop);

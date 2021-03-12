@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 import { Image, StyleSheet } from 'react-native';
 
-const Medical = () => (
-  <Image source={require('../../assets/medical.png')} style={styles.image} />
+const Building = () => (
+  <Image source={require('!/assets/building.png')} style={styles.image} />
 );
 
 const styles = StyleSheet.create({
@@ -12,4 +12,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(Medical);
+export default memo(Building);

@@ -1,3 +1,4 @@
+import { registerRootComponent } from 'expo';
 import React, { useState, useEffect } from 'react';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider as StoreProvider, useSelector } from 'react-redux';
@@ -19,7 +20,7 @@ import commonColor from './native-base-theme/variables/commonColor';
 
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+function App() {
   const middleware = [thunk];
   const store = createStore(rootReducer, applyMiddleware(...middleware));
 
@@ -27,16 +28,16 @@ export default function App() {
 
   // eslint-disable-next-line consistent-return
   async function onAuthStateChanged(newUserState) {
-    if (newUserState && !newUserState.emailVerified) {
-      try {
-        console.log(newUserState.user.uid);
-        await newUserState.sendEmailVerification();
-        console.log('Verification email sent.');
-      } catch (e) {
-        console.error('Error sending verification email:', e);
-      }
-      return firebase.auth().signOut();
-    }
+    // if (newUserState && !newUserState.emailVerified) {
+    //   try {
+    //     console.log(newUserState.user.uid);
+    //     await newUserState.sendEmailVerification();
+    //     console.log('Verification email sent.');
+    //   } catch (e) {
+    //     console.error('Error sending verification email:', e);
+    //   }
+    //   return firebase.auth().signOut();
+    // }
     setUser(newUserState);
   }
   useEffect(() => firebase.auth().onAuthStateChanged(onAuthStateChanged), []);
@@ -55,3 +56,5 @@ export default function App() {
     </StyleProvider>
   );
 }
+
+export default registerRootComponent(App);
