@@ -1,10 +1,9 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import LoginPage from '../pages/LoginPage';
+import LoginPage from '@/screens/LoginPage';
 
 // Navigation
-
 const LoginContainer = ({ Tab, user }) => (
   <NavigationContainer>
     <StatusBar barStyle="light-content" backgroundColor="#fff" />

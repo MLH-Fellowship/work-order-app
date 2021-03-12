@@ -1,7 +1,7 @@
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import * as actionTypes from './types';
-import firebase from '../core/config';
+import firebase from '@/api/firebase';
 
 export const db = firebase.database();
 

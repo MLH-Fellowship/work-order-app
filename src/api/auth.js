@@ -1,9 +1,5 @@
-import firebase from 'firebase/app';
-import 'firebase/auth';
-//import { useDispatch } from 'react-redux';
-import { createUserInfo } from '../actions';
-
-//const dispatch = useDispatch();
+import firebase from './firebase'
+import { createUserInfo } from '@/actions';
 
 export const logoutUser = () => {
   firebase.auth().signOut();
