@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { StatusBar } from "react-native";
+import { useDispatch } from "react-redux";
+import { StatusBar, View } from "react-native";
 import MapPage from "@/screens/Map";
 import DashboardPage from "@/screens/Dashboard";
 import SettingsPage from "@/screens/Settings";
@@ -8,7 +8,6 @@ import { setCurrentUser } from "@/store/user";
 import theme from "theme";
 
 //Icons
-//cheatsheet: https://ionicons.com/v4/cheatsheet.html
 import Icon from "react-native-vector-icons/Ionicons";
 
 // Navigation
@@ -27,7 +26,7 @@ const MainContainer = ({ Tab, user }) => {
   useEffect(() => {
     setCurrentUser(username)(dispatch);
   }, []);
-  
+
   return (
     <NavigationContainer>
       <StatusBar barStyle="light-content" backgroundColor="#fff" />
@@ -35,13 +34,22 @@ const MainContainer = ({ Tab, user }) => {
         initialRouteName="Map"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => (
-            <Icon name={routeToIcon[route.name]} size={size} color={color} />
+            <View style={{height: size - 4}}>
+              <Icon name={routeToIcon[route.name]} size={size - 4} color={color} />
+            </View>
           ),
         })}
-        tabBarOptions={{
+        tabBarOptions={{  
           activeTintColor: theme.brandAccent,
           inactiveTintColor: theme.textColor,
+          labelStyle: {
+            marginTop: 6,
+          },
+          tabStyle: {
+            marginBottom: 6,
+          },
           style: {
+            padding: 10,
             backgroundColor: theme.brandPrimary,
             borderTopWidth: 0,
           },
