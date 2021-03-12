@@ -9,7 +9,7 @@ import {
   Right,
   Icon,
 } from 'native-base';
-import { logoutUser } from '@/api/auth-api';
+import { logoutUser } from '@/api/auth';
 
 const Settings = () => (
   <Container>
