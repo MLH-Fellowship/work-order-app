@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Icon } from 'native-base';
 import Dashboard from '@/views/Dashboard';
 import DashboardAdmin from '@/views/DashboardAdmin';
-import DashboardDetail from '@/components/DashboardDetail';
+import DashboardDetail from '@/views/OrderDetails';
 import theme from '@/native-base-theme/variables/commonColor';
 
 import { updateOrders } from '../actions';
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
 });
 
 const DashboardPage = () => {
-  const detailState = useSelector((state) => state.detailReducer);
+  const detailState = useSelector((state) => state.dashboardReducer);
   const userState = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
 

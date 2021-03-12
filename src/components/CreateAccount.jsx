@@ -1,18 +1,14 @@
-import React, { memo, useState } from 'react';
+import React, { useState } from 'react';
 import {
-  StyleSheet, KeyboardAvoidingView, Platform, Modal,
+  StyleSheet
 } from 'react-native';
 import {
-  Toast, Text, Container, Content, Body, Title, Header, Button, 
-  Spinner, Input, Item, Label, View, ActionSheet, Picker, Icon, Form
+  Toast, Text, Content, Body, Title, Header, Button, 
+  Spinner, Input, Item, Label, View, Picker, Icon
 } from 'native-base';
-import Logo from './Logo';
 // import { emailValidator, passwordValidator } from '../core/utils';
-import { loginUser, registerUser } from '../api/auth';
-import theme from '../native-base-theme/variables/commonColor';
-import { createUserInfo } from '../actions';
-import { ScrollView } from 'react-native-gesture-handler';
-//import { useDispatch } from 'react-redux';
+import { registerUser } from '../api/auth';
+
 
 export const CreateAccount = () => {
 

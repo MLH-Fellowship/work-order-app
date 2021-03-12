@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 import { StyleProvider, Root } from 'native-base';
 
 // Redux
-import rootReducer from './reducers';
+import rootReducer from './store';
 
 // Navigation
 import NavigationController from './navigation'
