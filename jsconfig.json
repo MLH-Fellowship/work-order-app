@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "theme": ["./src/native-base-theme/variables/commonColor"]
+    }
+  }
+}
