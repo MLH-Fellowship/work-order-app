@@ -6,13 +6,9 @@ import {
 import { useDispatch } from 'react-redux';
 import { activateModal } from '@/store/modal';
 
-import Building from './MapMarkers/Building';
-import Barracks from './MapMarkers/Barracks';
-import CarShop from './MapMarkers/CarShop';
-import Gym from './MapMarkers/Gym';
-import Medical from './MapMarkers/Medical';
-import Office from './MapMarkers/Office';
-import Dining from './MapMarkers/Dining';
+import {
+  Building, Barracks, CarShop, Gym, Medical, Office, Dining
+} from '@/components/MapMarkers';
 
 const purposeToIcon = {
   Office,

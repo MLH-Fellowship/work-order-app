@@ -10,8 +10,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// console.log(require('~/utils'))`;
-
 const Logo = () => (
   <Image source={require('!/assets/75RR.png')} style={styles.image} />
 );

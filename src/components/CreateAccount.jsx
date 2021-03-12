@@ -40,7 +40,7 @@ export const CreateAccount = () => {
         // Is at least 9 characters long or at most 30 characters
         const passwordRegex1 = /(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[#@$=+%^!*_])\S{9,30}/g;
         // Make sure that the password consists of only these characters
-        const passwordRegex2 = /[^A-Za-z0-9#@$=+%^!*_]+/g;
+        const passwordRegex2 = /[^A-Za-z0-9@$=+%^!*_.]+/g;
     
         let passwordError;
         if (!newPassword.value || !passwordRegex1.test(newPassword.value) || passwordRegex2.test(newPassword.value)) {

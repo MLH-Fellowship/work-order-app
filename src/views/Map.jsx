@@ -7,13 +7,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import buildingData from '@/buildings.json';
 import OrderModal from '@/components/OrderModal';
 import { activateModal } from '@/store/modal';
-import Building from '@/components/MapMarkers/Building';
-import Barracks from '@/components/MapMarkers/Barracks';
-import CarShop from '@/components/MapMarkers/CarShop';
-import Gym from '@/components/MapMarkers/Gym';
-import Medical from '@/components/MapMarkers/Medical';
-import Office from '@/components/MapMarkers/Office';
-import Dining from '@/components/MapMarkers/Dining';
+import {
+  Building, Barracks, CarShop, Gym, Medical, Office, Dining
+} from '@/components/MapMarkers';
 
 const styles = StyleSheet.create({
   container: {
