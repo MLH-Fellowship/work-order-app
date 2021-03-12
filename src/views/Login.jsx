@@ -15,6 +15,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import {CreateAccount} from '@/components/CreateAccount';
 
 const LoginScreen = ({ navigation }) => {
+  // todo: use useEffect to get rid of error
+  // :: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in a useEffect cleanup function.
   const [email, setEmail] = useState({ value: '', error: undefined });
   const [password, setPassword] = useState({ value: '', error: undefined });
   const [loading, setLoading] = useState(false);
