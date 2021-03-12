@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import LoginPage from '@/screens/LoginPage';
+import LoginPage from '@/screens/Login';
 
 // Navigation
 const LoginContainer = ({ Tab, user }) => (

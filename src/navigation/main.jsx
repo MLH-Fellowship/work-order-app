@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StatusBar } from "react-native";
-import MapPage from "@/screens/MapPage";
-import DashboardPage from "@/screens/DashboardPage";
-import SettingsPage from "@/screens/SettingsPage";
+import MapPage from "@/screens/Map";
+import DashboardPage from "@/screens/Dashboard";
+import SettingsPage from "@/screens/Settings";
 import { setCurrentUser } from "@/actions/index";
 import theme from "@/native-base-theme/variables/commonColor";
 
