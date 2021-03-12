@@ -4,7 +4,7 @@ import {
   Card, CardItem, Text, Right, Left,
 } from 'native-base';
 import { useDispatch } from 'react-redux';
-import { activateModal } from '../actions/index';
+import { activateModal } from '@/store/modal';
 
 import Building from './MapMarkers/Building';
 import Barracks from './MapMarkers/Barracks';

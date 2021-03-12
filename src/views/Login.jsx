@@ -3,15 +3,12 @@ import {
   StyleSheet, KeyboardAvoidingView, Platform, Modal,
 } from 'react-native';
 import {
-  Toast, Text, Container, Header, Body, Title, Button, Spinner, Input, Item, Label, View, ActionSheet, Picker, Root
+  Toast, Text, Container, Button, Spinner, Input, Item, Label, View, Root
 } from 'native-base';
 import Logo from '@/components/Logo';
 // import { emailValidator, passwordValidator } from '@/core/utils';
-import { loginUser, registerUser } from '@/api/auth';
-import theme from '@/native-base-theme/variables/commonColor';
-//import { createUserInfo } from '@/actions';
+import { loginUser } from '@/api/auth';
 import { ScrollView } from 'react-native-gesture-handler';
-//import { useDispatch } from 'react-redux';
 import {CreateAccount} from '@/components/CreateAccount';
 
 const LoginScreen = ({ navigation }) => {

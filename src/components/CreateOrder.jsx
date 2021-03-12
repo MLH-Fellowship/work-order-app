@@ -3,11 +3,12 @@ import { Formik } from 'formik';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { addOrders, deactivateModal } from '../actions/index';
+import { deactivateModal } from '@/store/modal';
+import { addOrders } from '@/store/order';
 import FormButton from './FormButton';
 import FormInput from './FormInput';
 
-import theme from '../native-base-theme/variables/commonColor';
+import theme from 'theme';
 import ImageSelectButtonGroup from './ImageSelectionButtonGroup';
 
 const styles = StyleSheet.create({

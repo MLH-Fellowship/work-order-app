@@ -13,7 +13,7 @@ import NavigationController from './navigation'
 
 // Theme
 import getTheme from './native-base-theme/components';
-import commonColor from './native-base-theme/variables/commonColor';
+import commonColor from 'theme';
 
 function App() {
   const store = createStore(rootReducer, applyMiddleware(thunk));

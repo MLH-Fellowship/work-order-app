@@ -3,9 +3,9 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, View, Icon } from 'native-base';
 import Modal from 'react-native-modal';
 import { useSelector, useDispatch } from 'react-redux';
-import { deactivateModal } from '../actions/index';
+import { deactivateModal } from '@/store/modal';
 import CreateOrder from './CreateOrder';
-import theme from '../native-base-theme/variables/commonColor';
+import theme from 'theme';
 
 const styles = StyleSheet.create({
   model: {

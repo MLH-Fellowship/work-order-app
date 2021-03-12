@@ -2,7 +2,7 @@ import React, { useEffect, memo } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 import { Container, Text } from 'native-base';
 import { useSelector, useDispatch } from 'react-redux';
-import { getOrders } from '@/actions';
+import { getOrders } from '@/store/order';
 import DashboardTile from '@/components/DashboardTile';
 
 const styles = StyleSheet.create({

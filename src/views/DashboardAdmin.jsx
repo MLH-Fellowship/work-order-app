@@ -5,7 +5,7 @@ import {
 } from 'native-base';
 import { useSelector, useDispatch } from 'react-redux';
 import R from 'ramda';
-import { getOrders } from '@/actions';
+import { getOrders } from '@/store/order';
 import DashboardTile from '@/components/DashboardTile';
 
 const DashboardTileSepatator = ({ group }) => (

@@ -6,9 +6,9 @@ import { Icon } from 'native-base';
 import Dashboard from '@/views/Dashboard';
 import DashboardAdmin from '@/views/DashboardAdmin';
 import DashboardDetail from '@/views/OrderDetails';
-import theme from '@/native-base-theme/variables/commonColor';
+import theme from 'theme';
 
-import { updateOrders } from '../actions';
+import { updateOrders } from '@/store/order';
 
 const DashboardStack = createStackNavigator();
 
@@ -66,9 +66,10 @@ const DashboardPage = () => {
               size={25}
               style={styles.button}
               onPress={() => {
-                updateOrders(detailState.order.id)({
-                  ...detailState.order, complete: true,
-                })(dispatch);
+                updateOrders({
+                  ...detailState.order,
+                  complete: true
+                })
                 navigation.goBack();
               }}
             />

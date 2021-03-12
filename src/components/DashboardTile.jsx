@@ -3,8 +3,8 @@ import {
   View, Text, Body, ListItem,
 } from 'native-base';
 import { useDispatch } from 'react-redux';
-import { getDashboardDetailData } from '../actions/index';
-import theme from '../native-base-theme/variables/commonColor';
+import { getDashboardDetailData } from '@/store/dashboard';
+import theme from 'theme';
 
 const StatusDot = ({ done }) => (
   <View style={{

@@ -6,7 +6,7 @@ import MapView, { Marker } from 'react-native-maps';
 import { useSelector, useDispatch } from 'react-redux';
 import buildingData from '@/buildings.json';
 import OrderModal from '@/components/OrderModal';
-import { activateModal } from '@/actions/index';
+import { activateModal } from '@/store/modal';
 import Building from '@/components/MapMarkers/Building';
 import Barracks from '@/components/MapMarkers/Barracks';
 import CarShop from '@/components/MapMarkers/CarShop';

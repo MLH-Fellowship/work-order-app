@@ -31,6 +31,7 @@ module.exports = {
         alias: {
           '@': './src/',
           '!': './',
+          'theme': './src/native-base-theme/variables/commonColor'
         },
       },
     },

@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Icon } from 'native-base';
 import { StyleSheet } from 'react-native';
 import Map from '@/views/Map';
-import theme from '../native-base-theme/variables/commonColor';
+import theme from 'theme';
 import Search from '../views/Search';
 
 const MapStack = createStackNavigator();

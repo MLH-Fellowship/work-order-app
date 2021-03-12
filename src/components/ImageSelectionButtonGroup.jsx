@@ -3,7 +3,7 @@ import { StyleSheet, Image } from 'react-native';
 import { View, Text } from 'native-base';
 import * as ImagePicker from 'expo-image-picker';
 import FormButton from './FormButton';
-import theme from '../native-base-theme/variables/commonColor';
+import theme from 'theme';
 
 const pickImage = async (handleImageChange) => {
   const result = await ImagePicker.launchImageLibraryAsync({

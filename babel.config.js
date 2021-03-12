@@ -11,6 +11,7 @@ module.exports = function (api) {
           alias: {
             '@': './src',
             '!': './',
+            'theme': './src/native-base-theme/variables/commonColor'
           },
         },
       ],

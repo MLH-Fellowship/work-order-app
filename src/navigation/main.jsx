@@ -4,8 +4,8 @@ import { StatusBar } from "react-native";
 import MapPage from "@/screens/Map";
 import DashboardPage from "@/screens/Dashboard";
 import SettingsPage from "@/screens/Settings";
-import { setCurrentUser } from "@/actions/index";
-import theme from "@/native-base-theme/variables/commonColor";
+import { setCurrentUser } from "@/store/user";
+import theme from "theme";
 
 //Icons
 //cheatsheet: https://ionicons.com/v4/cheatsheet.html
