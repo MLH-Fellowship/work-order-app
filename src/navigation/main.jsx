@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StatusBar } from "react-native";
-import MapPage from "@/pages/MapPage";
-import DashboardPage from "@/pages/DashboardPage";
-import SettingsPage from "@/pages/SettingsPage";
+import MapPage from "@/screens/MapPage";
+import DashboardPage from "@/screens/DashboardPage";
+import SettingsPage from "@/screens/SettingsPage";
 import { setCurrentUser } from "@/actions/index";
 import theme from "@/native-base-theme/variables/commonColor";
 
@@ -33,22 +33,11 @@ const MainContainer = ({ Tab, user }) => {
         initialRouteName="Map"
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-
-            switch (route.name) {
-              case "Map":
-                iconName = "ios-map";
-                break;
-              case "Dashboard":
-                iconName = "md-list";
-                break;
-              case "Settings":
-                iconName = "md-settings";
-                break;
-
-              default:
-                break;
-            }
+            const iconName = {
+              Map: 'ios-map',
+              Dashboard: 'md-list',
+              Settings: 'md-settings',
+            }[route.name]
 
             // You can return any component that you like here!
             return <Icon name={iconName} size={size} color={color} />;
