@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import firebase from '@/core/config';
+import firebase from '@/api/firebase';
 import MainNavigation from './main';
 import LoginNavigation from './login';
 
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+const Tab = createBottomTabNavigator();
 
-export default () => {
+function NavigationController (){
   // todo access store user
   const [user, setUser] = useState();
 
@@ -12,7 +14,6 @@ export default () => {
   async function onAuthStateChanged(newUserState) {
     if (newUserState && !newUserState.emailVerified) {
       try {
-        console.log(newUserState.user.uid);
         await newUserState.sendEmailVerification();
         console.log('Verification email sent.');
       } catch (e) {
@@ -28,3 +29,5 @@ export default () => {
     ? <MainNavigation Tab={Tab} user={user} />
     : <LoginNavigation Tab={Tab} user={user} />
 }
+
+export default NavigationController;
