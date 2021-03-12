@@ -166,7 +166,7 @@ const LoginScreen = ({ navigation }) => {
         >
           {loading ? <Spinner /> : <Text>Create Account</Text>}
         </Button>
-        <Toast message={error} onDismiss={() => setError('')} />
+        {error && <Toast message={error} onDismiss={() => setError('')} />}
       </KeyboardAvoidingView>
     </Container>
   );
