@@ -43,12 +43,12 @@ export const getUserOrders = (user) => (dispatch) => {
   });
 };
 
-export const updateOrders = (orderName, data) => {
+export const updateOrders = (order) => {
   firebase
     .database()
     .ref('/orders')
-    .child(orderName)
-    .set(data)
+    .child(order.id)
+    .set(order)
 };
 
 export const addOrders = (order) => async (dispatch) => {
