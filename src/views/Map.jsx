@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import * as Location from 'expo-location';
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import { View, Text } from 'native-base';
+import React, { useState } from 'react';
+import { StyleSheet } from 'react-native';
+import { View, Icon, Button, Fab } from 'native-base';
 import MapView, { Marker } from 'react-native-maps';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import buildingData from '@/buildings.json';
 import OrderModal from '@/components/OrderModal';
 import { activateModal } from '@/store/modal';
-import {
-  Building, Barracks, CarShop, Gym, Medical, Office, Dining
-} from '@/components/MapMarkers';
+import { purposeToIcon } from '@/components/MapMarkers';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,8 +22,8 @@ const Map = () => {
 
   const [trackViewChanges, setTrackViewChanges] = useState(true);
   const [addMarker, setAddMarker] = useState(false);
-  const [pinMarker, setPinMarker] = useState([]);
-  const [someText, setSomeText] = useState('Add Pin to Custom Location');
+  const [pinMarker, setPinMarker] = useState(null);
+  const [fabOpen, setFabOpen] = useState(false);
 
   const stopTrackingViewChanges = () => {
     setTrackViewChanges(false);
@@ -46,101 +43,69 @@ const Map = () => {
         }}
         onPress={(e) => {
           if (addMarker) {
-            setPinMarker(
-              [
-                {
-                  coordinates: e.nativeEvent.coordinate,
-                },
-              ],
-            );
+            setPinMarker({
+              coordinates: e.nativeEvent.coordinate,
+            });
           }
         }}
       >
 
-        {pinMarker.map((added, index) => (
-          <View key={index}>
-            <Marker
-              draggable
-              key={index}
-              coordinate={{
-                latitude: added.coordinates.latitude,
-                longitude: added.coordinates.longitude,
-              }}
-              onPress={() => {
-                dispatch(activateModal(added));
-              }}
-              onDragEnd={(e) => setPinMarker([
-                {
-                  coordinates: e.nativeEvent.coordinate,
-                },
-              ])}
-            />
-          </View>
-        ))}
+        {pinMarker && (
+          <Marker
+            draggable
+            coordinate={pinMarker.coordinates}
+            onPress={() => {
+              dispatch(activateModal(pinMarker));
+            }}
+            onDragEnd={(e) => setPinMarker({ coordinates: e.nativeEvent.coordinate })}
+          />
+        )
+        }
 
-        {buildingData.buildings.map((marker, index) => (
+        {buildingData.buildings.map(({ purpose, coordinates: [latitude, longitude]  }, index) => {
+          const Icon = purposeToIcon[purpose] || purposeToIcon.Building
+          return (
           <View key={index}>
             <Marker
               key={index}
-              coordinate={{
-                latitude: marker.coordinates[0],
-                longitude: marker.coordinates[1],
-              }}
+              coordinate={{ latitude, longitude }}
               onPress={() => {
                 if (!addMarker) {
                   dispatch(activateModal(marker));
                 }
               }}
               tracksViewChanges={trackViewChanges}
-            >
-              {marker.purpose === 'Office' ? (
-                <Office onLoad={stopTrackingViewChanges} fadeDuration={0} />
-              ) : marker.purpose === 'Barracks' ? (
-                <Barracks onLoad={stopTrackingViewChanges} fadeDuration={0} />
-              ) : marker.purpose === 'Gym' ? (
-                <Gym onLoad={stopTrackingViewChanges} fadeDuration={0} />
-              ) : marker.purpose === 'Medical' ? (
-                <Medical onLoad={stopTrackingViewChanges} fadeDuration={0} />
-              ) : marker.purpose === 'Dining Facility' ? (
-                <Dining onLoad={stopTrackingViewChanges} fadeDuration={0} />
-              ) : marker.purpose === 'Car Shop' ? (
-                <CarShop onLoad={stopTrackingViewChanges} fadeDuration={0} />
-              ) : (
-                <Building onLoad={stopTrackingViewChanges} fadeDuration={0} />
-              )}
+              >
+                <Icon onLoad={stopTrackingViewChanges} fadeDuration={0}></Icon>
             </Marker>
           </View>
-        ))}
+        )})}
       </MapView>
       <View>
-        <TouchableOpacity
-          style={
-            {
-              height: 50,
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: '#3c343c',
-            }
-}
-          onPress={() => {
-            setAddMarker(!addMarker);
-            if (addMarker) {
-              setSomeText('Add Pin to Custom Location');
-              setPinMarker([]);
-            } else {
-              setSomeText('Cancel');
-            }
+        <Fab
+          active={fabOpen}
+          direction="up"
+          containerStyle={{ }}
+          style={{
+            backgroundColor: '#5067FF',
+            marginBottom: 5
           }}
+          position="bottomRight"
+          onPress={() => setFabOpen(!fabOpen)}
         >
-          <Text style={
-            {
-              color: 'white',
-            }
-}
+          <Icon name="map"/>
+          <Button
+            style={{ backgroundColor: '#DD5144' }}
+            onPress={() => {
+              setAddMarker(!addMarker)
+              if (addMarker) {
+                setPinMarker(null)
+              }
+            }}
           >
-            {someText}
-          </Text>
-        </TouchableOpacity>
+            <Icon name={addMarker ? 'close' : 'pin'} style={{color: '#fff' }} />
+          </Button>
+        </Fab>
       </View>
       <OrderModal />
     </View>
