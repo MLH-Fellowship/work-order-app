@@ -15,3 +15,13 @@ export const Dining = memo(() => (<Image source={require('!/assets/dining.png')}
 export const Gym = memo(() => (<Image source={require('!/assets/gym.png')} style={styles.image} />));
 export const Medical = memo(() => (<Image source={require('!/assets/medical.png')} style={styles.image} />));
 export const Office = memo(() => (<Image source={require('!/assets/office.png')} style={styles.image} />));
+
+export const purposeToIcon = {
+  Building,
+  Office,
+  Barracks,
+  Gym,
+  Medical,
+  'Dining Facility': Dining,
+  'Car Shop': CarShop,
+};

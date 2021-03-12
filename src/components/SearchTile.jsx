@@ -6,22 +6,11 @@ import {
 import { useDispatch } from 'react-redux';
 import { activateModal } from '@/store/modal';
 
-import {
-  Building, Barracks, CarShop, Gym, Medical, Office, Dining
-} from '@/components/MapMarkers';
-
-const purposeToIcon = {
-  Office,
-  Barracks,
-  Gym,
-  Medical,
-  'Dining Facility': Dining,
-  'Car Shop': CarShop,
-};
+import { purposeToIcon } from '@/components/MapMarkers';
 
 const SearchTile = ({ item, style }) => {
   const dispatch = useDispatch();
-  const TileIcon = purposeToIcon[item.purpose] || Building;
+  const TileIcon = purposeToIcon[item.purpose] || purposeToIcon.Building;
   const title = item.name == null ? `Building ${item.number}` : item.name;
 
   return (
