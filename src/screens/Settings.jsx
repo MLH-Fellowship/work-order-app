@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Settings from '@/views/Settings';
-import theme from 'theme';
+import { StackNavigatorOptions } from './_defaults';
 
 const SettingsStack = createStackNavigator();
 
@@ -10,18 +10,7 @@ const SettingsPage = () => (
     <SettingsStack.Screen
       name="Settings"
       component={Settings}
-      options={{
-        headerStyle: {
-          backgroundColor: theme.brandPrimary,
-          elevation: 0,
-          shadowOpacity: 0,
-          borderBottomWidth: 0,
-        },
-        headerTintColor: theme.textColor,
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
-      }}
+      options={StackNavigatorOptions}
     />
   </SettingsStack.Navigator>
 );

@@ -6,19 +6,14 @@ import { Icon } from 'native-base';
 import Dashboard from '@/views/Dashboard';
 import DashboardAdmin from '@/views/DashboardAdmin';
 import DashboardDetail from '@/views/OrderDetails';
-import theme from 'theme';
+
+import { StackNavigatorOptions } from './_defaults';
 
 import { updateOrders } from '@/store/order';
 
 const DashboardStack = createStackNavigator();
 
 const styles = StyleSheet.create({
-  headerStyle: {
-    backgroundColor: theme.brandPrimary,
-    elevation: 0,
-    shadowOpacity: 0,
-    borderBottomWidth: 0,
-  },
   button: {
     paddingRight: 15,
   },
@@ -31,26 +26,19 @@ const DashboardPage = () => {
 
   const { role } = userState;
 
-  const DashboardStackOptions = {
-    headerStyle: styles.headerStyle,
-    headerTintColor: theme.textColor,
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-  };
   return (
     <DashboardStack.Navigator>
       {role === 'admin' ? (
         <DashboardStack.Screen
           name="Dashboard Admin"
           component={DashboardAdmin}
-          options={DashboardStackOptions}
+          options={StackNavigatorOptions}
         />
       ) : (
         <DashboardStack.Screen
           name="Dashboard"
           component={Dashboard}
-          options={DashboardStackOptions}
+          options={StackNavigatorOptions}
         />
       )}
 
@@ -58,7 +46,7 @@ const DashboardPage = () => {
         name="DashboardDetail"
         component={DashboardDetail}
         options={({ navigation }) => ({
-          ...DashboardStackOptions,
+          ...StackNavigatorOptions,
           title: `Building ${detailState.order.building}`,
           headerRight: () => (
             <Icon

@@ -1,7 +1,8 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Login from '@/views/Login';
-import theme from 'theme';
+
+import { StackNavigatorOptions } from './_defaults';
 
 const LoginStack = createStackNavigator();
 
@@ -10,19 +11,7 @@ const LoginPage = () => (
     <LoginStack.Screen
       name="Login"
       component={Login}
-      options={{
-        headerStyle: {
-          backgroundColor: theme.brandPrimary,
-          elevation: 0,
-          shadowOpacity: 0,
-          borderBottomWidth: 0,
-        },
-        headerTintColor: theme.textColor,
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
-
-      }}
+      options={StackNavigatorOptions}
     />
   </LoginStack.Navigator>
 );

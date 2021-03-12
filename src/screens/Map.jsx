@@ -3,38 +3,26 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Icon } from 'native-base';
 import { StyleSheet } from 'react-native';
 import Map from '@/views/Map';
-import theme from 'theme';
-import Search from '../views/Search';
+import Search from '@/views/Search';
+import { StackNavigatorOptions } from './_defaults';
+
 
 const MapStack = createStackNavigator();
 
 const styles = StyleSheet.create({
-  headerStyle: {
-    backgroundColor: theme.brandPrimary,
-    elevation: 0,
-    shadowOpacity: 0,
-    borderBottomWidth: 0,
-  },
   button: {
     paddingRight: 15,
   },
 });
 
 const MapPage = () => {
-  const MapStackOptions = {
-    headerStyle: styles.headerStyle,
-    headerTintColor: theme.textColor,
-    headerTitleStyle: {
-      fontWeight: 'bold',
-    },
-  };
   return (
     <MapStack.Navigator>
       <MapStack.Screen
         name="Map"
         component={Map}
         options={({ navigation }) => ({
-          ...MapStackOptions,
+          ...StackNavigatorOptions,
           headerRight: () => (
             <Icon
               name="search"
@@ -48,7 +36,7 @@ const MapPage = () => {
       <MapStack.Screen
         name="Search"
         component={Search}
-        options={MapStackOptions}
+        options={StackNavigatorOptions}
       />
     </MapStack.Navigator>
   );
