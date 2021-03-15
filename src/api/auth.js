@@ -5,6 +5,12 @@ export const logoutUser = () => {
   firebase.auth().signOut();
 };
 
+// TODO: Move this method to file. Not too relevant to authentication
+export const getUserInfo = () => {
+  console.log('memes');
+  console.log(firebase.auth().currentUser);
+}
+
 export const registerUser = async (email, password, data) => {
   try {
     const { user } = await firebase
@@ -29,6 +35,25 @@ export const registerUser = async (email, password, data) => {
   };
 
 };
+
+export const resetPasswordForUser = async (email) => {
+  await firebase
+    .auth()
+    .sendPasswordResetEmail(email)
+      .then(() => {
+        return {
+          message: 'Email sent',
+          error: ''
+        };
+      })
+      .catch((error) => {
+        console.log(error.code);
+        return {
+          message: '',
+          error: error.code
+        };
+      });
+}
 
 export const loginUser = async ({ email, password }) => {
   try {

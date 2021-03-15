@@ -9,7 +9,7 @@ import {
   Right,
   Icon,
 } from 'native-base';
-import { logoutUser } from '@/api/auth';
+import { logoutUser, getUserInfo } from '@/api/auth';
 
 const Settings = () => (
   <Container>
@@ -18,7 +18,7 @@ const Settings = () => (
         <ListItem itemHeader>
           <Text>ACCOUNT</Text>
         </ListItem>
-        <ListItem>
+        <ListItem onPress={getUserInfo}>
           <Left>
             <Text>Edit Profile</Text>
           </Left>
