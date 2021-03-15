@@ -9,6 +9,7 @@ export const logoutUser = () => {
 export const getUserInfo = () => {
   console.log('memes');
   console.log(firebase.auth().currentUser);
+  return firebase.auth().currentUser;
 }
 
 export const registerUser = async (email, password, data) => {
