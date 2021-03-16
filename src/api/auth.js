@@ -5,13 +5,6 @@ export const logoutUser = () => {
   firebase.auth().signOut();
 };
 
-// TODO: Move this method to file. Not too relevant to authentication
-export const getUserInfo = () => {
-  console.log('memes');
-  console.log(firebase.auth().currentUser);
-  return firebase.auth().currentUser;
-}
-
 export const registerUser = async (email, password, data) => {
   try {
     const { user } = await firebase

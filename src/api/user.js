@@ -9,3 +9,30 @@ export const createUserInfo = (userId, data) => {
     .child(userId)
     .set(data)
 }
+
+export const getUserInfo = () => {
+  const currentUser = firebase.auth().currentUser;
+  //console.log(currentUser.uid);
+  let result = {}
+  firebase.database().ref('/users')
+    .child(currentUser.uid).on('value', (snap) => {
+      const data = snap.val() ? snap.val() : {};
+      
+      console.log(data);
+      const temp = {
+        ...data,
+        email : currentUser.email,
+      };
+      console.log(temp);
+      result = temp;
+      //return {
+      //  ...data,
+      //  'email' : currentUser.email,
+      //};
+      // let orders = Object.values(data);
+
+  });
+  //console.log(temp);
+  //console.log(firebase.auth().currentUser);
+  return result;
+}
