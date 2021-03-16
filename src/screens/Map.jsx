@@ -4,6 +4,7 @@ import { Icon } from 'native-base';
 import { StyleSheet } from 'react-native';
 import Map from '@/views/Map';
 import Search from '@/views/Search';
+import SubmitOrder from '@/views/SubmitOrder';
 import { StackNavigatorOptions } from './_defaults';
 
 
@@ -36,6 +37,11 @@ const MapPage = () => {
       <MapStack.Screen
         name="Search"
         component={Search}
+        options={StackNavigatorOptions}
+      />
+      <MapStack.Screen
+        name="Submit Order"
+        component={SubmitOrder}
         options={StackNavigatorOptions}
       />
     </MapStack.Navigator>

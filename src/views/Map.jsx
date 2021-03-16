@@ -2,10 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { View, Icon, Button, Fab } from 'native-base';
 import MapView, { Marker } from 'react-native-maps';
-import { useDispatch } from 'react-redux';
 import buildingData from '@/buildings.json';
-import OrderModal from '@/components/OrderModal';
-import { activateModal } from '@/store/modal';
 import { purposeToIcon } from '@/components/MapMarkers';
 
 const styles = StyleSheet.create({
@@ -17,9 +14,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Map = () => {
-  const dispatch = useDispatch();
-
+const Map = ({ navigation }) => {
   const [trackViewChanges, setTrackViewChanges] = useState(true);
   const [addMarker, setAddMarker] = useState(false);
   const [pinMarker, setPinMarker] = useState(null);
@@ -55,14 +50,15 @@ const Map = () => {
             draggable
             coordinate={pinMarker.coordinates}
             onPress={() => {
-              dispatch(activateModal(pinMarker));
+              navigation.push('Submit Order', { building: pinMarker})
             }}
             onDragEnd={(e) => setPinMarker({ coordinates: e.nativeEvent.coordinate })}
           />
         )
         }
 
-        {buildingData.buildings.map(({ purpose, coordinates: [latitude, longitude]  }, index) => {
+        {buildingData.buildings.map((marker, index) => {
+          const { purpose, coordinates: [latitude, longitude]  } = marker
           const Icon = purposeToIcon[purpose] || purposeToIcon.Building
           return (
           <View key={index}>
@@ -71,7 +67,7 @@ const Map = () => {
               coordinate={{ latitude, longitude }}
               onPress={() => {
                 if (!addMarker) {
-                  dispatch(activateModal(marker));
+                  navigation.push('Submit Order', { building: marker })
                 }
               }}
               tracksViewChanges={trackViewChanges}
@@ -107,7 +103,6 @@ const Map = () => {
           </Button>
         </Fab>
       </View>
-      <OrderModal />
     </View>
   );
 };

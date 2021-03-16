@@ -21,7 +21,6 @@ export const CreateAccount = () => {
     const [serviceRole, setServiceRole] = useState({ value: undefined });
     
       const onSubmitAccountPressed = async () => {
-        //console.log(Date.now())
         if (loading) return;
     
         // validate email
