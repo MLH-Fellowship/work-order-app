@@ -31,7 +31,7 @@ const contains = (item, query) => {
   return false;
 };
 
-const Search = () => {
+const Search = ({ navigation }) => {
   const jsonData = buildingData.buildings;
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -55,7 +55,7 @@ const Search = () => {
       </Header>
       <FlatList
         data={data}
-        renderItem={({ item }) => <SearchTile style={styles.listItem} item={item} />}
+        renderItem={({ item }) => <SearchTile navigation={navigation} style={styles.listItem} item={item} />}
         keyExtractor={({ number }) => number.toString()}
         ListFooterComponent={<Text />}
       />
