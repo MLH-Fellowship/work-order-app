@@ -1,9 +1,84 @@
 import firebase from './firebase'
-import { createUserInfo } from '@/api/user';
+import { createUserInfo, setPhoneNumber, setAltPhoneNumber } from '@/api/user';
 
 export const logoutUser = () => {
   firebase.auth().signOut();
 };
+
+export const deleteAccount = (userProvidedPassword) => {
+  const user = firebase.auth().currentUser;
+  const credential = firebase.auth.EmailAuthProvider.credential(
+    user.email, 
+    userProvidedPassword
+  );
+  // Now you can use that to reauthenticate
+  user.reauthenticateWithCredential(credential)
+    .then(() => {
+      user.delete()
+      .then(() => {
+        // User deleted.
+      }).catch((error) => {
+        // An error happened.
+      });
+    })
+    .catch(() => {
+
+    });
+}
+
+export const resetForgottenPassword = () => {
+  // check if valid phone number
+
+  const user = firebase.auth().currentUser;
+  //resetPasswordForUser(user.email);
+}
+
+export const changePrimaryPhone = (phoneNumber) => {
+  // check if valid phone number
+
+  const user = firebase.auth().currentUser;
+
+  try {
+    setPhoneNumber(user.uid, phoneNumber);
+  }
+  catch (e) {
+    
+  }
+}
+
+export const changeAlternatePhone = (phoneNumber) => {
+  // check if valid phone number
+
+  const user = firebase.auth().currentUser;
+  try {
+    setAltPhoneNumber(user.uid, phoneNumber);
+  }
+  catch (e) {
+
+  }
+  //
+}
+
+export const changePassword = (oldPassword, newPassword) => {
+  const user = firebase.auth().currentUser;
+  const credential = firebase.auth.EmailAuthProvider.credential(
+    user.email, 
+    oldPassword
+  );
+  // Now you can use that to reauthenticate
+  user.reauthenticateWithCredential(credential)
+    .then(() => {
+      user.updatePassword(newPassword)
+      .then(() => {
+        // Update successful.
+      }).catch((error) => {
+        // An error happened.
+      });
+    })
+    .catch((error) => {
+
+    });
+}
 
 export const registerUser = async (email, password, data) => {
   try {

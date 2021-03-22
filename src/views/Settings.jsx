@@ -20,7 +20,14 @@ import {
   Item,
   Label,
 } from 'native-base';
-import { logoutUser } from '@/api/auth';
+import { 
+  logoutUser,
+  changePrimaryPhone,
+  changePassword,
+  changeAlternatePhone,
+  deleteAccount,
+  resetForgottenPassword,
+} from '@/api/auth';
 import { getUserInfo } from '@/api/user';
 
 const Settings = () => {
@@ -279,6 +286,7 @@ const Settings = () => {
 
                 <Button
                   block
+                  onPress={changePassword(oldPassword, newPassword)}
                   style={{
                     marginBottom: 10,
                 }}>
@@ -287,6 +295,7 @@ const Settings = () => {
 
                 <Button
                   block
+                  onPress={resetForgottenPassword}
                   style={{
                     marginBottom: 10,
                 }}>
@@ -344,6 +353,15 @@ const Settings = () => {
                   />
                 </Item>
 
+                <Button
+                  block
+                  onPress={changePrimaryPhone(phoneNumber)}
+                  style={{
+                    marginBottom: 10,
+                }}>
+                  <Text style={{color: "white"}}>Update Phone Number</Text>
+                </Button>
+
                 <Item 
                   floatingLabel
                   style={{
@@ -363,10 +381,11 @@ const Settings = () => {
                 
                 <Button
                   block
+                  onPress={changeAlternatePhone(altPhoneNumber)}
                   style={{
                     marginBottom: 10,
                 }}>
-                  <Text style={{color: "white"}}>Confirm Changes</Text>
+                  <Text style={{color: "white"}}>Update Alternate Phone Number</Text>
                 </Button>
 
               </Content>
@@ -412,6 +431,23 @@ const Settings = () => {
                     marginBottom: 10,
                   }}
                 >
+                  <Label>Password</Label>
+                  <Input
+                    keyboardType="email-address"
+                    textContentType="emailAddress"
+                    autoCompleteType="email"
+                    autoCapitalize="none"
+                    value={oldPassword}
+                    onChangeText={(value) => setOldPassword(value)}
+                  />
+                </Item>
+
+                <Item 
+                  floatingLabel
+                  style={{
+                    marginBottom: 10,
+                  }}
+                >
                   <Label>Type "delete me"</Label>
                   <Input
                     keyboardType="email-address"
@@ -425,6 +461,7 @@ const Settings = () => {
 
                 <Button
                   block
+                  onPress={deleteAccount(oldPassword)}
                   style={{
                     marginBottom: 10,
                 }}>
@@ -437,10 +474,6 @@ const Settings = () => {
 
 
       </Modal>
-
-      
-
-      
 
     </Container>
 
