@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Modal,
 } from 'react-native';
@@ -29,6 +29,8 @@ import {
   resetForgottenPassword,
 } from '@/api/auth';
 import { getUserInfo } from '@/api/user';
+import { useDispatch } from "react-redux"; // access things from dispatches instead of the database.
+import store from '@/store';
 
 const Settings = () => {
 
@@ -40,6 +42,7 @@ const Settings = () => {
 
 
   const [oldPassword, setOldPassword] = useState('');
+  const [toDeletePassword, setToDeletePassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
@@ -48,7 +51,14 @@ const Settings = () => {
 
   const [deleteText, setDeleteText] = useState('');
 
-  const userInfo = getUserInfo();
+  //const userInfo = getUserInfo();
+
+  //const something = store.getState().userReducer;
+  //console.log(something.email);
+  const [userInfo, setUserInfo] = useState(store.getState().userReducer);
+  store.subscribe(() => {
+    setUserInfo(store.getState().userReducer);
+  });
 
   return (
     <Container>
@@ -58,6 +68,7 @@ const Settings = () => {
             <Text>ACCOUNT</Text>
           </ListItem>
           <ListItem onPress={() => {
+            //console.log(userInfo);
             setVisible(!visible);
           }}>
             <Left>
@@ -155,7 +166,7 @@ const Settings = () => {
                   <Text>Alternative Phone: {userInfo.altPhoneNumber}</Text>
                 </ListItem>
                 <ListItem>
-                  <Text>Role: {userInfo['role']} </Text>
+                  <Text>Role: {userInfo.role} </Text>
                 </ListItem>
                 {/* Password */}
                 <ListItem itemHeader>
@@ -286,7 +297,9 @@ const Settings = () => {
 
                 <Button
                   block
-                  onPress={changePassword(oldPassword, newPassword)}
+                  onPress={() => {
+                    changePassword(oldPassword, newPassword)
+                  }}
                   style={{
                     marginBottom: 10,
                 }}>
@@ -355,7 +368,9 @@ const Settings = () => {
 
                 <Button
                   block
-                  onPress={changePrimaryPhone(phoneNumber)}
+                  onPress={() => {
+                    changePrimaryPhone(phoneNumber);
+                  }}
                   style={{
                     marginBottom: 10,
                 }}>
@@ -381,7 +396,9 @@ const Settings = () => {
                 
                 <Button
                   block
-                  onPress={changeAlternatePhone(altPhoneNumber)}
+                  onPress={() => {
+                    changeAlternatePhone(altPhoneNumber)
+                  }}
                   style={{
                     marginBottom: 10,
                 }}>
@@ -437,8 +454,8 @@ const Settings = () => {
                     textContentType="emailAddress"
                     autoCompleteType="email"
                     autoCapitalize="none"
-                    value={oldPassword}
-                    onChangeText={(value) => setOldPassword(value)}
+                    value={toDeletePassword}
+                    onChangeText={(value) => setToDeletePassword(value)}
                   />
                 </Item>
 
@@ -461,7 +478,11 @@ const Settings = () => {
 
                 <Button
                   block
-                  onPress={deleteAccount(oldPassword)}
+                  onPress={() => {
+                    if(deleteText === 'delete me') {
+                      deleteAccount(toDeletePassword);
+                    }
+                  }}
                   style={{
                     marginBottom: 10,
                 }}>

@@ -1,14 +1,7 @@
-import { combineReducers } from 'redux';
-import modalReducer from "./modal";
-import userReducer from "./user";
-import orderReducer from "./order";
-import dashboardReducer from "./dashboard";
+import rootReducer from './rootReducer';
+import thunk from 'redux-thunk';
+import { createStore, applyMiddleware } from 'redux';
 
-const rootReducer = combineReducers({
-  modalReducer,
-  orderReducer,
-  dashboardReducer,
-  userReducer,
-});
+const store = createStore(rootReducer, applyMiddleware(thunk));
 
-export default rootReducer;
+export default store;
