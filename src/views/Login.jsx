@@ -71,7 +71,7 @@ const LoginScreen = ({ navigation }) => {
       password: password.value,
     });
 
-    if (response.error && response.error.length > 0) {
+    if (response && response.error.length > 0) {
       console.log(response.error);
       Toast.show({
         text: response.error,
@@ -81,6 +81,10 @@ const LoginScreen = ({ navigation }) => {
     }
 
     setLoading(false);
+
+    // If password is valid, but does not fit the criteria, prompt password reset
+
+
   };
 
   const styles = StyleSheet.create({
