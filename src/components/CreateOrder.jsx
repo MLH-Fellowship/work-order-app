@@ -3,7 +3,6 @@ import { Formik } from 'formik';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { deactivateModal } from '@/store/modal';
 import { addOrders } from '@/store/order';
 import FormButton from './FormButton';
 import FormInput from './FormInput';
@@ -18,7 +17,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   descriptionTextbox: {
-    height: 64,
+    height: 80,
   },
   buttonGroupParanet: {
     width: '100%',
@@ -34,7 +33,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const CreateOrder = ({ buildingNumber, buildingCoordinates }) => {
+const CreateOrder = ({ onSubmit, building }) => {
   const dispatch = useDispatch();
   const userReducer = useSelector((state) => state.userReducer);
   return (
@@ -51,10 +50,10 @@ const CreateOrder = ({ buildingNumber, buildingCoordinates }) => {
         addOrders({
           ...values,
           user: userReducer.username,
-          building: buildingNumber,
-          coordinates: buildingCoordinates,
+          building: building.number,
+          coordinates: building.coordinates,
         })(dispatch);
-        dispatch(deactivateModal());
+        onSubmit()
       }}
     >
       {({
@@ -83,7 +82,7 @@ const CreateOrder = ({ buildingNumber, buildingCoordinates }) => {
               placeholder="Description"
               multiline
               style={styles.descriptionTextbox}
-              numberOfLines={2}
+              numberOfLines={4}
               onChangeText={handleChange('description')}
               onBlur={handleBlur('description')}
               value={values.description}

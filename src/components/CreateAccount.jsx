@@ -21,7 +21,6 @@ export const CreateAccount = () => {
     const [serviceRole, setServiceRole] = useState({ value: undefined });
     
       const onSubmitAccountPressed = async () => {
-        //console.log(Date.now())
         if (loading) return;
     
         // validate email
@@ -30,9 +29,8 @@ export const CreateAccount = () => {
         const domain2 = '@mail.mil';
     
         let emailError;
-        if (!newEmail.value //|| 
-           //(!newEmail.value.endsWith(domain1) && !newEmail.value.endsWith(domain2))) {
-        ) {
+        if (!newEmail.value || 
+           (!newEmail.value.endsWith(domain1) && !newEmail.value.endsWith(domain2))) {
           emailError = 'invalid email';
         }
     

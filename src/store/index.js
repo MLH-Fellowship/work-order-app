@@ -1,7 +1,12 @@
-import rootReducer from './rootReducer';
-import thunk from 'redux-thunk';
-import { createStore, applyMiddleware } from 'redux';
+import { combineReducers } from 'redux';
+import userReducer from "./user";
+import orderReducer from "./order";
+import dashboardReducer from "./dashboard";
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const rootReducer = combineReducers({
+  orderReducer,
+  dashboardReducer,
+  userReducer,
+});
 
-export default store;
+export default rootReducer;
