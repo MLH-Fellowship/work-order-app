@@ -1,12 +1,12 @@
 import React from 'react';
 import { registerRootComponent } from 'expo';
-import { createStore, applyMiddleware } from 'redux';
 import { Provider as StoreProvider } from 'react-redux';
-import thunk from 'redux-thunk';
 import { StyleProvider, Root } from 'native-base';
 
+import store from './store';
+
 // Redux
-import rootReducer from './store';
+//import rootReducer from './store';
 
 // Navigation
 import NavigationController from './navigation'
@@ -16,7 +16,7 @@ import getTheme from './native-base-theme/components';
 import commonColor from 'theme';
 
 function App() {
-  const store = createStore(rootReducer, applyMiddleware(thunk));
+  //const store = createStore(rootReducer, applyMiddleware(thunk));
   return (
     <StyleProvider style={getTheme(commonColor)}>
       <StoreProvider store={store}>

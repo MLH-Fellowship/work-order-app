@@ -3,13 +3,15 @@ import {
   StyleSheet, KeyboardAvoidingView, Platform, Modal,
 } from 'react-native';
 import {
-  Toast, Text, Container, Button, Spinner, Input, Item, Label, View, Root
+  Toast, Text, Container, Button, Spinner, Input, Item, Label, View, Root, Header, Title, Body
 } from 'native-base';
 import Logo from '@/components/Logo';
 // import { emailValidator, passwordValidator } from '@/core/utils';
 import { loginUser } from '@/api/auth';
 import { ScrollView } from 'react-native-gesture-handler';
 import {CreateAccount} from '@/components/CreateAccount';
+{/* account reset */}
+import { resetPasswordForUser } from '../api/auth';
 
 const LoginScreen = ({ navigation }) => {
   // todo: use useEffect to get rid of error
@@ -19,15 +21,35 @@ const LoginScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
+  const [accountCreationModalVisible, setAccountCreationModalVisible] = useState(false);
+
+  const [passwordResetModalVisible, setPasswordResetModalVisible] = useState(false);
+  const [passwordResetEmail, setPasswordResetEmail] = useState({ value: '', error: undefined });
 
   const onCreateAccountPressed = async () => {
-    setModalVisible(true);
+    setAccountCreationModalVisible(true);
   };
 
   const onCancelCreateAccountPressed = async () => {
-    setModalVisible(false);
+    setAccountCreationModalVisible(false);
   };
+
+  const onPasswordResetPressed = async () => {
+    setPasswordResetModalVisible(true);
+  };
+
+  const onSendPasswordResetRequest = async () => {
+    if(passwordResetEmail.value && passwordResetEmail.value.length > 0) {
+      resetPasswordForUser(passwordResetEmail.value);
+    }
+    console.log(passwordResetEmail);
+  }
+
+  const onCancelPasswordResetPressed = async () => {
+    setPasswordResetModalVisible(false);
+  };
+
+
 
   const onLoginPressed = async () => {
     if (loading) return;
@@ -49,7 +71,7 @@ const LoginScreen = ({ navigation }) => {
       password: password.value,
     });
 
-    if (response.error.length > 0) {
+    if (response && response.error.length > 0) {
       console.log(response.error);
       Toast.show({
         text: response.error,
@@ -59,6 +81,10 @@ const LoginScreen = ({ navigation }) => {
     }
 
     setLoading(false);
+
+    // If password is valid, but does not fit the criteria, prompt password reset
+
+
   };
 
   const styles = StyleSheet.create({
@@ -98,23 +124,22 @@ const LoginScreen = ({ navigation }) => {
             textContentType="password"
             autoCompleteType="password"
             autoCapitalize="none"
-            //passwordRules="minlength: 9; maxlength: 30; required: lower; required: upper; required: digit;"
             secureTextEntry
             value={password.value}
             onChangeText={(value) => setPassword({ value })}
           />
         </Item>
 
-        
+        {/* Account Creation */}
         <Modal
           style={{
             justifyContent: 'flex-end',
           }}
           animationType="slide"
           presentationStyle="fullScreen"
-          visible={modalVisible}
+          visible={accountCreationModalVisible}
           onRequestClose={() => {
-            setModalVisible(!modalVisible);
+            setAccountCreationModalVisible(!accountCreationModalVisible);
           }}
         >
           <Root>
@@ -147,6 +172,78 @@ const LoginScreen = ({ navigation }) => {
           </Root>
         </Modal>
 
+        {/* Password Reset */}
+        <Modal
+          style={{
+            justifyContent: "center",
+          }}
+          animationType="slide"
+          presentationStyle="fullScreen"
+          visible={passwordResetModalVisible}
+          onRequestClose={() => {
+            setPasswordResetModalVisible(!passwordResetModalVisible);
+          }}
+        >
+          <Root>
+            <Container>
+              <Header>
+                <Body>
+                  <Title>Reset Password</Title>
+                </Body>
+              </Header>
+              <KeyboardAvoidingView
+                style={styles.container}
+                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              >
+                {/* Enter Email */}
+                <Item 
+                  floatingLabel
+                  error={email.error !== undefined}
+                  style={{
+                    marginBottom: 10,
+                  }}
+                >
+                  <Label>Email</Label>
+                  <Input
+                    keyboardType="email-address"
+                    textContentType="emailAddress"
+                    autoCompleteType="email"
+                    autoCapitalize="none"
+                    value={passwordResetEmail.value}
+                    onChangeText={(value) => setPasswordResetEmail({ value })}
+                  />
+                </Item>
+                
+                {/* Submit Password Reset Request */}
+                <Button
+                    disabled={loading}
+                    primary={!loading}
+                    block
+                    onPress={onSendPasswordResetRequest}
+                    style={{
+                      marginBottom: 10,
+                    }}
+                  >
+                    {loading ? <Spinner /> : <Text>Submit</Text>}
+                  </Button>
+                  
+                {/* Cancel Password Reset */}
+                <Button
+                    disabled={loading}
+                    primary={!loading}
+                    block
+                    onPress={onCancelPasswordResetPressed}
+                    style={{
+                      marginBottom: 10,
+                    }}
+                  >
+                    {loading ? <Spinner /> : <Text>Cancel</Text>}
+                </Button>
+              </KeyboardAvoidingView>
+            </Container>
+          </Root>
+        </Modal>
+
         <Button
           disabled={loading}
           primary={!loading}
@@ -163,9 +260,22 @@ const LoginScreen = ({ navigation }) => {
           primary={!loading}
           block
           onPress={onCreateAccountPressed}
+          style={{
+            marginBottom: 10,
+          }}
         >
           {loading ? <Spinner /> : <Text>Create Account</Text>}
         </Button>
+
+        <Button
+          disabled={loading}
+          primary={!loading}
+          block
+          onPress={onPasswordResetPressed}
+        >
+          {loading ? <Spinner /> : <Text>Forgot Password?</Text>}
+        </Button>
+
         {error ? <Toast message={error} onDismiss={() => setError('')} /> : null}
       </KeyboardAvoidingView>
     </Container>
