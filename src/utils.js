@@ -30,22 +30,10 @@ export const emailValidator = (email) => {
   return '';
 };
 
-export const isValidPassword = (password) => {
+export const passwordValidator = (password) => {
+  if (!password || password.length <= 0) return 'Password cannot be empty.';
 
-  // Validate password
-  // Contains at least one capital letter, lowercase letter, number, and a special character
-  // Is at least 9 characters long or at most 30 characters
-  const passwordRegex1 = /(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[#@$=+%^!*_])\S{9,30}/g;
-  // Make sure that the password consists of only these characters
-  const passwordRegex2 = /[^A-Za-z0-9@$=+%^!*_.]+/g;
-
-  if (!password || 
-    !passwordRegex1.test(password) || 
-    passwordRegex2.test(password)) {
-      return false;
-  }
-
-  return true;
+  return '';
 };
 
 export const nameValidator = (name) => {

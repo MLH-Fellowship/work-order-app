@@ -22,9 +22,9 @@ const routeToIcon = {
 const MainContainer = ({ Tab, user }) => {
   const dispatch = useDispatch();
   const username = user.uid;
-  const email = user.email;
+
   useEffect(() => {
-    setCurrentUser(username, email)(dispatch);
+    setCurrentUser(username)(dispatch);
   }, []);
 
   return (

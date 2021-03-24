@@ -13,15 +13,15 @@ function NavigationController (){
   // eslint-disable-next-line consistent-return
   async function onAuthStateChanged(newUserState) {
     console.log(newUserState);
-    if (newUserState && !newUserState.emailVerified) {
-      try {
-        await newUserState.sendEmailVerification();
-        console.log('Verification email sent.');
-      } catch (e) {
-        console.error('Error sending verification email:', e);
-      }
-      return firebase.auth().signOut();
-    }
+    // if (newUserState && !newUserState.emailVerified) {
+    //   try {
+    //     await newUserState.sendEmailVerification();
+    //     console.log('Verification email sent.');
+    //   } catch (e) {
+    //     console.error('Error sending verification email:', e);
+    //   }
+    //   return firebase.auth().signOut();
+    // }
     setUser(newUserState);
   }
   useEffect(() => firebase.auth().onAuthStateChanged(onAuthStateChanged), []);
