@@ -1,5 +1,7 @@
 import firebase from "@/api/firebase";
 import { uploadImage } from "@/api/storage";
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from "uuid";
 
 
 const INITIAL_STATE = {
