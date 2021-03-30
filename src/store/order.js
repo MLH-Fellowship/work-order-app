@@ -30,7 +30,6 @@ export const getUserOrders = (user) => (dispatch) => {
     .ref('/orders')
     .on('value', (snap) => {
     const data = snap.val() ? snap.val() : {};
-    console.log(data);
     // let orders = Object.values(data);
 
     dispatch({
