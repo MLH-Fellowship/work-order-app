@@ -1,11 +1,11 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StyleSheet } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Icon } from 'native-base';
 import Dashboard from '@/views/Dashboard';
-import DashboardAdmin from '@/views/DashboardAdmin';
 import DashboardDetail from '@/views/OrderDetails';
+import TechnicianSearch from '@/views/TechnicianSearch';
 
 import { StackNavigatorOptions } from './_defaults';
 
@@ -22,26 +22,27 @@ const styles = StyleSheet.create({
 const DashboardPage = () => {
   const detailState = useSelector((state) => state.dashboardReducer);
   const userState = useSelector((state) => state.userReducer);
-  const dispatch = useDispatch();
 
   const { role } = userState;
+  const dashbaordTitle = {
+    admin: 'Admin Dashboard',
+    tenant: 'Dashboard',
+    techincian: 'Technician Dashboard',
+  }[role];
+
 
   return (
     <DashboardStack.Navigator>
-      {role === 'admin' ? (
-        <DashboardStack.Screen
-          name="Dashboard Admin"
-          component={DashboardAdmin}
-          options={StackNavigatorOptions}
-        />
-      ) : (
-        <DashboardStack.Screen
-          name="Dashboard"
-          component={Dashboard}
-          options={StackNavigatorOptions}
-        />
-      )}
-
+      <DashboardStack.Screen
+        name={dashbaordTitle}
+        component={Dashboard}
+        options={StackNavigatorOptions}
+      />
+      <DashboardStack.Screen
+        name='Technician Search'
+        component={TechnicianSearch}
+        options={StackNavigatorOptions}
+      />
       <DashboardStack.Screen
         name="DashboardDetail"
         component={DashboardDetail}
