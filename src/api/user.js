@@ -9,3 +9,17 @@ export const createUserInfo = (userId, data) => {
     .child(userId)
     .set(data)
 }
+
+const Promiseify = (query) => new Promise(res => query.once('value', (snapshot) => res(snapshot.val())))
+
+export const getTechnicians = () => {
+  return Promiseify(
+    firebase
+    .database()
+    .ref('users')
+      .orderByChild('role')
+      
+      .equalTo('techincian')
+    
+  )
+}
