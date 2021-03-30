@@ -57,3 +57,8 @@ export const phoneNumberValidator = (phoneNumber) => {
 
   return '';
 };
+
+export const fbObjectToList = (obj) => Object.keys(obj).map((id) => ({
+  id,
+  ...obj[id],
+}));
