@@ -1,9 +1,79 @@
-import firebase from './firebase'
-import { createUserInfo } from '@/api/user';
+import firebase from "@/api/firebase";
 
-export const logoutUser = () => {
-  firebase.auth().signOut();
-};
+export const deleteAccount = (userProvidedPassword) => {
+  const user = firebase.auth().currentUser;
+  const credential = firebase.auth.EmailAuthProvider.credential(
+    user.email, 
+    userProvidedPassword
+  );
+  // Now you can use that to reauthenticate
+  user.reauthenticateWithCredential(credential)
+    .then(() => {
+      user.delete()
+      .then(() => {
+        // User deleted.
+      }).catch((error) => {
+        // An error happened.
+      });
+    })
+    .catch(() => {
+
+    });
+}
+
+export const resetForgottenPassword = () => {
+  // check if valid phone number
+
+  const user = firebase.auth().currentUser;
+  //resetPasswordForUser(user.email);
+}
+
+export const changePrimaryPhone = (phoneNumber) => {
+  // check if valid phone number
+  console.log("changePrimaryPhone");
+  const user = firebase.auth().currentUser;
+
+  try {
+    setPhoneNumber(user.uid, phoneNumber);
+  }
+  catch (e) {
+    
+  }
+}
+
+export const changeAlternatePhone = (phoneNumber) => {
+  // check if valid phone number
+  console.log("changeAlternatePhone");
+  const user = firebase.auth().currentUser;
+  try {
+    setAltPhoneNumber(user.uid, phoneNumber);
+  }
+  catch (e) {
+
+  }
+  //
+}
+
+export const changePassword = (oldPassword, newPassword) => {
+  const user = firebase.auth().currentUser;
+  const credential = firebase.auth.EmailAuthProvider.credential(
+    user.email, 
+    oldPassword
+  );
+  // Now you can use that to reauthenticate
+  user.reauthenticateWithCredential(credential)
+    .then(() => {
+      user.updatePassword(newPassword)
+      .then(() => {
+        // Update successful.
+      }).catch((error) => {
+        // An error happened.
+      });
+    })
+    .catch((error) => {
+
+    });
+}
 
 export const registerUser = async (email, password, data) => {
   try {
@@ -29,6 +99,25 @@ export const registerUser = async (email, password, data) => {
   };
 
 };
+
+export const resetPasswordForUser = async (email) => {
+  await firebase
+    .auth()
+    .sendPasswordResetEmail(email)
+      .then(() => {
+        return {
+          message: 'Email sent',
+          error: ''
+        };
+      })
+      .catch((error) => {
+        console.log(error.code);
+        return {
+          message: '',
+          error: error.code
+        };
+      });
+}
 
 export const loginUser = async ({ email, password }) => {
   try {

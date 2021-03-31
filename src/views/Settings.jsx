@@ -478,11 +478,8 @@ const Settings = () => {
 
                 <Button
                   block
-                  onPress={() => {
-                    if(deleteText === 'delete me') {
-                      deleteAccount(toDeletePassword);
-                    }
-                  }}
+                  disabled={deleteText !== 'delete me'}
+                  onPress={() => {deleteAccount(toDeletePassword)}}
                   style={{
                     marginBottom: 10,
                 }}>
