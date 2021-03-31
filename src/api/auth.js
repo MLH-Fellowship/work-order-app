@@ -1,6 +1,8 @@
 import firebase from "@/api/firebase";
+import {setPhoneNumber, setAltPhoneNumber} from "@/api/user"
 
 export const deleteAccount = (userProvidedPassword) => {
+  console.log("deleteAccount");
   const user = firebase.auth().currentUser;
   const credential = firebase.auth.EmailAuthProvider.credential(
     user.email, 
@@ -12,46 +14,98 @@ export const deleteAccount = (userProvidedPassword) => {
       user.delete()
       .then(() => {
         // User deleted.
-      }).catch((error) => {
-        // An error happened.
+      }).catch((e) => {
+        return {
+          message: '',
+          error: 'Unable to delete user'
+        }
       });
     })
-    .catch(() => {
-
+    .catch((e) => {
+      return {
+        message: '',
+        error: 'Invalid credentials'
+      }
     });
 }
 
 export const resetForgottenPassword = () => {
-  // check if valid phone number
-
   const user = firebase.auth().currentUser;
   //resetPasswordForUser(user.email);
+
+  firebase
+    .auth()
+    .sendPasswordResetEmail(user.email)
+      .then(() => {
+        return {
+          message: 'Email sent',
+          error: ''
+        };
+      })
+      .catch((e) => {
+        console.log(error.code);
+        return {
+          message: '',
+          error: error.code
+        };
+      });
 }
 
 export const changePrimaryPhone = (phoneNumber) => {
   // check if valid phone number
+  const phoneNumberRegex = /([^0-9])*/g;
+  if (!phoneNumber.value || phoneNumber.value.length !== 10 || !phoneNumberRegex.test(phoneNumber.value)) {
+    return {
+      message: '',
+      error: 'Invalid phone number'
+    }
+  }
+
   console.log("changePrimaryPhone");
   const user = firebase.auth().currentUser;
 
   try {
     setPhoneNumber(user.uid, phoneNumber);
+    return {
+      message: 'Primary phone number successfully changed',
+      error: ''
+    };
   }
-  catch (e) {
-    
+  catch(e) {
+    return {
+      message: '',
+      error: 'Unable to update primary phone number'
+    };
   }
+  
 }
 
 export const changeAlternatePhone = (phoneNumber) => {
   // check if valid phone number
+  const phoneNumberRegex = /([^0-9])*/g;
+  if (!phoneNumber.value || phoneNumber.value.length !== 10 || !phoneNumberRegex.test(phoneNumber.value)) {
+    return {
+      message: '',
+      error: 'Invalid phone number'
+    }
+  }
+
   console.log("changeAlternatePhone");
   const user = firebase.auth().currentUser;
+  
   try {
     setAltPhoneNumber(user.uid, phoneNumber);
+    return {
+      message: 'Alternate phone number successfully changed',
+      error: ''
+    };
   }
-  catch (e) {
-
+  catch(e) {
+    return {
+      message: '',
+      error: 'Unable to update alternate phone number'
+    };
   }
-  //
 }
 
 export const changePassword = (oldPassword, newPassword) => {
@@ -65,13 +119,22 @@ export const changePassword = (oldPassword, newPassword) => {
     .then(() => {
       user.updatePassword(newPassword)
       .then(() => {
-        // Update successful.
-      }).catch((error) => {
-        // An error happened.
+        return {
+          message: 'Password successfully updated',
+          error: ''
+        }
+      }).catch((e) => {
+        return {
+          message: '',
+          error: 'Unable to update password'
+        }
       });
     })
-    .catch((error) => {
-
+    .catch((e) => {
+      return {
+        message: '',
+        error: 'Invalid credentials'
+      }
     });
 }
 

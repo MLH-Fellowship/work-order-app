@@ -9,3 +9,19 @@ export const createUserInfo = (userId, data) => {
     .child(userId)
     .set(data)
 }
+
+export const setPhoneNumber = (userId, newPhoneNumber) => {
+  firebase
+    .database()
+    .ref('/users')
+    .child(userId)
+    .set({'phoneNumber' : newPhoneNumber});
+}
+
+export const setAltPhoneNumber = (userId, newPhoneNumber) => {
+  firebase
+    .database()
+    .ref('/users')
+    .child(userId)
+    .set({'altPhoneNumber' : newPhoneNumber});
+}
