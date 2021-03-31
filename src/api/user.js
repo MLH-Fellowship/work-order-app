@@ -15,7 +15,7 @@ export const setPhoneNumber = (userId, newPhoneNumber) => {
     .database()
     .ref('/users')
     .child(userId)
-    .set({'phoneNumber' : newPhoneNumber});
+    .update({'phoneNumber' : newPhoneNumber});
 }
 
 export const setAltPhoneNumber = (userId, newPhoneNumber) => {
@@ -23,5 +23,5 @@ export const setAltPhoneNumber = (userId, newPhoneNumber) => {
     .database()
     .ref('/users')
     .child(userId)
-    .set({'altPhoneNumber' : newPhoneNumber});
+    .update({'altPhoneNumber' : newPhoneNumber});
 }

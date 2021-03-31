@@ -1,6 +1,10 @@
 import firebase from "@/api/firebase";
 import {setPhoneNumber, setAltPhoneNumber} from "@/api/user"
 
+export const logoutUser = () => {
+  firebase.auth().signOut();
+};
+
 export const deleteAccount = (userProvidedPassword) => {
   console.log("deleteAccount");
   const user = firebase.auth().currentUser;
@@ -83,7 +87,8 @@ export const changePrimaryPhone = (phoneNumber) => {
 export const changeAlternatePhone = (phoneNumber) => {
   // check if valid phone number
   const phoneNumberRegex = /([^0-9])*/g;
-  if (!phoneNumber.value || phoneNumber.value.length !== 10 || !phoneNumberRegex.test(phoneNumber.value)) {
+  if (!phoneNumber || phoneNumber.length !== 10 || !phoneNumberRegex.test(phoneNumber)) {
+    console.log("!Error");
     return {
       message: '',
       error: 'Invalid phone number'
@@ -95,12 +100,14 @@ export const changeAlternatePhone = (phoneNumber) => {
   
   try {
     setAltPhoneNumber(user.uid, phoneNumber);
+    console.log(user.uid + "   " + phoneNumber);
     return {
       message: 'Alternate phone number successfully changed',
       error: ''
     };
   }
   catch(e) {
+    console.log("Error");
     return {
       message: '',
       error: 'Unable to update alternate phone number'
