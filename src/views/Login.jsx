@@ -50,7 +50,7 @@ const LoginScreen = ({ navigation }) => {
     });
 
     if (response.error.length > 0) {
-      console.log(response.error);
+      console.error(response.error);
       Toast.show({
         text: response.error,
         type: 'danger',

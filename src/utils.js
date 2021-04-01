@@ -1,7 +1,6 @@
 import { Linking, Alert, Platform } from 'react-native';
 
 export const callNumber = (phone) => {
-  console.log('callNumber ----> ', phone);
   let phoneNumber = phone;
   if (Platform.OS !== 'android') {
     phoneNumber = `telprompt:${phone}`;
@@ -16,7 +15,7 @@ export const callNumber = (phone) => {
         return Linking.openURL(phoneNumber);
       }
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.error(err));
 };
 
 export const emailValidator = (email) => {
@@ -58,3 +57,8 @@ export const phoneNumberValidator = (phoneNumber) => {
 
   return '';
 };
+
+export const fbObjectToList = (obj) => Object.keys(obj).map((id) => ({
+  id,
+  ...obj[id],
+}));

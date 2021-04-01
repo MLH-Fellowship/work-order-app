@@ -1,9 +1,16 @@
 import React, { useEffect, memo } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
-import { Container, Text } from 'native-base';
-import { useSelector, useDispatch } from 'react-redux';
+import {
+  Container, Text, List, Separator, View, ListItem, Body
+} from 'native-base';
+import { useSelector, useDispatch, connect } from 'react-redux';
+import R from 'ramda';
 import { getOrders } from '@/store/order';
 import DashboardTile from '@/components/DashboardTile';
+
+const DashboardTileSepatator = ({ group }) => (
+  <Separator bordered><Text style={{ fontWeight: 'bold' }}>{group === 'MISC' ? 'MISC' : `Building ${group}`.toUpperCase() }</Text></Separator>
+);
 
 const styles = StyleSheet.create({
   listItem: {
@@ -13,44 +20,56 @@ const styles = StyleSheet.create({
   },
 });
 
-const Dashboard = ({ navigation }) => {
+const Dashboard = ({ userReducer, navigation }) => {
   const orderState = useSelector((state) => state.orderReducer);
   const dispatch = useDispatch();
 
   const getOrderArray = () => {
     const { orders } = orderState;
-    return Object.keys(orders)
-      .reduce(
-        (prev, id) => (orders[id].complete
-          ? prev
-          : [
-            ...prev,
-            {
-              id,
-              ...orders[id],
-            },
-          ]),
-        [],
-      );
+    const ordersArray = Object.keys(orders).map((id) => ({
+      id,
+      ...orders[id],
+    }));
+
+    const filteredOrdersArray = {
+      admin: () => ordersArray,
+      tenant: () => ordersArray.filter(R.propEq('user', userReducer.username)),
+      techincian: () => ordersArray.filter(R.pathEq(['technician', 'id'], userReducer.username)),
+    }[userReducer.role]()
+      
+    const grouped = R.groupBy(R.propOr('MISC', 'building'), filteredOrdersArray);
+    const orderedWithSeparators = Object.keys(grouped)
+      .sort(R.identity)
+      .reduce((col, group) => [...col, { group }, ...grouped[group]], []);
+    return orderedWithSeparators;
   };
 
   useEffect(
     () => navigation.addListener('focus', () => dispatch(getOrders())),
     [],
   );
-
   return (
     <Container>
-      <FlatList
-        data={getOrderArray()}
-        renderItem={({ item }) => (
-          <DashboardTile style={styles.listItem} order={item} navigation={navigation} />
-        )}
-        keyExtractor={(item, index) => index.toString()}
-        ListFooterComponent={<Text />}
-      />
+      <List>
+        <FlatList
+          style={{ height: '100%' }}
+          data={getOrderArray()}
+          renderItem={({ item }) => (
+            item.group ? <DashboardTileSepatator {...item} /> : <DashboardTile order={item} navigation={navigation} />
+          )}
+          keyExtractor={(item, index) => index.toString()}
+          ListFooterComponent={<Text />}
+          ListEmptyComponent={
+            <ListItem last>
+              <Body>
+                <Text>{'No work orders found...'}</Text>
+              </Body>
+           </ListItem>
+          }
+        />
+      </List>
     </Container>
   );
 };
 
-export default memo(Dashboard);
+export default memo(connect(R.pick(['userReducer']))(Dashboard));

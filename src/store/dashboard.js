@@ -10,7 +10,6 @@ export const getDashboardDetailData = (order) => ({
 });
 
 const reducer = (state = INITIAL_STATE, action) => {
-  console.log(action);
   switch (action.type) {
     case GET_DASHBOARD_DETAIL_DATA:
       return {

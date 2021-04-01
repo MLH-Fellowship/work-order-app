@@ -35,8 +35,6 @@ const takePicture = async (handleImageChange) => {
     quality: 1,
   });
 
-  console.log('Took a picture!', result);
-
   if (!result.cancelled) {
     handleImageChange(result.uri);
   }

@@ -3,6 +3,7 @@ import {
   View, Text, Body, ListItem,
 } from 'native-base';
 import { useDispatch } from 'react-redux';
+import R from 'ramda';
 import { getDashboardDetailData } from '@/store/dashboard';
 import theme from 'theme';
 
@@ -24,7 +25,7 @@ const DashboardTile = ({ order, navigation }) => {
       last
       onPress={() => {
         dispatch(getDashboardDetailData(order));
-        navigation.navigate('DashboardDetail', order);
+        navigation.navigate('DashboardDetail', { order });
       }}
     >
       <Body>
@@ -39,5 +40,6 @@ const DashboardTile = ({ order, navigation }) => {
     </ListItem>
   );
 };
+
 
 export default memo(DashboardTile);
