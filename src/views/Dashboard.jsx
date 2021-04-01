@@ -24,8 +24,6 @@ const Dashboard = ({ userReducer, navigation }) => {
   const orderState = useSelector((state) => state.orderReducer);
   const dispatch = useDispatch();
 
-  // console.log('userReducer', userReducer)
-
   const getOrderArray = () => {
     const { orders } = orderState;
     const ordersArray = Object.keys(orders).map((id) => ({
@@ -35,8 +33,8 @@ const Dashboard = ({ userReducer, navigation }) => {
 
     const filteredOrdersArray = {
       admin: () => ordersArray,
-      tenant: () => ordersArray.filter(R.propEq('submitted_by', userReducer.username)),
-      techincian: () => ordersArray.filter(R.propEq('assigned_to', userReducer.username)),
+      tenant: () => ordersArray.filter(R.propEq('user', userReducer.username)),
+      techincian: () => ordersArray.filter(R.pathEq(['technician', 'id'], userReducer.username)),
     }[userReducer.role]()
       
     const grouped = R.groupBy(R.propOr('MISC', 'building'), filteredOrdersArray);

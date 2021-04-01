@@ -14,8 +14,7 @@ export const setCurrentUser = (username) => (dispatch) => {
     .ref('/users')
     .child(username)
     .on('value', (snap) => {
-      // TODO: remove { role: 'admin' }
-      const data = snap.val() || { role: 'admin' };
+      const data = snap.val()
       dispatch({
         type: SET_CURRENT_USER,
         username,
@@ -31,7 +30,7 @@ const reducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         username: action.username,
-        role: action.role,
+        role: action.role, // 'admin' ||
       };
 
     default:
