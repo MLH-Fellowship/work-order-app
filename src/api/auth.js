@@ -1,5 +1,5 @@
 import firebase from "@/api/firebase";
-import {setPhoneNumber, setAltPhoneNumber} from "@/api/user"
+import {setPhoneNumber, setAltPhoneNumber, createUserInfo} from "@/api/user"
 
 export const logoutUser = () => {
   firebase.auth().signOut();
@@ -147,11 +147,16 @@ export const changePassword = (oldPassword, newPassword) => {
 
 export const registerUser = async (email, password, data) => {
   try {
+    //createUserInfo("helloworld", data);
     const { user } = await firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(email, password);//.then(createUserInfo(user.uid, data));
+    //console.log('created user and provided user.uid: ' + user.uid);
     createUserInfo(user.uid, data);
+    //console.log('created user and provided user.uid: ' + user.uid);
+    //console.log('created user info')
   } catch (e) {
+    console.log(e);
     return {
       message: '',
       error: {

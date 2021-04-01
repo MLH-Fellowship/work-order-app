@@ -252,10 +252,11 @@ const Settings = () => {
                 >
                   <Label>Old Password</Label>
                   <Input
-                    keyboardType="email-address"
-                    textContentType="emailAddress"
-                    autoCompleteType="email"
+                    textContentType="password"
+                    autoCompleteType="password"
+                    returnKeyType="done"
                     autoCapitalize="none"
+                    secureTextEntry
                     value={oldPassword}
                     onChangeText={(value) => setOldPassword(value)}
                   />
@@ -269,10 +270,11 @@ const Settings = () => {
                 >
                   <Label>New Password</Label>
                   <Input
-                    keyboardType="email-address"
-                    textContentType="emailAddress"
-                    autoCompleteType="email"
+                    textContentType="password"
+                    autoCompleteType="password"
+                    returnKeyType="done"
                     autoCapitalize="none"
+                    secureTextEntry
                     value={newPassword}
                     onChangeText={(value) => setNewPassword(value)}
                   />
@@ -286,10 +288,11 @@ const Settings = () => {
                 >
                   <Label>Confirm New Password</Label>
                   <Input
-                    keyboardType="email-address"
-                    textContentType="emailAddress"
-                    autoCompleteType="email"
+                    textContentType="password"
+                    autoCompleteType="password"
+                    returnKeyType="done"
                     autoCapitalize="none"
+                    secureTextEntry
                     value={confirmNewPassword}
                     onChangeText={(value) => setConfirmNewPassword(value)}
                   />
@@ -357,10 +360,11 @@ const Settings = () => {
                 >
                   <Label>New Primary Phone Number</Label>
                   <Input
-                    keyboardType="email-address"
+                    keyboardType="number-pad"
                     textContentType="emailAddress"
                     autoCompleteType="email"
                     autoCapitalize="none"
+                    returnKeyType="done"
                     value={phoneNumber}
                     onChangeText={(value) => setPhoneNumber(value)}
                   />
@@ -385,10 +389,11 @@ const Settings = () => {
                 >
                   <Label>New Alternate Phone Number</Label>
                   <Input
-                    keyboardType="email-address"
+                    keyboardType="number-pad"
                     textContentType="emailAddress"
                     autoCompleteType="email"
                     autoCapitalize="none"
+                    returnKeyType="done"
                     value={altPhoneNumber}
                     onChangeText={(value) => setAltPhoneNumber(value)}
                   />
@@ -450,10 +455,11 @@ const Settings = () => {
                 >
                   <Label>Password</Label>
                   <Input
-                    keyboardType="email-address"
-                    textContentType="emailAddress"
-                    autoCompleteType="email"
+                    textContentType="password"
+                    autoCompleteType="password"
+                    returnKeyType="done"
                     autoCapitalize="none"
+                    secureTextEntry
                     value={toDeletePassword}
                     onChangeText={(value) => setToDeletePassword(value)}
                   />
@@ -470,6 +476,7 @@ const Settings = () => {
                     keyboardType="email-address"
                     textContentType="emailAddress"
                     autoCompleteType="email"
+                    returnKeyType="done"
                     autoCapitalize="none"
                     value={deleteText}
                     onChangeText={(value) => setDeleteText(value)}

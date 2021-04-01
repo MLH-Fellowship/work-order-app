@@ -2,7 +2,8 @@ import firebase from "@/api/firebase";
 
 export const createUserInfo = (userId, data) => {
   // WARN: outer mem access
-  data['verificationSent'] = Date.now();
+  // data['verificationSent'] = Date.now();
+  console.log("createUserInfo");
   firebase
     .database()
     .ref('/users')
