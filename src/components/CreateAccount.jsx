@@ -14,6 +14,7 @@ export const CreateAccount = () => {
 
     const [loading, setLoading] = useState(false);
     const [newEmail, setNewEmail] = useState({ value: '', error: undefined });
+    const [newName, setNewName] = useState({value: '', error: undefined });
     const [newPassword, setNewPassword] = useState({ value: '', error: undefined });
     const [confirmPassword, setConfirmPassword] = useState({ value: '', error: undefined });
     const [phoneNumber, setPhoneNumber] = useState({ value: '', error: undefined });
@@ -28,9 +29,14 @@ export const CreateAccount = () => {
         const domain1 = '@socom.mil';
         const domain2 = '@mail.mil';
     
+        let nameError;
+        if (!newName.value) {
+          nameError = 'invalid name';
+        }
+
         let emailError;
-        if (!newEmail.value || 
-           (!newEmail.value.endsWith(domain1) && !newEmail.value.endsWith(domain2))) {
+        if (!newEmail.value /*|| 
+           (!newEmail.value.endsWith(domain1) && !newEmail.value.endsWith(domain2))*/) {
           emailError = 'invalid email';
         }
     
@@ -76,7 +82,8 @@ export const CreateAccount = () => {
         setPhoneNumber({ ...phoneNumber, error: phoneNumberError });
         setAltPhoneNumber({ ...altPhoneNumber, error: altPhoneNumberError });
     
-        if (emailError
+        if (nameError
+          || emailError
           || passwordError
           || confirmPasswordError
           || phoneNumberError
@@ -97,19 +104,20 @@ export const CreateAccount = () => {
               newEmail.value,
               newPassword.value,
               {
+                name: newName.value,
                 phoneNumber: phoneNumber.value,
                 altPhoneNumber: altPhoneNumber.value,
                 role: serviceRole.value
               }
             );
             
-            if(response.message.length > 0) {
-              Toast.show({
-                text: response.message,
-                type: 'success',
-                duration: 3000,
-              });
-            }
+            //if(response.message.length > 0) {
+            //  Toast.show({
+            //    text: response.message,
+            //    type: 'success',
+            //    duration: 3000,
+            //  });
+            //}
             if(response.error.length > 0) {
               Toast.show({
                     text: response.error,
@@ -144,6 +152,25 @@ export const CreateAccount = () => {
             <View
                 style={{marginLeft: '5%', marginRight: '5%'}}
             >
+            
+            <Item
+              floatingLabel
+              error={newName.error !== undefined}
+              style={{ marginVertical: 10 }}
+            >
+              <Label>Name</Label>
+              <Input
+                keyboardType="default"
+                textContentType="name"
+                returnKeyType="done"
+                autoCompleteType="name"
+                autoCapitalize="words"
+                value={newName.value}
+                onChangeText={(value) => setNewName({ value })}
+              />
+            </Item>
+            <Text>Use your first and last names</Text>
+
             <Item
               floatingLabel
               error={newEmail.error !== undefined}
@@ -153,6 +180,7 @@ export const CreateAccount = () => {
               <Input
                 keyboardType="email-address"
                 textContentType="emailAddress"
+                returnKeyType="done"
                 autoCompleteType="email"
                 autoCapitalize="none"
                 value={newEmail.value}
